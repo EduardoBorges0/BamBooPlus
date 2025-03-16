@@ -15,5 +15,5 @@ interface LanguageDao {
     suspend fun updateLanguage(language: String)
 
     @Query("SELECT * FROM language_entity WHERE id = 0")
-    suspend fun getLanguage(): LiveData<LanguageEntity?>
+    fun getLanguage(): LiveData<LanguageEntity?>
 }

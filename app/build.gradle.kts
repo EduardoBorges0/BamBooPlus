@@ -8,7 +8,9 @@ plugins {
 android {
     namespace = "com.app.bamboo"
     compileSdk = 35
-
+    kapt {
+        correctErrorTypes = true
+    }
     defaultConfig {
         applicationId = "com.app.bamboo"
         minSdk = 29
@@ -54,8 +56,8 @@ android {
 dependencies {
     //Hilt
     implementation (libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     //Navigation
     implementation (libs.androidx.navigation.compose)
     //Coil
@@ -64,8 +66,13 @@ dependencies {
     implementation (libs.androidx.room.runtime)
     implementation (libs.androidx.room.ktx)
     kapt(libs.room.compiler)
-
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core.ktx)
+    implementation ("androidx.work:work-runtime:2.10.0") // Certifique-se de usar a versão mais recente
+
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

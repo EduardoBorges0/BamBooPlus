@@ -7,7 +7,8 @@ import dagger.hilt.components.SingletonComponent
 @Module(
     includes = [
         RepositoriesModule::class,
-        DaoModule::class
+        DaoModule::class,
+        NotifyModule::class,
     ]
 )
 @InstallIn(SingletonComponent::class)

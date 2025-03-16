@@ -6,5 +6,5 @@ import com.app.bamboo.data.models.LanguageEntity
 interface LanguageRepository {
     suspend fun insertLanguage(languageCode: String)
     suspend fun updateLanguage(language: String)
-    suspend fun getLanguage(): LiveData<LanguageEntity?>
+    fun getLanguage(): LiveData<LanguageEntity?>
 }

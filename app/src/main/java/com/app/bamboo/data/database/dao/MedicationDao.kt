@@ -7,11 +7,14 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.app.bamboo.data.models.MedicationEntities
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import java.lang.Thread.State
 
 @Dao
 interface MedicationDao {
     @Query("SELECT * FROM medication_entity")
-    fun getAllMedications() : LiveData<List<MedicationEntities>>
+    fun getAllMedications() : Flow<List<MedicationEntities>>
 
     @Insert
     suspend fun insertMedication(medicationEntities: MedicationEntities)

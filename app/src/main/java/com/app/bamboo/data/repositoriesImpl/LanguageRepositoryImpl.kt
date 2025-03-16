@@ -19,7 +19,7 @@ class LanguageRepositoryImpl @Inject constructor(private val languageDao: Langua
         languageDao.updateLanguage(language)
     }
 
-    override suspend fun getLanguage(): LiveData<LanguageEntity?> {
+    override fun getLanguage(): LiveData<LanguageEntity?> {
         return languageDao.getLanguage()
     }
 }
