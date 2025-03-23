@@ -1,6 +1,7 @@
 package com.app.bamboo.di
 
 import dagger.Module
+import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -8,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
     includes = [
         RepositoriesModule::class,
         DaoModule::class,
-        NotifyModule::class,
     ]
 )
 @InstallIn(SingletonComponent::class)

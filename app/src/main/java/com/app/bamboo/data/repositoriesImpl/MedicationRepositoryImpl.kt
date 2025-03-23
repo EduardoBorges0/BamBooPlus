@@ -19,7 +19,7 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
         description: String,
         pillOrDrop: String,
         daysOrHour: String,
-        medicationTime: Int,
+        medicationTime: String,
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -40,7 +40,7 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
         description: String,
         pillOrDrop: String,
         daysOrHour: String,
-        medicationTime: Int,
+        medicationTime: String,
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -55,4 +55,11 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
     override suspend fun updateAccomplish(id: Long, accomplish: Boolean) {
         medicationDao.updateAccomplish(id = id, accomplish = accomplish)
     }
+    override suspend fun getMedicationsTime(): List<String>{
+        return medicationDao.getMedicationsTime()
+    }
+    override suspend fun getIdByMedicationsTime(medicationTime: String): Long{
+        return medicationDao.getIdByMedicationsTime(medicationTime)
+    }
+
 }

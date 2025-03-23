@@ -27,4 +27,10 @@ interface MedicationDao {
 
     @Query("UPDATE medication_entity SET accomplish = :accomplish WHERE id = :id")
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
+
+    @Query("SELECT medication_time FROM medication_entity")
+    suspend fun getMedicationsTime(): List<String>
+
+    @Query("SELECT id FROM medication_entity WHERE medication_time = :medicationTime")
+    suspend fun getIdByMedicationsTime(medicationTime: String): Long
 }

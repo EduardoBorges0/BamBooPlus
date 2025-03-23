@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.Thread.State
 import javax.inject.Inject
 
+@HiltViewModel
 class MedicationsViewModel @Inject constructor(private val repository: MedicationRepository) :
     ViewModel() {
     private val _getAllMedications = MutableStateFlow<List<MedicationEntities>>(emptyList())
@@ -26,6 +27,7 @@ class MedicationsViewModel @Inject constructor(private val repository: Medicatio
             }
         }
     }
+
 
     suspend fun getNextMedication() {
 

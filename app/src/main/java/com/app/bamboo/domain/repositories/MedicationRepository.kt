@@ -12,7 +12,7 @@ interface MedicationRepository {
         description: String,
         pillOrDrop: String,
         daysOrHour: String,
-        medicationTime: Int,
+        medicationTime: String,
     )
 
     suspend fun deleteMedication(id: Long)
@@ -21,8 +21,12 @@ interface MedicationRepository {
         description: String,
         pillOrDrop: String,
         daysOrHour: String,
-        medicationTime: Int,
+        medicationTime: String,
     )
 
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
+
+    suspend fun getMedicationsTime(): List<String>
+
+    suspend fun getIdByMedicationsTime(medicationTime: String): Long
 }
