@@ -58,6 +58,7 @@ dependencies {
     implementation (libs.androidx.hilt.navigation.compose)
     implementation("com.google.dagger:hilt-android:2.51.1")
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.lifecycle.service)
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     //Navigation
     implementation (libs.androidx.navigation.compose)

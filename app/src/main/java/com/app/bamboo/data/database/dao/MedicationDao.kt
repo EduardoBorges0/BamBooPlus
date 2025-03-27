@@ -14,7 +14,7 @@ import java.lang.Thread.State
 @Dao
 interface MedicationDao {
     @Query("SELECT * FROM medication_entity")
-    fun getAllMedications() : Flow<List<MedicationEntities>>
+    fun getAllMedications() : LiveData<List<MedicationEntities>>
 
     @Insert
     suspend fun insertMedication(medicationEntities: MedicationEntities)
@@ -31,6 +31,7 @@ interface MedicationDao {
     @Query("SELECT medication_time FROM medication_entity")
     suspend fun getMedicationsTime(): List<String>
 
-    @Query("SELECT id FROM medication_entity WHERE medication_time = :medicationTime")
-    suspend fun getIdByMedicationsTime(medicationTime: String): Long
+    @Query("SELECT id FROM medication_entity WHERE medication_time = '16:00'")
+    fun getIdByMedicationsTime(): LiveData<Long>
+
 }

@@ -6,11 +6,13 @@ import com.app.bamboo.data.models.MedicationEntities
 import com.app.bamboo.domain.repositories.MedicationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class MedicationRepositoryImpl @Inject constructor(private val medicationDao: MedicationDao) :
     MedicationRepository {
-    override suspend fun getAllMedications(): Flow<List<MedicationEntities>> {
+    override suspend fun getAllMedications(): LiveData<List<MedicationEntities>> {
         return medicationDao.getAllMedications()
     }
 
@@ -58,8 +60,4 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
     override suspend fun getMedicationsTime(): List<String>{
         return medicationDao.getMedicationsTime()
     }
-    override suspend fun getIdByMedicationsTime(medicationTime: String): Long{
-        return medicationDao.getIdByMedicationsTime(medicationTime)
-    }
-
 }

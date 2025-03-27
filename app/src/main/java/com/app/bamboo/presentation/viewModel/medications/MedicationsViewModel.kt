@@ -14,16 +14,16 @@ import javax.inject.Inject
 @HiltViewModel
 class MedicationsViewModel @Inject constructor(private val repository: MedicationRepository) :
     ViewModel() {
-    private val _getAllMedications = MutableStateFlow<List<MedicationEntities>>(emptyList())
-    val getAllMedications: StateFlow<List<MedicationEntities>> = _getAllMedications
+    private val _getAllMedications = MutableStateFlow<List<MedicationEntities>?>(emptyList())
+    val getAllMedications: StateFlow<List<MedicationEntities>?> = _getAllMedications
 
     private val _getNextMedication = MutableStateFlow<List<MedicationEntities>>(emptyList())
     val getNextMedication: StateFlow<List<MedicationEntities>> = _getNextMedication
 
     fun getAllMedications() {
         viewModelScope.launch {
-            repository.getAllMedications().collect { list ->
-                _getAllMedications.value = list
+            if(repository.getAllMedications().value != null){
+                _getAllMedications.value = repository.getAllMedications().value
             }
         }
     }

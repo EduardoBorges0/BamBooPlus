@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
     <application
         android:name=".BamBooApplication"
         android:allowBackup="true"
@@ -18,28 +20,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BamBoo"
         tools:targetApi="31">
+        <activity
+            android:name=".presentation.view.SuaActivity"
+            android:exported="false"
+            android:label="@string/title_activity_sua"
+            android:theme="@style/Theme.BamBoo" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.view.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.BamBoo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name=".utils.notifications.NotificationReceiver"
+        <receiver android:name=".presentation.notifications.AlarmReceiver"
             android:exported="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
-            </intent-filter>
-        </receiver>
-
-
-
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
     </application>
 </manifest>

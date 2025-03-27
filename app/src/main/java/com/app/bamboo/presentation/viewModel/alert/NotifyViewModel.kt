@@ -1,17 +1,22 @@
 package com.app.bamboo.presentation.viewModel.alert
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.data.models.MedicationEntities
 import com.app.bamboo.domain.usecases.GetSortedMedicationsUseCase
 import com.app.bamboo.domain.usecases.MoveFirstMedicationIfNeededUseCase
 import com.app.bamboo.domain.usecases.ScheduleNextNotificationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,29 +24,24 @@ import javax.inject.Inject
 class NotifyViewModel @Inject constructor(
     private val getSortedMedicationsUseCase: GetSortedMedicationsUseCase,
     private val moveFirstMedicationIfNeededUseCase: MoveFirstMedicationIfNeededUseCase,
-    private val scheduleNextNotificationUseCase: ScheduleNextNotificationUseCase
+    private val scheduleNextNotificationUseCase: ScheduleNextNotificationUseCase,
 ) : ViewModel() {
-    val getBiggerToLower: LiveData<List<String>> = moveFirstMedicationIfNeededUseCase.medications
 
-    private val _title = MutableLiveData("Lembrete Diário")
-    val title: LiveData<String> = _title
-
-    private val _message = MutableLiveData("Está na hora de conferir seu app!")
-    val message: LiveData<String> = _message
+    val getBiggerToLower: StateFlow<List<String>> = moveFirstMedicationIfNeededUseCase.medications
 
     init {
         updateMedicationList()
         startAutoUpdate()
     }
 
-    fun updateMedicationList() {
+    private fun updateMedicationList() {
         viewModelScope.launch {
             val sortedList = getSortedMedicationsUseCase()
             moveFirstMedicationIfNeededUseCase.updateList(sortedList)
         }
     }
 
-    fun moveFirstToLastIfNeeded() {
+    private fun moveFirstToLastIfNeeded() {
         viewModelScope.launch {
             moveFirstMedicationIfNeededUseCase.moveFirstToLastIfNeeded()
         }
@@ -49,34 +49,33 @@ class NotifyViewModel @Inject constructor(
 
     private fun startAutoUpdate() {
         viewModelScope.launch {
-            while (true) {
+            while (isActive) {
                 delay(6000)
                 moveFirstToLastIfNeeded()
             }
         }
     }
 
-    fun showNotifications(context: Context) {
+    fun showNotifications(activity: Activity,context: Context) {
         viewModelScope.launch {
-            getBiggerToLower.value?.let {
-                scheduleNextNotificationUseCase(context, it, title.value, message.value)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                        101
+                    )
+                }
+            }
+            val list = getBiggerToLower.value
+            if (list.isNotEmpty()) {
+                scheduleNextNotificationUseCase(context, list)
             }
         }
     }
 
-    suspend fun updateMedicationsNotificationTexts(medications: List<MedicationEntities>) {
-        if(medications.isNotEmpty()){
-            val medication = medications.filter {
-                it.medicationTime == (getBiggerToLower.value?.get(0) ?: "")
-            }
-            val name = medication.map {
-                it.medicationName
-            }
-            val time = medication.map {
-                it.medicationTime
-            }
-            _title.value = "Hora do ${name[0]}"
-            _message.value = "Já são ${time[0]}, Boo está te esperando"
-        }
-    }
 }
