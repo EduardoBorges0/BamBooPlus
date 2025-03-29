@@ -13,7 +13,7 @@ object ShowNotification {
            channelName = "Medication Channel",
            descriptionChannel = "Alarm Medication",
            activity = SuaActivity::class.java,
-           notificationtitle = "Está na hora da sua medicação",
+           notificationTitle = "Está na hora da sua medicação",
            notificationDescription = "Clique aqui para confirmar"
        )
     }

@@ -1,5 +1,8 @@
 package com.app.bamboo.presentation.viewModel.medications
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.bamboo.data.models.MedicationEntities
@@ -14,21 +17,20 @@ import javax.inject.Inject
 @HiltViewModel
 class MedicationsViewModel @Inject constructor(private val repository: MedicationRepository) :
     ViewModel() {
-    private val _getAllMedications = MutableStateFlow<List<MedicationEntities>?>(emptyList())
-    val getAllMedications: StateFlow<List<MedicationEntities>?> = _getAllMedications
+    private val _getAllMedications = MutableLiveData<List<MedicationEntities>?>(emptyList())
+    val getAllMedications: LiveData<List<MedicationEntities>?> = _getAllMedications
 
     private val _getNextMedication = MutableStateFlow<List<MedicationEntities>>(emptyList())
     val getNextMedication: StateFlow<List<MedicationEntities>> = _getNextMedication
 
     fun getAllMedications() {
         viewModelScope.launch {
+            Log.d("MEDICACAO", "MEDICACAO ${repository.getAllMedications().value}")
             if(repository.getAllMedications().value != null){
                 _getAllMedications.value = repository.getAllMedications().value
             }
         }
     }
-
-
     suspend fun getNextMedication() {
 
     }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface MedicationRepository {
     suspend fun getAllMedications(): LiveData<List<MedicationEntities>>
+
     suspend fun insertMedication(
         medicationName: String,
         description: String,

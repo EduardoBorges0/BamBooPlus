@@ -4,10 +4,9 @@ import com.app.bamboo.domain.repositories.MedicationRepository
 import com.app.bamboo.utils.TimeUtils
 import java.time.Duration
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class GetSortedMedicationsUseCase @Inject constructor(private val repository: MedicationRepository) {
+class SortedListMedicationsUseCase @Inject constructor(private val repository: MedicationRepository) {
     suspend operator fun invoke(): List<String> {
         val medications = repository.getMedicationsTime()
         val now = LocalTime.now()

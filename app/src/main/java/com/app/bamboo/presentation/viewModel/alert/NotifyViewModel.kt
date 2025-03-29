@@ -9,11 +9,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.domain.usecases.GetSortedMedicationsUseCase
-import com.app.bamboo.domain.usecases.MoveFirstMedicationIfNeededUseCase
-import com.app.bamboo.domain.usecases.ScheduleNextNotificationUseCase
+import com.app.bamboo.service.ScheduleAlarmService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
@@ -22,12 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotifyViewModel @Inject constructor(
-    private val getSortedMedicationsUseCase: GetSortedMedicationsUseCase,
-    private val moveFirstMedicationIfNeededUseCase: MoveFirstMedicationIfNeededUseCase,
-    private val scheduleNextNotificationUseCase: ScheduleNextNotificationUseCase,
+    private val scheduleAlarmService: ScheduleAlarmService,
 ) : ViewModel() {
-
-    val getBiggerToLower: StateFlow<List<String>> = moveFirstMedicationIfNeededUseCase.medications
+    val getBiggerToLower: StateFlow<List<String>> = scheduleAlarmService.medicationsTime
 
     init {
         updateMedicationList()
@@ -36,14 +30,14 @@ class NotifyViewModel @Inject constructor(
 
     private fun updateMedicationList() {
         viewModelScope.launch {
-            val sortedList = getSortedMedicationsUseCase()
-            moveFirstMedicationIfNeededUseCase.updateList(sortedList)
+            val sortedList = scheduleAlarmService.getSortedMedications()
+            scheduleAlarmService.updateMedicationList(sortedList)
         }
     }
 
     private fun moveFirstToLastIfNeeded() {
         viewModelScope.launch {
-            moveFirstMedicationIfNeededUseCase.moveFirstToLastIfNeeded()
+            scheduleAlarmService.moveFirstToLastIfNeeded()
         }
     }
 
@@ -56,7 +50,7 @@ class NotifyViewModel @Inject constructor(
         }
     }
 
-    fun showNotifications(activity: Activity,context: Context) {
+    fun showNotifications(activity: Activity, context: Context) {
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(
@@ -73,9 +67,8 @@ class NotifyViewModel @Inject constructor(
             }
             val list = getBiggerToLower.value
             if (list.isNotEmpty()) {
-                scheduleNextNotificationUseCase(context, list)
+                scheduleAlarmService.scheduleNextNotification(context, list)
             }
         }
     }
-
 }
