@@ -11,6 +11,7 @@ import dagger.hilt.components.SingletonComponent
     includes = [
         RepositoriesModule::class,
         DaoModule::class,
+        WorkManagerModule::class
     ]
 )
 @InstallIn(SingletonComponent::class)

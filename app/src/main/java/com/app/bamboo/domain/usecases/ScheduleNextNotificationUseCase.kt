@@ -1,22 +1,32 @@
 package com.app.bamboo.domain.usecases
 
 import android.content.Context
-import com.app.bamboo.presentation.notifications.scheduleNotification
-import java.time.LocalTime
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.app.bamboo.domain.usecases.workers.MedicationAlarmWorker
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ScheduleNextNotificationUseCase @Inject constructor() {
+class ScheduleNextNotificationUseCase @Inject constructor(
+    private val workManager: WorkManager,
+) {
     operator fun invoke(
         context: Context,
         medications: List<String>,
     ) {
-        val now = LocalTime.now()
-        val times = medications.map { LocalTime.parse(it) }
-        val nextTime = times.firstOrNull { it.isAfter(now) }
-            ?: times.firstOrNull()
-                ?.plusHours(24)
-        nextTime?.let {
-            scheduleNotification(context, it.hour, it.minute)
-        }
+        val data = workDataOf("medications" to medications.toTypedArray())
+
+        val workRequest = PeriodicWorkRequestBuilder<MedicationAlarmWorker>(15, TimeUnit.MINUTES)
+            .setInputData(data)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            "medication_alarm_work",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            workRequest
+        )
     }
 }

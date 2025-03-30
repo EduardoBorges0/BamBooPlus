@@ -26,7 +26,6 @@ object NotificationUtils {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Criação do canal de notificação para Android O ou superior
         val channel = NotificationChannel(
             channelId,
             channelName,
@@ -54,7 +53,7 @@ object NotificationUtils {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        val vibrationPattern = longArrayOf(0, 1000, 500, 1000) // Vibra por 1s, pausa 0.5s, vibra 1s
+        val vibrationPattern = longArrayOf(0, 1000, 500, 1000)
 
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -66,7 +65,6 @@ object NotificationUtils {
             .setVibrate(vibrationPattern)
             .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setOngoing(true)
             .setContentIntent(pendingIntent)
             .build()
 
@@ -74,7 +72,7 @@ object NotificationUtils {
 
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         val wakeLock = powerManager.newWakeLock(
-            PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP,
+            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.PARTIAL_WAKE_LOCK,
             "MyApp:WakeLock"
         )
 

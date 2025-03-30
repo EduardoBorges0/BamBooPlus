@@ -32,7 +32,6 @@ fun AppNavigation(navController: NavHostController) {
     val notifyViewModel: NotifyViewModel = hiltViewModel()
     val list by notifyViewModel.getBiggerToLower.collectAsState(emptyList())
 
-
     Text(if (list.isNotEmpty()) list.toString() else "Sem hora")
 }
 

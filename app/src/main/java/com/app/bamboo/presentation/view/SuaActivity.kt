@@ -33,18 +33,6 @@ class SuaActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val notifyViewModel: NotifyViewModel = hiltViewModel()
-            val medicationsViewModel: MedicationsViewModel = hiltViewModel()
-            val list by notifyViewModel.getBiggerToLower.collectAsState()
-            medicationsViewModel.getAllMedications()
-
-            LaunchedEffect(list) {
-                list.let {
-                    if (it.isNotEmpty()) {
-                        notifyViewModel.showNotifications(this@SuaActivity, this@SuaActivity)
-                    }
-                }
-            }
             BamBooTheme {
                 Greeting(
                 )
@@ -56,9 +44,4 @@ class SuaActivity : ComponentActivity() {
 
 @Composable
 fun Greeting() {
-    val notifyViewModel: NotifyViewModel = hiltViewModel()
-    val list = notifyViewModel.getBiggerToLower.collectAsState()
-    Text(
-        text = list.value.toString(),
-    )
 }
