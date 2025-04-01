@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 
 object TimeUtils {
-    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     fun formattedLocalDate(time: String): LocalTime{
         return LocalTime.parse(time, formatter)
     }

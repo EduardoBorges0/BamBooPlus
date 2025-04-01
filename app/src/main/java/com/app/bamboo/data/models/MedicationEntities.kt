@@ -17,6 +17,7 @@ data class MedicationEntities(
     val daysOrHours: String,
     @ColumnInfo(name = "medication_time")
     val medicationTime: String,
+    val time: Long,
     @ColumnInfo(name = "accomplish")
     val accomplish: Boolean? = null
 )

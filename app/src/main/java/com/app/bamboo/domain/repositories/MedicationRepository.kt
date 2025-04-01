@@ -1,6 +1,7 @@
 package com.app.bamboo.domain.repositories
 
 import androidx.lifecycle.LiveData
+import androidx.room.Query
 import com.app.bamboo.data.models.MedicationEntities
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ interface MedicationRepository {
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
+        time: Long
     )
 
     suspend fun deleteMedication(id: Long)
@@ -23,10 +25,10 @@ interface MedicationRepository {
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
+        time: Long
     )
 
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
-    suspend fun getMedicationsTime(): List<String>
-
+    fun getMedicationsTime(): Flow<List<String>>
 }

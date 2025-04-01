@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import dagger.hilt.android.EntryPointAccessors
 import java.util.Calendar
 
 fun scheduleNotification(
@@ -28,7 +29,6 @@ fun scheduleNotification(
         set(Calendar.MINUTE, minuteNow)
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
-
         if (timeInMillis <= now.timeInMillis) {
             add(Calendar.DAY_OF_MONTH, 1)
         }

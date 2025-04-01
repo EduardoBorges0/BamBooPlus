@@ -19,7 +19,7 @@ class InsertMedicationsViewModel @Inject constructor(private val repository: Med
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
-        time: Long
+        time: Long,
     ) {
         viewModelScope.launch {
             val convertTime = LocalTime.parse(medicationTime).plusHours(time)
@@ -27,8 +27,8 @@ class InsertMedicationsViewModel @Inject constructor(private val repository: Med
                 medicationName = medicationName,
                 description = description,
                 pillOrDrop = pillOrDrop,
-                daysOrHour = daysOrHour,
-                medicationTime = convertTime.toString()
+                daysOrHour = daysOrHour, medicationTime = convertTime.toString(),
+                time = time
             )
         }
     }

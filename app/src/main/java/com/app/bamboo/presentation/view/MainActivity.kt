@@ -30,9 +30,9 @@ import java.time.LocalTime
 @Composable
 fun AppNavigation(navController: NavHostController) {
     val notifyViewModel: NotifyViewModel = hiltViewModel()
-    val list by notifyViewModel.getBiggerToLower.collectAsState(emptyList())
-
-    Text(if (list.isNotEmpty()) list.toString() else "Sem hora")
+    val insert: InsertMedicationsViewModel = hiltViewModel()
+    val list by notifyViewModel.medicationsTime.collectAsState()
+    Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())
 }
 
 
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             val medicationsViewModel: MedicationsViewModel = hiltViewModel()
-            val list by notifyViewModel.getBiggerToLower.collectAsState()
+            val list by notifyViewModel.medicationsTime.collectAsState()
             medicationsViewModel.getAllMedications()
 
             LaunchedEffect(list) {

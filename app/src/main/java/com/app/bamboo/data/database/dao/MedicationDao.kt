@@ -29,9 +29,6 @@ interface MedicationDao {
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
     @Query("SELECT medication_time FROM medication_entity")
-    suspend fun getMedicationsTime(): List<String>
-
-    @Query("SELECT id FROM medication_entity WHERE medication_time = '16:00'")
-    fun getIdByMedicationsTime(): LiveData<Long>
+    fun getMedicationsTime(): LiveData<List<String>>
 
 }
