@@ -1,9 +1,12 @@
 package com.app.bamboo.domain.notifications
 
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.app.bamboo.data.worker.MedicationAlarmWorker
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ScheduleNextNotificationUseCase @Inject constructor(
@@ -14,9 +17,14 @@ class ScheduleNextNotificationUseCase @Inject constructor(
     ) {
         val data = workDataOf("medications" to medications?.toTypedArray())
 
-        val workRequest = OneTimeWorkRequestBuilder<MedicationAlarmWorker>()
+        val workRequest = PeriodicWorkRequestBuilder<MedicationAlarmWorker>(15, TimeUnit.MINUTES)
             .setInputData(data)
             .build()
-        workManager.enqueue(workRequest)
+
+        workManager.enqueueUniquePeriodicWork(
+            "MedicationAlarmWorker",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            workRequest
+        )
     }
 }
