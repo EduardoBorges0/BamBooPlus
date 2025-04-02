@@ -17,7 +17,7 @@ interface MedicationDao {
     fun getAllMedications() : LiveData<List<MedicationEntities>>
 
     @Insert
-    suspend fun insertMedication(medicationEntities: MedicationEntities)
+    suspend fun insertMedication(medicationEntities: MedicationEntities) : Long
 
     @Query("DELETE FROM medication_entity WHERE id = :id")
     suspend fun deleteMedication(id: Long)
@@ -30,5 +30,4 @@ interface MedicationDao {
 
     @Query("SELECT medication_time FROM medication_entity")
     fun getMedicationsTime(): LiveData<List<String>>
-
 }

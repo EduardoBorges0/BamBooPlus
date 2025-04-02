@@ -22,12 +22,12 @@ class InsertMedicationsViewModel @Inject constructor(private val repository: Med
         time: Long,
     ) {
         viewModelScope.launch {
-            val convertTime = LocalTime.parse(medicationTime).plusHours(time)
             repository.insertMedication(
                 medicationName = medicationName,
                 description = description,
                 pillOrDrop = pillOrDrop,
-                daysOrHour = daysOrHour, medicationTime = convertTime.toString(),
+                daysOrHour = daysOrHour,
+                medicationTime = medicationTime,
                 time = time
             )
         }

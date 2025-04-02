@@ -4,6 +4,7 @@ import android.content.Context
 import com.app.bamboo.data.database.dao.AppointmentDao
 import com.app.bamboo.data.database.dao.LanguageDao
 import com.app.bamboo.data.database.dao.MedicationDao
+import com.app.bamboo.data.database.dao.MedicationScheduleDao
 import com.app.bamboo.data.database.settings.DatabaseProvider
 import dagger.Module
 import dagger.Provides
@@ -32,4 +33,11 @@ object DaoModule {
     fun providerLanguageDao(@ApplicationContext context: Context): LanguageDao {
         return DatabaseProvider.getLanguageDao(context)
     }
+
+    @Provides
+    @Singleton
+    fun providerMedicationScheduleDao(@ApplicationContext context: Context): MedicationScheduleDao {
+        return DatabaseProvider.getMedicationScheduleDao(context)
+    }
+
 }

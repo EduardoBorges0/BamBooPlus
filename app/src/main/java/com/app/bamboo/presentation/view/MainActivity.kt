@@ -18,21 +18,27 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import androidx.work.Configuration
-import androidx.work.WorkManager
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
-import java.time.LocalTime
-
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
     val notifyViewModel: NotifyViewModel = hiltViewModel()
     val insert: InsertMedicationsViewModel = hiltViewModel()
+    LaunchedEffect(Unit) {
+//        insert.insertMedication(
+//            medicationName = "Dorflex",
+//            description = "Para dor",
+//            pillOrDrop = "Pill",
+//            daysOrHour = "Hour",
+//            medicationTime = "10:00",
+//            time = 8
+//        )
+    }
     val list by notifyViewModel.medicationsTime.collectAsState()
-    Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())
+    Text(if (list.isNotEmpty()) "Sem hora" else list.toString())
 }
 
 

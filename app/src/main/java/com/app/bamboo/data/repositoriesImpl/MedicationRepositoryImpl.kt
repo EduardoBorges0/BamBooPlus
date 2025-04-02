@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asFlow
 import com.app.bamboo.data.database.dao.MedicationDao
+import com.app.bamboo.data.database.dao.MedicationScheduleDao
 import com.app.bamboo.data.models.MedicationEntities
+import com.app.bamboo.data.models.MedicationSchedule
 import com.app.bamboo.domain.repositories.MedicationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +19,10 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class MedicationRepositoryImpl @Inject constructor(private val medicationDao: MedicationDao) :
+class MedicationRepositoryImpl @Inject constructor(
+    private val medicationDao: MedicationDao,
+    private val medicationScheduleDao: MedicationScheduleDao,
+) :
     MedicationRepository {
     override suspend fun getAllMedications(): LiveData<List<MedicationEntities>> {
         return medicationDao.getAllMedications()
@@ -29,7 +34,7 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
-        time: Long
+        time: Long,
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -39,7 +44,30 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
             medicationTime = medicationTime,
             time = time
         )
-        medicationDao.insertMedication(medication)
+
+        val medicationId = medicationDao.insertMedication(medication)
+
+        insertSchedules(medicationId, medicationTime, time.toInt())
+    }
+
+    private suspend fun insertSchedules(medicationId: Long, startTime: String, intervalHours: Int) {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        var nextTime = LocalTime.parse(startTime, formatter)
+
+        val schedules = mutableListOf<MedicationSchedule>()
+
+        repeat(24 / intervalHours) {
+            schedules.add(
+                MedicationSchedule(
+                    medicationId = medicationId,
+                    scheduledTime = nextTime.format(formatter)
+                )
+            )
+            nextTime = nextTime.plusHours(intervalHours.toLong())
+        }
+        if (schedules.isNotEmpty()) {
+            medicationScheduleDao.insertSchedule(schedules)
+        }
     }
 
     override suspend fun deleteMedication(id: Long) {
@@ -52,7 +80,7 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
-        time: Long
+        time: Long,
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -68,6 +96,7 @@ class MedicationRepositoryImpl @Inject constructor(private val medicationDao: Me
     override suspend fun updateAccomplish(id: Long, accomplish: Boolean) {
         medicationDao.updateAccomplish(id = id, accomplish = accomplish)
     }
+
     override fun getMedicationsTime(): Flow<List<String>> {
         return medicationDao.getMedicationsTime().asFlow()
     }
