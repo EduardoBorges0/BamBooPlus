@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.notifications
+package com.app.bamboo.domain.notifications
 
 import android.content.BroadcastReceiver
 import android.content.Context

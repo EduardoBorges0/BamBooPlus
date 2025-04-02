@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 class MedicationRepositoryImpl @Inject constructor(
     private val medicationDao: MedicationDao,
-    private val medicationScheduleDao: MedicationScheduleDao,
 ) :
     MedicationRepository {
     override suspend fun getAllMedications(): LiveData<List<MedicationEntities>> {
@@ -35,7 +34,7 @@ class MedicationRepositoryImpl @Inject constructor(
         daysOrHour: String,
         medicationTime: String,
         time: Long,
-    ) {
+    ): Long {
         val medication = MedicationEntities(
             medicationName = medicationName,
             description = description,
@@ -44,30 +43,7 @@ class MedicationRepositoryImpl @Inject constructor(
             medicationTime = medicationTime,
             time = time
         )
-
-        val medicationId = medicationDao.insertMedication(medication)
-
-        insertSchedules(medicationId, medicationTime, time.toInt())
-    }
-
-    private suspend fun insertSchedules(medicationId: Long, startTime: String, intervalHours: Int) {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        var nextTime = LocalTime.parse(startTime, formatter)
-
-        val schedules = mutableListOf<MedicationSchedule>()
-
-        repeat(24 / intervalHours) {
-            schedules.add(
-                MedicationSchedule(
-                    medicationId = medicationId,
-                    scheduledTime = nextTime.format(formatter)
-                )
-            )
-            nextTime = nextTime.plusHours(intervalHours.toLong())
-        }
-        if (schedules.isNotEmpty()) {
-            medicationScheduleDao.insertSchedule(schedules)
-        }
+        return medicationDao.insertMedication(medication)
     }
 
     override suspend fun deleteMedication(id: Long) {

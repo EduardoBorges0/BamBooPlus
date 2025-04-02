@@ -16,7 +16,7 @@ interface MedicationRepository {
         daysOrHour: String,
         medicationTime: String,
         time: Long
-    )
+    ): Long
 
     suspend fun deleteMedication(id: Long)
     suspend fun updateMedication(

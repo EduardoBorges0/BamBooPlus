@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.notifications
+package com.app.bamboo.domain.notifications
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -13,7 +13,7 @@ fun scheduleNotification(
     hourNow: Int,
     minuteNow: Int,
 ) {
-    val requestCode = hourNow * 100 + minuteNow  // ID único baseado na hora e no minuto
+    val requestCode = hourNow * 100 + minuteNow
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val intent = Intent(context, AlarmReceiver::class.java)
     val pendingIntent = PendingIntent.getBroadcast(

@@ -1,15 +1,12 @@
-package com.app.bamboo.domain.usecases.workers
+package com.app.bamboo.data.worker
 
 import android.content.Context
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.app.bamboo.domain.repositories.MedicationRepository
-import com.app.bamboo.presentation.notifications.scheduleNotification
-import dagger.hilt.android.EntryPointAccessors
+import com.app.bamboo.domain.notifications.scheduleNotification
 import java.time.Duration
 import java.time.LocalTime
-import javax.inject.Inject
 
 class MedicationAlarmWorker(
     context: Context,

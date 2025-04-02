@@ -37,8 +37,8 @@ fun AppNavigation(navController: NavHostController) {
 //            time = 8
 //        )
     }
-    val list by notifyViewModel.medicationsTime.collectAsState()
-    Text(if (list.isNotEmpty()) "Sem hora" else list.toString())
+    val list by notifyViewModel.medicationSchedules.observeAsState()
+    Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())
 }
 
 
@@ -49,13 +49,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             val medicationsViewModel: MedicationsViewModel = hiltViewModel()
-            val list by notifyViewModel.medicationsTime.collectAsState()
+            val list by notifyViewModel.medicationSchedules.observeAsState()
             medicationsViewModel.getAllMedications()
 
             LaunchedEffect(list) {
                 list.let {
-                    if (it.isNotEmpty()) {
-                        notifyViewModel.showNotifications(this@MainActivity, this@MainActivity)
+                    if (it != null) {
+                        if (it.isNotEmpty()) {
+                            notifyViewModel.showNotifications(this@MainActivity, this@MainActivity)
+                        }
                     }
                 }
             }

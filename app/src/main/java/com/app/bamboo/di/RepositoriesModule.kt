@@ -30,7 +30,6 @@ object RepositoriesModule {
     ): MedicationRepository {
         return MedicationRepositoryImpl(
             medicationDao = medicationDao,
-            medicationScheduleDao = medicationScheduleDao
         )
     }
 

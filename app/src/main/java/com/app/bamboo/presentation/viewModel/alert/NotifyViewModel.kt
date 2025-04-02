@@ -8,43 +8,23 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.domain.repositories.MedicationRepository
 import com.app.bamboo.domain.repositories.MedicationScheduleRepository
-import com.app.bamboo.service.ScheduleAlarmService
+import com.app.bamboo.domain.notifications.ScheduleNextNotificationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
 class NotifyViewModel @Inject constructor(
-    private val scheduleAlarmService: ScheduleAlarmService,
-    private val medicationRepository: MedicationRepository,
-    private val medicationScheduleRepository: MedicationScheduleRepository
+    private val scheduleNextNotification: ScheduleNextNotificationUseCase,
+    private val medicationScheduleRepository: MedicationScheduleRepository,
 ) : ViewModel() {
-    val medicationsTime = MutableStateFlow<List<String>>(emptyList())
-    private val _medicationSchedules = MutableStateFlow<List<String>>(emptyList())
-    val medicationSchedules: StateFlow<List<String>> = _medicationSchedules
+    val medicationSchedules: LiveData<List<String>> =
+        medicationScheduleRepository.getAllSchedules()
 
-    fun getSchedulesForMedication(medicationId: Long) {
-        viewModelScope.launch {
-            medicationScheduleRepository.getSchedulesForMedication(medicationId).observeForever { schedules ->
-                _medicationSchedules.value = schedules
-            }
-        }
-    }
-    init {
-        viewModelScope.launch {
-            medicationRepository.getMedicationsTime().collect { times ->
-                medicationsTime.value = times
-            }
-        }
-    }
     fun showNotifications(activity: Activity, context: Context) {
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -60,10 +40,8 @@ class NotifyViewModel @Inject constructor(
                     )
                 }
             }
-            Log.d("MEDICATION LIST", "MEDICATION $medicationsTime")
-            if (medicationsTime.value.isNotEmpty()) {
-                scheduleAlarmService.scheduleNextNotification(medicationsTime.value ?: emptyList())
-            }
+            Log.d("MEDICATION LIST", "MEDICATION ${medicationSchedules.value}")
+            scheduleNextNotification.invoke(medicationSchedules.value)
         }
     }
 }
