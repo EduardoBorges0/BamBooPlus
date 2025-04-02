@@ -57,8 +57,6 @@ dependencies {
     //Hilt
     implementation (libs.androidx.hilt.navigation.compose)
     implementation("com.google.dagger:hilt-android:2.51.1")
-    implementation(libs.androidx.runtime.livedata)
-    implementation(libs.androidx.lifecycle.service)
     implementation(libs.androidx.hilt.work)
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     //Navigation
@@ -73,9 +71,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core.ktx)
-    implementation ("androidx.work:work-runtime:2.10.0") // Certifique-se de usar a versão mais recente
-
-
+    implementation ("androidx.work:work-runtime:2.10.0")
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.lifecycle.service)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
