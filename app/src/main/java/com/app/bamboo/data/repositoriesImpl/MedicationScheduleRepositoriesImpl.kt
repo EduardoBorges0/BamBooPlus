@@ -19,4 +19,17 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
     override fun getAllSchedules(): LiveData<List<String>> {
         return medicationScheduleDao.getAllSchedules()
     }
+
+    override fun getAllMedicationSchedules(): LiveData<List<MedicationSchedule>> {
+        return medicationScheduleDao.getAllMedicationSchedules()
+    }
+
+    override fun getAllMedicationId(): LiveData<List<Long>> {
+        return medicationScheduleDao.getAllMedicationId()
+    }
+
+    override fun getMedicationsName(): LiveData<List<String>>{
+        return medicationScheduleDao.getMedicationsName()
+    }
+
 }

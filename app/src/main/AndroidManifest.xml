@@ -3,15 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
     <application
         android:name=".BamBooApplication"
         android:allowBackup="true"
@@ -24,13 +25,17 @@
         android:theme="@style/Theme.BamBoo"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.view.SuaActivity"
+            android:name=".presentation.navigation.NavController"
             android:exported="false"
-            android:theme="@style/Theme.BamBoo"
+            android:label="@string/title_activity_nav_controller"
+            android:theme="@style/Theme.BamBoo" />
+        <activity
+            android:name=".presentation.view.notifyMedicationView.MainNotifyMedication"
+            android:exported="false"
+            android:launchMode="singleTask"
             android:showWhenLocked="true"
-            android:turnScreenOn="true"
-            android:launchMode="singleTask"/>
-
+            android:theme="@style/Theme.BamBoo"
+            android:turnScreenOn="true" />
         <activity
             android:name=".presentation.view.MainActivity"
             android:exported="true"
@@ -41,8 +46,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".domain.notifications.AlarmReceiver"
+
+        <receiver
+            android:name=".domain.notifications.AlarmReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
     </application>
+
 </manifest>

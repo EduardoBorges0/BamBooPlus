@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.app.bamboo.domain.notifications.scheduleNotification
+import com.app.bamboo.domain.notifications.medication.scheduleNotification
 import java.time.Duration
 import java.time.LocalTime
 
@@ -13,33 +13,49 @@ class MedicationAlarmWorker(
     workerParams: WorkerParameters,
 ) : Worker(context, workerParams) {
     override fun doWork(): Result {
-        val medications = inputData.getStringArray("medications")?.toList() ?: emptyList()
+        val timeSchedules = inputData.getStringArray("medications")?.toList() ?: emptyList()
+        val medicationId = inputData.getStringArray("medication_id")?.toList() ?: emptyList()
+        val medicationName = inputData.getStringArray("medication_name")?.toList() ?: emptyList()
 
-        sortedMedication(medications)
-
-        Log.d("MedicationWorker", "Worker executado! Hora atual: ${LocalTime.now()}")
-        Log.d("MedicationWorker", "Medicações agendadas: ${medications}")
-
+        sortedMedication(timeSchedules, medicationId, medicationName)
         return Result.success()
     }
 
-    private fun sortedMedication(medications: List<String>){
+    private fun sortedMedication(
+        medications: List<String>,
+        ids: List<String>,
+        medicationNames: List<String>?,
+    ) {
         val context = applicationContext
         val now = LocalTime.now()
 
-        val parsedTimes = medications.mapNotNull { time ->
-            runCatching { LocalTime.parse(time) }.getOrNull()
-        }
-        val futureTimes = parsedTimes.filter { it.isAfter(now) || it == now }
-        val sortedTimes = if (futureTimes.isNotEmpty()) {
-            futureTimes.sortedBy { Duration.between(now, it).seconds }
-        } else {
-            parsedTimes.map { it.plusHours(24) }.sortedBy { it.toSecondOfDay() }
-        }
-        Log.d("MedicationWorker", "Medicações agendadas: $sortedTimes")
+        val nameList = medicationNames ?: List(medications.size) { "Desconhecido" }
 
-        sortedTimes.forEach { time ->
-            scheduleNotification(context, time.hour, time.minute)
+        val parsedTriples = medications.indices.mapNotNull { i ->
+            val timeStr = medications.getOrNull(i)
+            val id = ids.getOrNull(i)
+            val name = nameList.getOrNull(i)
+
+            val time = runCatching { LocalTime.parse(timeStr) }.getOrNull()
+            if (time != null && id != null && name != null) {
+                Triple(time, id, name)
+            } else null
+        }
+
+        val futureTriples = parsedTriples.filter { (time, _, _) ->
+            time.isAfter(now) || time == now
+        }
+
+        val sortedTriples = if (futureTriples.isNotEmpty()) {
+            futureTriples.sortedBy { (time, _, _) -> Duration.between(now, time).seconds }
+        } else {
+            parsedTriples.map { (time, id, name) -> Triple(time.plusHours(24), id, name) }
+                .sortedBy { (time, _, _) -> time.toSecondOfDay() }
+        }
+
+        sortedTriples.forEach { (time, id, name) ->
+            scheduleNotification(context, time.hour, time.minute, id = id, medicationName = name)
         }
     }
+
 }

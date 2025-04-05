@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BamBoo+</string>
     <string name="title_activity_sua">SuaActivity</string>
+    <string name="title_activity_nav_controller">NavController</string>
 </resources>

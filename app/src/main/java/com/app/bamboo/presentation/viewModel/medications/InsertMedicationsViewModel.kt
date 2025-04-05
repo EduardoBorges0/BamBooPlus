@@ -17,7 +17,7 @@ import javax.inject.Inject
 class InsertMedicationsViewModel @Inject constructor(
     private val repository: MedicationRepository,
     private val medicationScheduleRepository: MedicationScheduleRepository,
-): ViewModel() {
+) : ViewModel() {
     fun insertMedication(
         medicationName: String,
         description: String,
@@ -35,10 +35,16 @@ class InsertMedicationsViewModel @Inject constructor(
                 medicationTime = medicationTime,
                 time = time
             )
-            insertSchedules(medicationId, medicationTime, time.toInt())
+            insertSchedules(medicationId, medicationTime, time.toInt(), medicationName)
         }
     }
-    private suspend fun insertSchedules(medicationId: Long, startTime: String, intervalHours: Int) {
+
+    private suspend fun insertSchedules(
+        medicationId: Long,
+        startTime: String,
+        intervalHours: Int,
+        medicationName: String,
+    ) {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         var nextTime = TimeUtils.formattedLocalDate(startTime)
 
@@ -48,6 +54,7 @@ class InsertMedicationsViewModel @Inject constructor(
             schedules.add(
                 MedicationSchedule(
                     medicationId = medicationId,
+                    medicationName = medicationName,
                     scheduledTime = nextTime.format(formatter)
                 )
             )

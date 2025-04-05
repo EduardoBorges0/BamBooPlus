@@ -3,17 +3,15 @@ package com.app.bamboo.domain.notifications
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import dagger.hilt.android.EntryPointAccessors
-import kotlinx.coroutines.runBlocking
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import com.app.bamboo.domain.notifications.medication.ShowNotification
 
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            ShowNotification.showMedicationNotification(it)
+            val id = intent?.getLongExtra("medication_id", -1) ?: -1
+            val medicationName = intent?.getStringExtra("medication_name") ?: "Sem nome"
+            ShowNotification.showMedicationNotification(it, id, medicationName)
         }
     }
 }

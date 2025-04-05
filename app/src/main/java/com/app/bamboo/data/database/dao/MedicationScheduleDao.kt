@@ -18,6 +18,16 @@ interface MedicationScheduleDao {
     @Query("SELECT scheduled_time FROM medication_schedule")
     fun getAllSchedules(): LiveData<List<String>>
 
+
+    @Query("SELECT medication_id FROM medication_schedule")
+    fun getAllMedicationId(): LiveData<List<Long>>
+
+    @Query("SELECT medication_name FROM medication_schedule")
+    fun getMedicationsName(): LiveData<List<String>>
+
+    @Query("SELECT * FROM medication_schedule")
+    fun getAllMedicationSchedules(): LiveData<List<MedicationSchedule>>
+
     @Query("DELETE FROM medication_schedule WHERE medication_id = :medicationId")
     suspend fun deleteSchedules(medicationId: Long)
 }

@@ -1,10 +1,8 @@
 package com.app.bamboo.domain.repositories
 
 import androidx.lifecycle.LiveData
-import androidx.room.Query
 import com.app.bamboo.data.models.MedicationEntities
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface MedicationRepository {
     suspend fun getAllMedications(): LiveData<List<MedicationEntities>>
@@ -31,4 +29,6 @@ interface MedicationRepository {
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
     fun getMedicationsTime(): Flow<List<String>>
+
+    suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>
 }

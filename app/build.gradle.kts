@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.gson)
+
     implementation ("androidx.work:work-runtime:2.10.0")
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.lifecycle.service)

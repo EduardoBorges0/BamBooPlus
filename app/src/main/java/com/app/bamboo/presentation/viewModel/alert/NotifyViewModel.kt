@@ -12,18 +12,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.bamboo.domain.repositories.MedicationScheduleRepository
-import com.app.bamboo.domain.notifications.ScheduleNextNotificationUseCase
+import com.app.bamboo.domain.notifications.medication.EnqueueReminder
+import com.app.bamboo.domain.repositories.MedicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NotifyViewModel @Inject constructor(
-    private val scheduleNextNotification: ScheduleNextNotificationUseCase,
+    private val scheduleNextNotification: EnqueueReminder,
     private val medicationScheduleRepository: MedicationScheduleRepository,
 ) : ViewModel() {
-    val medicationSchedules: LiveData<List<String>> =
+    val timeSchedules: LiveData<List<String>> =
         medicationScheduleRepository.getAllSchedules()
+
+    val medicationId: LiveData<List<Long>> =
+        medicationScheduleRepository.getAllMedicationId()
+
+    val medicationName: LiveData<List<String>> = medicationScheduleRepository.getMedicationsName()
 
     fun showNotifications(activity: Activity, context: Context) {
         viewModelScope.launch {
@@ -40,8 +46,15 @@ class NotifyViewModel @Inject constructor(
                     )
                 }
             }
-            Log.d("MEDICATION LIST", "MEDICATION ${medicationSchedules.value}")
-            scheduleNextNotification.invoke(medicationSchedules.value)
+            Log.d(
+                "MEDICATION LIST",
+                "MEDICATION ${timeSchedules.value} AND ${medicationName.value}"
+            )
+            scheduleNextNotification.invoke(
+                timeSchedules.value,
+                medicationId.value,
+                medicationName.value
+            )
         }
     }
 }

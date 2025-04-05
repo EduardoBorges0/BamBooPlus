@@ -13,7 +13,7 @@ import com.app.bamboo.data.models.MedicationSchedule
 
 @Database(
     entities = [MedicationEntities::class, AppointmentEntities::class, LanguageEntity::class, MedicationSchedule::class],
-    version = 5
+    version = 6
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun medicationDao(): MedicationDao

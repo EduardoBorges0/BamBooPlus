@@ -1,20 +1,13 @@
 package com.app.bamboo.presentation.view
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -22,22 +15,26 @@ import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
+import com.app.bamboo.presentation.viewModel.medications.NotifyMedicationsViewModel
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
     val notifyViewModel: NotifyViewModel = hiltViewModel()
-    val insert: InsertMedicationsViewModel = hiltViewModel()
+    val insertMedicationsViewModel: InsertMedicationsViewModel = hiltViewModel()
+    val list by notifyViewModel.timeSchedules.observeAsState()
+    val id by notifyViewModel.medicationId.observeAsState()
+    val medicationName by notifyViewModel.medicationName.observeAsState()
     LaunchedEffect(Unit) {
-//        insert.insertMedication(
-//            medicationName = "Dorflex",
-//            description = "Para dor",
-//            pillOrDrop = "Pill",
-//            daysOrHour = "Hour",
-//            medicationTime = "10:00",
-//            time = 8
-//        )
+//            insertMedicationsViewModel.insertMedication(
+//        medicationName = "Dorflex",
+//        description = "Para dor",
+//        pillOrDrop = "Pill",
+//        daysOrHour = "Hour",
+//        medicationTime = "10:00",
+//        time = 8
+//    )
     }
-    val list by notifyViewModel.medicationSchedules.observeAsState()
+
     Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())
 }
 
@@ -49,9 +46,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             val medicationsViewModel: MedicationsViewModel = hiltViewModel()
-            val list by notifyViewModel.medicationSchedules.observeAsState()
+            val list by notifyViewModel.timeSchedules.observeAsState()
             medicationsViewModel.getAllMedications()
+            val notifyMedicationsViewModel: NotifyMedicationsViewModel = hiltViewModel()
+            val times by notifyMedicationsViewModel.medicationTimes.observeAsState(emptyList())
 
+            LaunchedEffect(times) {
+                if (times.isNotEmpty()) {
+                    notifyMedicationsViewModel.getLastTime(times)
+                }
+            }
             LaunchedEffect(list) {
                 list.let {
                     if (it != null) {

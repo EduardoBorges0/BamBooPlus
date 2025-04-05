@@ -16,11 +16,11 @@ object NotificationUtils {
     fun showNotification(
         context: Context,
         channelId: String,
-        notificationId: Int,
         channelName: String,
         descriptionChannel: String,
         activity: Class<out Activity>,
         notificationTitle: String,
+        id: Long,
         notificationDescription: String
     ) {
         val notificationManager =
@@ -41,17 +41,20 @@ object NotificationUtils {
             enableLights(true)
             enableVibration(true)
         }
+
         notificationManager.createNotificationChannel(channel)
 
         val intent = Intent(context, activity).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("medication_id", id)
         }
         val pendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            id.toInt(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         val vibrationPattern = longArrayOf(0, 1000, 500, 1000)
 
@@ -68,11 +71,11 @@ object NotificationUtils {
             .setContentIntent(pendingIntent)
             .build()
 
-        notificationManager.notify(notificationId, notification)
+        notificationManager.notify((id.hashCode()), notification)
 
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         val wakeLock = powerManager.newWakeLock(
-            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.PARTIAL_WAKE_LOCK,
+            PowerManager.PARTIAL_WAKE_LOCK,
             "MyApp:WakeLock"
         )
 

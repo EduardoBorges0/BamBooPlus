@@ -12,12 +12,13 @@ import androidx.room.PrimaryKey
             entity = MedicationEntities::class,
             parentColumns = ["id"],
             childColumns = ["medication_id"],
-            onDelete = ForeignKey.CASCADE // Garante que os agendamentos sejam removidos ao deletar uma medicação
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class MedicationSchedule(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @ColumnInfo("medication_name") val medicationName: String,
     @ColumnInfo(name = "medication_id") val medicationId: Long,
     @ColumnInfo(name = "scheduled_time") val scheduledTime: String
 )
