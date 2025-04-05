@@ -32,6 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
@@ -44,18 +46,18 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainNotifyMedication : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.addFlags(
-            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
-                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
-                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-        )
         enableEdgeToEdge()
         val medicationId = intent.getLongExtra("medication_id", -1L)
         setContent {
             val notifyMedicationsViewModel: NotifyMedicationsViewModel = hiltViewModel()
             notifyMedicationsViewModel.getMedicationById(medicationId)
+            val navHostController = rememberNavController()
             BamBooTheme {
-                MainNotifyMedicationComposable(notifyMedicationsViewModel, medicationId)
+                MainNotifyMedicationComposable(
+                    notifyMedicationsViewModel,
+                    medicationId,
+                    navHostController
+                    )
             }
         }
     }
@@ -65,6 +67,7 @@ class MainNotifyMedication : ComponentActivity() {
 fun MainNotifyMedicationComposable(
     notifyMedicationsViewModel: NotifyMedicationsViewModel,
     id: Long,
+    navHostController: NavHostController,
 ) {
     val heightSize = LocalConfiguration.current.screenHeightDp.dp
     val medicationList = notifyMedicationsViewModel.medication.observeAsState().value?.get(0)
@@ -106,9 +109,11 @@ fun MainNotifyMedicationComposable(
             modifier = Modifier.align(Alignment.BottomCenter),
             confirmClick = {
                 notifyMedicationsViewModel.updateAccomplish(id, true)
-                           },
+                navHostController.navigate("mainMedication")
+            },
             cancelClick = {
                 notifyMedicationsViewModel.updateAccomplish(id, false)
+                navHostController.navigate("mainMedication")
             })
     }
 }

@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.bamboo.domain.repositories.MedicationScheduleRepository
 import com.app.bamboo.domain.notifications.medication.EnqueueReminder
-import com.app.bamboo.domain.repositories.MedicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,7 +30,7 @@ class NotifyViewModel @Inject constructor(
 
     val medicationName: LiveData<List<String>> = medicationScheduleRepository.getMedicationsName()
 
-    fun showNotifications(activity: Activity, context: Context) {
+    fun showNotifications(activity: Activity?, context: Context) {
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(
@@ -39,17 +38,15 @@ class NotifyViewModel @Inject constructor(
                         Manifest.permission.POST_NOTIFICATIONS
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    ActivityCompat.requestPermissions(
-                        activity,
-                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                        101
-                    )
+                    activity?.let {
+                        ActivityCompat.requestPermissions(
+                            it,
+                            arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                            101
+                        )
+                    }
                 }
             }
-            Log.d(
-                "MEDICATION LIST",
-                "MEDICATION ${timeSchedules.value} AND ${medicationName.value}"
-            )
             scheduleNextNotification.invoke(
                 timeSchedules.value,
                 medicationId.value,

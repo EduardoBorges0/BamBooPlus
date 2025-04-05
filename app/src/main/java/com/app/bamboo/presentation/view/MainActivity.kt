@@ -37,36 +37,3 @@ fun AppNavigation(navController: NavHostController) {
 
     Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())
 }
-
-
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            val notifyViewModel: NotifyViewModel = hiltViewModel()
-            val medicationsViewModel: MedicationsViewModel = hiltViewModel()
-            val list by notifyViewModel.timeSchedules.observeAsState()
-            medicationsViewModel.getAllMedications()
-            val notifyMedicationsViewModel: NotifyMedicationsViewModel = hiltViewModel()
-            val times by notifyMedicationsViewModel.medicationTimes.observeAsState(emptyList())
-
-            LaunchedEffect(times) {
-                if (times.isNotEmpty()) {
-                    notifyMedicationsViewModel.getLastTime(times)
-                }
-            }
-            LaunchedEffect(list) {
-                list.let {
-                    if (it != null) {
-                        if (it.isNotEmpty()) {
-                            notifyViewModel.showNotifications(this@MainActivity, this@MainActivity)
-                        }
-                    }
-                }
-            }
-            val navController = rememberNavController()
-            AppNavigation(navController)
-        }
-    }
-}

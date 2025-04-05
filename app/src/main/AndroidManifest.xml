@@ -25,11 +25,6 @@
         android:theme="@style/Theme.BamBoo"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.navigation.NavController"
-            android:exported="false"
-            android:label="@string/title_activity_nav_controller"
-            android:theme="@style/Theme.BamBoo" />
-        <activity
             android:name=".presentation.view.notifyMedicationView.MainNotifyMedication"
             android:exported="false"
             android:launchMode="singleTask"
@@ -37,7 +32,7 @@
             android:theme="@style/Theme.BamBoo"
             android:turnScreenOn="true" />
         <activity
-            android:name=".presentation.view.MainActivity"
+            android:name=".presentation.navigation.NavController"
             android:exported="true"
             android:theme="@style/Theme.BamBoo">
             <intent-filter>
