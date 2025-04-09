@@ -6,12 +6,13 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.app.bamboo.data.models.AppointmentEntities
+import com.app.bamboo.data.models.AppointmentSummary
 import com.app.bamboo.data.models.MedicationEntities
 
 @Dao
 interface AppointmentDao {
     @Query("SELECT * FROM appointment_entity")
-    fun getAllAppointment() : LiveData<List<AppointmentEntities>>
+    fun getAllAppointment(): LiveData<List<AppointmentEntities>>
 
     @Insert
     suspend fun insertAppointment(appointment: AppointmentEntities)
@@ -24,4 +25,13 @@ interface AppointmentDao {
 
     @Query("UPDATE appointment_entity SET accomplish = :accomplish WHERE id = :id")
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
+
+
+    @Query(
+        """
+        SELECT appointment_type, appointment_date, appointment_time 
+        FROM appointment_entity
+    """
+    )
+     fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>
 }

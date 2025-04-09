@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
+import com.app.bamboo.presentation.viewModel.appointment.InsertAppointmentViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
@@ -24,15 +25,16 @@ fun AppNavigation(navController: NavHostController) {
     val list by notifyViewModel.timeSchedules.observeAsState()
     val id by notifyViewModel.medicationId.observeAsState()
     val medicationName by notifyViewModel.medicationName.observeAsState()
+    val insertAppointmentViewModel: InsertAppointmentViewModel = hiltViewModel()
     LaunchedEffect(Unit) {
-//            insertMedicationsViewModel.insertMedication(
-//        medicationName = "Dorflex",
-//        description = "Para dor",
-//        pillOrDrop = "Pill",
-//        daysOrHour = "Hour",
-//        medicationTime = "10:00",
-//        time = 8
-//    )
+//        insertAppointmentViewModel.insertAppointment(
+//            appointmentType = "Consulta",           // tipo de consulta (ex: "Consulta", "Exame")
+//            onlineOrOnSite = "Presencial",          // ou "Online"
+//            doctorName = "Dr. João Silva",          // nome do médico
+//            hospitalName = "Hospital São Lucas",    // nome do hospital ou clínica
+//            appointmentDate = "10/04/2025",         // data no formato dd/MM/yyyy
+//            appointmentTime = "14:30",
+//        )
     }
 
     Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())

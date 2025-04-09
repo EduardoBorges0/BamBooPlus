@@ -1,5 +1,6 @@
 package com.app.bamboo.presentation.view.notifyMedicationView
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -31,11 +32,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.app.bamboo.R
+import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
 import com.app.bamboo.presentation.view.ui.theme.NotifyCancelButton
 import com.app.bamboo.presentation.view.ui.theme.NotifyConfirmButton
@@ -51,13 +54,22 @@ class MainNotifyMedication : ComponentActivity() {
         setContent {
             val notifyMedicationsViewModel: NotifyMedicationsViewModel = hiltViewModel()
             notifyMedicationsViewModel.getMedicationById(medicationId)
-            val navHostController = rememberNavController()
             BamBooTheme {
                 MainNotifyMedicationComposable(
                     notifyMedicationsViewModel,
-                    medicationId,
-                    navHostController
-                    )
+                    confirmClick = {
+                        notifyMedicationsViewModel.updateAccomplish(medicationId, true)
+                        val intent = Intent(this, MainNavController::class.java)
+                        startActivity(intent)
+                        finish()
+                    },
+                    cancelClick = {
+                        notifyMedicationsViewModel.updateAccomplish(medicationId, false)
+                        val intent = Intent(this, MainNavController::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                )
             }
         }
     }
@@ -66,8 +78,8 @@ class MainNotifyMedication : ComponentActivity() {
 @Composable
 fun MainNotifyMedicationComposable(
     notifyMedicationsViewModel: NotifyMedicationsViewModel,
-    id: Long,
-    navHostController: NavHostController,
+    confirmClick: () -> Unit,
+    cancelClick: () -> Unit,
 ) {
     val heightSize = LocalConfiguration.current.screenHeightDp.dp
     val medicationList = notifyMedicationsViewModel.medication.observeAsState().value?.get(0)
@@ -108,12 +120,10 @@ fun MainNotifyMedicationComposable(
         ConfirmOrCancelButtons(
             modifier = Modifier.align(Alignment.BottomCenter),
             confirmClick = {
-                notifyMedicationsViewModel.updateAccomplish(id, true)
-                navHostController.navigate("mainMedication")
+                confirmClick()
             },
             cancelClick = {
-                notifyMedicationsViewModel.updateAccomplish(id, false)
-                navHostController.navigate("mainMedication")
+                cancelClick()
             })
     }
 }

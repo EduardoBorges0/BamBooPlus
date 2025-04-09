@@ -22,24 +22,15 @@ import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NavController : ComponentActivity() {
+class MainNavController : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val notifyViewModel: NotifyViewModel = hiltViewModel()
-            val list by notifyViewModel.timeSchedules.observeAsState()
-            LaunchedEffect(list) {
-                list.let {
-                    if (it != null) {
-                        if (it.isNotEmpty()) {
-                            notifyViewModel.showNotifications(
-                                this@NavController,
-                                this@NavController
-                            )
-                        }
-                    }
-                }
+            val appointmentSummary by notifyViewModel.appointments.observeAsState()
+            LaunchedEffect(appointmentSummary) {
+                notifyViewModel.showAppointmentNotification(this@MainNavController)
             }
             NavControllerComposable()
         }
@@ -62,7 +53,7 @@ fun NavControllerComposable() {
 
             LaunchedEffect(list) {
                 if (!list.isNullOrEmpty()) {
-                    notifyViewModel.showNotifications(context = context, activity = activity)
+                    notifyViewModel.showMedicationNotifications(context = context, activity = activity)
                 }
             }
             AppNavigation(navController)

@@ -2,6 +2,7 @@ package com.app.bamboo.domain.repositories
 
 import androidx.lifecycle.LiveData
 import com.app.bamboo.data.models.AppointmentEntities
+import com.app.bamboo.data.models.AppointmentSummary
 
 interface AppointmentRepository {
     suspend fun getAllAppointment(): LiveData<List<AppointmentEntities>>
@@ -25,4 +26,6 @@ interface AppointmentRepository {
 
     suspend fun deleteAppointment(id: Long)
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
+    fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>
+
 }

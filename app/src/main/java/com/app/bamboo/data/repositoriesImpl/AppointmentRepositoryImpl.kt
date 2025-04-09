@@ -3,6 +3,7 @@ package com.app.bamboo.data.repositoriesImpl
 import androidx.lifecycle.LiveData
 import com.app.bamboo.data.database.dao.AppointmentDao
 import com.app.bamboo.data.models.AppointmentEntities
+import com.app.bamboo.data.models.AppointmentSummary
 import com.app.bamboo.domain.repositories.AppointmentRepository
 import javax.inject.Inject
 
@@ -56,5 +57,9 @@ class AppointmentRepositoryImpl @Inject constructor(private val appointmentDao: 
 
     override suspend fun updateAccomplish(id: Long, accomplish: Boolean) {
         appointmentDao.updateAccomplish(id = id, accomplish = accomplish)
+    }
+
+    override fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>{
+        return appointmentDao.getAppointmentSummaries()
     }
 }

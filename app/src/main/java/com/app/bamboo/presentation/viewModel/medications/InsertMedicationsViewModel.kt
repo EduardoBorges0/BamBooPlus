@@ -27,15 +27,28 @@ class InsertMedicationsViewModel @Inject constructor(
         time: Long,
     ) {
         viewModelScope.launch {
-            val medicationId = repository.insertMedication(
-                medicationName = medicationName,
-                description = description,
-                pillOrDrop = pillOrDrop,
-                daysOrHour = daysOrHour,
-                medicationTime = medicationTime,
-                time = time
-            )
-            insertSchedules(medicationId, medicationTime, time.toInt(), medicationName)
+            if(daysOrHour == "Days"){
+                val day = time * 24
+                val medicationId = repository.insertMedication(
+                    medicationName = medicationName,
+                    description = description,
+                    pillOrDrop = pillOrDrop,
+                    daysOrHour = daysOrHour,
+                    medicationTime = medicationTime,
+                    time = day
+                )
+                insertSchedules(medicationId, medicationTime, day.toInt(), medicationName)
+            }else{
+                val medicationId = repository.insertMedication(
+                    medicationName = medicationName,
+                    description = description,
+                    pillOrDrop = pillOrDrop,
+                    daysOrHour = daysOrHour,
+                    medicationTime = medicationTime,
+                    time = time
+                )
+                insertSchedules(medicationId, medicationTime, time.toInt(), medicationName)
+            }
         }
     }
 

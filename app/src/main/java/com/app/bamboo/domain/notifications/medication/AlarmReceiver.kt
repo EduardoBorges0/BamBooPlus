@@ -1,10 +1,9 @@
-package com.app.bamboo.domain.notifications
+package com.app.bamboo.domain.notifications.medication
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.app.bamboo.domain.notifications.medication.ShowNotification
-
+import com.app.bamboo.domain.notifications.ShowNotification
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

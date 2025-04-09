@@ -32,7 +32,7 @@
             android:theme="@style/Theme.BamBoo"
             android:turnScreenOn="true" />
         <activity
-            android:name=".presentation.navigation.NavController"
+            android:name=".presentation.navigation.MainNavController"
             android:exported="true"
             android:theme="@style/Theme.BamBoo">
             <intent-filter>
@@ -43,7 +43,7 @@
         </activity>
 
         <receiver
-            android:name=".domain.notifications.AlarmReceiver"
+            android:name=".domain.notifications.medication.AlarmReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
     </application>
