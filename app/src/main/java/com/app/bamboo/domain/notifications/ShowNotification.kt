@@ -17,16 +17,16 @@ object ShowNotification {
            id = id
        )
     }
-    fun showAppointmentNotification(context: Context) {
+    fun showAppointmentNotification(context: Context, id: Long?, appointmentType: String) {
         NotificationUtils.showNotification(
             context = context,
             channelId = "appointment_notification",
             channelName = "Appointment Channel",
             descriptionChannel = "Alarm Appointment",
             activity = MainNotifyMedication::class.java,
-            notificationTitle = "Está na hora da sua consulta",
+            notificationTitle = "Hoje é $appointmentType",
             notificationDescription = "Clique aqui para confirmar",
-            id = 1
+            id = id
         )
     }
 }

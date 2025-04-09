@@ -26,16 +26,6 @@ fun AppNavigation(navController: NavHostController) {
     val id by notifyViewModel.medicationId.observeAsState()
     val medicationName by notifyViewModel.medicationName.observeAsState()
     val insertAppointmentViewModel: InsertAppointmentViewModel = hiltViewModel()
-    LaunchedEffect(Unit) {
-//        insertAppointmentViewModel.insertAppointment(
-//            appointmentType = "Consulta",           // tipo de consulta (ex: "Consulta", "Exame")
-//            onlineOrOnSite = "Presencial",          // ou "Online"
-//            doctorName = "Dr. João Silva",          // nome do médico
-//            hospitalName = "Hospital São Lucas",    // nome do hospital ou clínica
-//            appointmentDate = "10/04/2025",         // data no formato dd/MM/yyyy
-//            appointmentTime = "14:30",
-//        )
-    }
 
     Text(if (list?.isNotEmpty() == true) "Sem hora" else list.toString())
 }

@@ -20,7 +20,7 @@ object NotificationUtils {
         descriptionChannel: String,
         activity: Class<out Activity>,
         notificationTitle: String,
-        id: Long,
+        id: Long?,
         notificationDescription: String
     ) {
         val notificationManager =
@@ -50,7 +50,7 @@ object NotificationUtils {
         }
         val pendingIntent = PendingIntent.getActivity(
             context,
-            id.toInt(),
+            id?.toInt() ?: 0,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )

@@ -29,7 +29,7 @@ interface AppointmentDao {
 
     @Query(
         """
-        SELECT appointment_type, appointment_date, appointment_time 
+        SELECT id, appointment_type, appointment_date, appointment_time 
         FROM appointment_entity
     """
     )

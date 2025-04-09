@@ -8,7 +8,9 @@ import com.app.bamboo.domain.notifications.ShowNotification
 class AlarmAppointmentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            ShowNotification.showAppointmentNotification(it)
+            val appointmentType = intent?.getStringExtra("appointmentName")
+            val id = intent?.getStringExtra("id")?.toLong()
+            ShowNotification.showAppointmentNotification(it, id, appointmentType.toString())
         }
     }
 }

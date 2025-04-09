@@ -67,11 +67,11 @@ class NotifyViewModel @Inject constructor(
 
     fun showAppointmentNotification(context: Context) {
         viewModelScope.launch {
-            appointments.value?.forEach {
-                val appointmentDate = it.appointmentDate
+            appointments.value?.forEach { appointments ->
+                val appointmentDate = appointments.appointmentDate
                 val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val date = format.parse(appointmentDate)
-                val (hour, minute) = it.appointmentTime.split(":").map { it.toInt() }
+                val (hour, minute) = appointments.appointmentTime.split(":").map { it.toInt() }
 
                 date?.let {
                     val calendar = Calendar.getInstance()
@@ -81,8 +81,15 @@ class NotifyViewModel @Inject constructor(
                         if (calendar.get(Calendar.MONTH) != 0) calendar.get(Calendar.MONTH) else calendar.get(
                             Calendar.MONTH
                         ) + 1
-
-                    scheduleAppointment(context, day, month, hour, minute, "", "1")
+                    scheduleAppointment(
+                        context,
+                        day,
+                        month,
+                        hour,
+                        minute,
+                        appointments.appointmentType,
+                        appointments.id.toString()
+                    )
                 }
             }
         }

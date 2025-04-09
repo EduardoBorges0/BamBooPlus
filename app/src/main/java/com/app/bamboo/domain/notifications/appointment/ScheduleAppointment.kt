@@ -11,24 +11,27 @@ import java.util.Locale
 
 fun scheduleAppointment(
     context: Context,
-    DayOfMonth: Int,
-    Month: Int,
+    dayOfMonth: Int,
+    month: Int,
     hour: Int,
     minute: Int,
-    medicationName: String,
+    appointmentName: String,
     id: String
 ) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val requestCode = "${DayOfMonth}_${Month}_$id".hashCode()
+    val requestCode = "${dayOfMonth}_${month}_$id".hashCode()
 
     val calendar = Calendar.getInstance().apply {
-        set(Calendar.DAY_OF_MONTH, DayOfMonth)
-        set(Calendar.MONTH, Month)
+        set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        set(Calendar.MONTH, month)
         set(Calendar.HOUR_OF_DAY, hour)
         set(Calendar.MINUTE, minute)
     }
 
-    val intent = Intent(context, AlarmAppointmentReceiver::class.java)
+    val intent = Intent(context, AlarmAppointmentReceiver::class.java).apply {
+        putExtra("id", id)
+        putExtra("appointmentName", appointmentName)
+    }
 
     val pendingIntent = PendingIntent.getBroadcast(
         context,
@@ -43,5 +46,5 @@ fun scheduleAppointment(
     )
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     val formattedTime = sdf.format(calendar.time)
-    Log.d("ScheduleAlarm", "Alarme agendado para: $formattedTime (medicação: $medicationName, id: $id)")
+    Log.d("ScheduleAlarm", "Alarme agendado para: $formattedTime (consulta: $appointmentName, id: $id)")
 }
