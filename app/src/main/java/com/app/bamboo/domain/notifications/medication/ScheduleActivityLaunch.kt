@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.app.bamboo.domain.notifications.medication.AlarmReceiver
 import java.util.Calendar
 
 fun scheduleNotification(

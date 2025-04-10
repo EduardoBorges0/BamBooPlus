@@ -32,7 +32,7 @@ interface AppointmentDao {
     @Query(
         """
         SELECT id, appointment_type, appointment_date, appointment_time 
-        FROM appointment_entity
+        FROM appointment_entity  WHERE accomplish IS NULL
     """
     )
      fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>

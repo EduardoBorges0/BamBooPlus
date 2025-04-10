@@ -9,8 +9,12 @@ class AlarmAppointmentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
             val appointmentType = intent?.getStringExtra("appointmentName")
+            val time = intent?.getStringExtra("time")
             val id = intent?.getStringExtra("id")?.toLong()
-            ShowNotification.showAppointmentNotification(it, id, appointmentType.toString())
+            ShowNotification.showAppointmentNotification(
+                it, id, appointmentType.toString(),
+                time.toString()
+            )
         }
     }
 }

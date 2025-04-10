@@ -52,12 +52,12 @@ class NotifyMedicationsViewModel @Inject constructor(
             _medication.value = medicationRepository.getMedicationsById(id)
         }
     }
+
     fun updateAccomplish(id: Long, accomplish: Boolean){
         viewModelScope.launch {
             medicationRepository.updateAccomplish(id, accomplish)
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()

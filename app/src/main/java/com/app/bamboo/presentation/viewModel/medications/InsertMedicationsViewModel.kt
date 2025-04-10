@@ -58,8 +58,7 @@ class InsertMedicationsViewModel @Inject constructor(
         intervalHours: Int,
         medicationName: String,
     ) {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        var nextTime = TimeUtils.formattedLocalDate(startTime)
+        var nextTime = TimeUtils.formattedLocalTime(startTime)
 
         val schedules = mutableListOf<MedicationSchedule>()
 
@@ -68,7 +67,7 @@ class InsertMedicationsViewModel @Inject constructor(
                 MedicationSchedule(
                     medicationId = medicationId,
                     medicationName = medicationName,
-                    scheduledTime = nextTime.format(formatter)
+                    scheduledTime = nextTime.toString()
                 )
             )
             nextTime = nextTime.plusHours(intervalHours.toLong())

@@ -15,7 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.app.bamboo.presentation.view.notifyView.ui.theme.BamBooTheme
+import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
 import com.app.bamboo.presentation.view.utils.notify.MainNotifyView
 import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
 import dagger.hilt.android.AndroidEntryPoint

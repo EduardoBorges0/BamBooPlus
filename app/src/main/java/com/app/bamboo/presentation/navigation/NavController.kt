@@ -1,10 +1,8 @@
 package com.app.bamboo.presentation.navigation
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
@@ -16,8 +14,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.app.bamboo.presentation.view.AppNavigation
+import com.app.bamboo.presentation.view.mainMedicationScreen.AppNavigation
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
+import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,6 +46,9 @@ fun NavControllerComposable() {
 
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             val medicationsViewModel: MedicationsViewModel = hiltViewModel()
+            val notifyAppointments: NotifyAppointmentsViewModel = hiltViewModel()
+            notifyAppointments.appointmentsListAccomplishNull?.observeAsState()
+            notifyAppointments.updateAccomplishAppointmentIsNull()
             val list by notifyViewModel.timeSchedules.observeAsState()
 
             medicationsViewModel.getAllMedications()

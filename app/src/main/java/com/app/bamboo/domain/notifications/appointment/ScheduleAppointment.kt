@@ -20,7 +20,7 @@ fun scheduleAppointment(
 ) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val requestCode = "${dayOfMonth}_${month}_$id".hashCode()
-
+    val time = "$hour:$minute"
     val calendar = Calendar.getInstance().apply {
         set(Calendar.DAY_OF_MONTH, dayOfMonth)
         set(Calendar.MONTH, month)
@@ -31,6 +31,7 @@ fun scheduleAppointment(
     val intent = Intent(context, AlarmAppointmentReceiver::class.java).apply {
         putExtra("id", id)
         putExtra("appointmentName", appointmentName)
+        putExtra("time", time)
     }
 
     val pendingIntent = PendingIntent.getBroadcast(
@@ -44,7 +45,4 @@ fun scheduleAppointment(
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent),
         pendingIntent
     )
-    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-    val formattedTime = sdf.format(calendar.time)
-    Log.d("ScheduleAlarm", "Alarme agendado para: $formattedTime (consulta: $appointmentName, id: $id)")
 }

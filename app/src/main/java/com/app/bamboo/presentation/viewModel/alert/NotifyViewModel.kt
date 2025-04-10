@@ -16,6 +16,7 @@ import com.app.bamboo.domain.notifications.appointment.scheduleAppointment
 import com.app.bamboo.domain.repositories.MedicationScheduleRepository
 import com.app.bamboo.domain.notifications.medication.EnqueueReminder
 import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -70,31 +71,35 @@ class NotifyViewModel @Inject constructor(
 
     fun showAppointmentNotification(context: Context) {
         viewModelScope.launch {
-            appointments.value?.forEach { appointments ->
-                val appointmentDate = appointments.appointmentDate
-                val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val date = format.parse(appointmentDate)
-                val (hour, minute) = appointments.appointmentTime.split(":").map { it.toInt() }
+            appointments.value?.forEach { appointment ->
+                val date = TimeUtils.formattedLocalDate(appointment.appointmentDate)
+                val (hour, minute) = appointment.appointmentTime.split(":").map { it.toInt() }
 
-                date?.let {
-                    val calendar = Calendar.getInstance()
-                    calendar.time = it
+                date.let {
+                    val calendar = Calendar.getInstance().apply {
+                        set(Calendar.HOUR_OF_DAY, hour)
+                        set(Calendar.MINUTE, minute)
+                        set(Calendar.SECOND, 0)
+                        set(Calendar.MILLISECOND, 0)
+
+                        add(Calendar.MINUTE, -30)
+                    }
+
                     val day = calendar.get(Calendar.DAY_OF_MONTH)
-                    val month =
-                        if (calendar.get(Calendar.MONTH) != 0) calendar.get(Calendar.MONTH) else calendar.get(
-                            Calendar.MONTH
-                        ) + 1
+                    val month = calendar.get(Calendar.MONTH) + 1
+
                     scheduleAppointment(
                         context,
                         day,
                         month,
-                        hour,
-                        minute,
-                        appointments.appointmentType,
-                        appointments.id.toString()
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        appointment.appointmentType,
+                        appointment.id.toString()
                     )
                 }
             }
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package com.app.bamboo.data.worker
 
 import android.content.Context
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.app.bamboo.domain.notifications.medication.scheduleNotification
