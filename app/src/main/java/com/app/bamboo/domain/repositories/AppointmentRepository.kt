@@ -27,5 +27,7 @@ interface AppointmentRepository {
     suspend fun deleteAppointment(id: Long)
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
     fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>
+    suspend fun getAppointmentsById(id: Long): List<AppointmentEntities>
+
 
 }

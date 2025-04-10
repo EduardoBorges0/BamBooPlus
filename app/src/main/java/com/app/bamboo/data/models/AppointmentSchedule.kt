@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 
 data class AppointmentSummary(
     val id: Long,
+
     @ColumnInfo(name = "appointment_type")
     val appointmentType: String,
 

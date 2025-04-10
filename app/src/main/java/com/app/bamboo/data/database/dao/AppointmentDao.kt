@@ -26,6 +26,8 @@ interface AppointmentDao {
     @Query("UPDATE appointment_entity SET accomplish = :accomplish WHERE id = :id")
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
+    @Query("SELECT * FROM appointment_entity WHERE id= :id")
+    suspend fun getAppointmentsById(id: Long): List<AppointmentEntities>
 
     @Query(
         """

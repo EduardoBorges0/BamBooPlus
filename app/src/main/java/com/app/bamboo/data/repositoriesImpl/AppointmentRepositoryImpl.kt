@@ -62,4 +62,8 @@ class AppointmentRepositoryImpl @Inject constructor(private val appointmentDao: 
     override fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>{
         return appointmentDao.getAppointmentSummaries()
     }
+
+    override suspend fun getAppointmentsById(id: Long): List<AppointmentEntities> {
+        return appointmentDao.getAppointmentsById(id)
+    }
 }
