@@ -16,7 +16,7 @@ class EnqueueReminder @Inject constructor(
     ) {
         val inputData = workDataOf(
             "medications" to medications?.toTypedArray(),
-            "medication_id" to id?.map { it.toString() }?.toTypedArray(),
+            "id" to id?.map { it.toString() }?.toTypedArray(),
             "medication_name" to medicationName?.map { it }?.toTypedArray()
         )
 

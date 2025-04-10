@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.notifyMedicationView
+package com.app.bamboo.presentation.view.utils.notify
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

@@ -2,4 +2,6 @@
     <string name="app_name">BamBoo+</string>
     <string name="title_activity_sua">SuaActivity</string>
     <string name="title_activity_nav_controller">NavController</string>
+    <string name="title_activity_main_notify_appointment">MainNotifyAppointment</string>
+    <string name="title_activity_main_appointment_notify">MainAppointmentNotify</string>
 </resources>

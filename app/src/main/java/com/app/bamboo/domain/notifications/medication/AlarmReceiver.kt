@@ -8,7 +8,7 @@ import com.app.bamboo.domain.notifications.ShowNotification
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            val id = intent?.getLongExtra("medication_id", -1) ?: -1
+            val id = intent?.getLongExtra("id", -1) ?: -1
             val medicationName = intent?.getStringExtra("medication_name") ?: "Sem nome"
             ShowNotification.showMedicationNotification(it, id, medicationName)
         }

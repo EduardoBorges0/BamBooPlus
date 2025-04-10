@@ -1,7 +1,8 @@
 package com.app.bamboo.domain.notifications
 
 import android.content.Context
-import com.app.bamboo.presentation.view.notifyMedicationView.MainNotifyMedication
+import com.app.bamboo.presentation.view.notifyView.MainAppointmentNotify
+import com.app.bamboo.presentation.view.notifyView.MainNotifyMedication
 import com.app.bamboo.utils.NotificationUtils
 
 object ShowNotification {
@@ -23,7 +24,7 @@ object ShowNotification {
             channelId = "appointment_notification",
             channelName = "Appointment Channel",
             descriptionChannel = "Alarm Appointment",
-            activity = MainNotifyMedication::class.java,
+            activity = MainAppointmentNotify::class.java,
             notificationTitle = "Hoje é $appointmentType",
             notificationDescription = "Clique aqui para confirmar",
             id = id

@@ -25,7 +25,17 @@
         android:theme="@style/Theme.BamBoo"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.view.notifyMedicationView.MainNotifyMedication"
+            android:name=".presentation.view.notifyView.MainAppointmentNotify"
+            android:exported="false"
+            android:label="@string/title_activity_main_appointment_notify"
+            android:theme="@style/Theme.BamBoo" />
+        <activity
+            android:name=".presentation.view.MainNotifyAppointment"
+            android:exported="false"
+            android:label="@string/title_activity_main_notify_appointment"
+            android:theme="@style/Theme.BamBoo" />
+        <activity
+            android:name=".presentation.view.notifyView.MainNotifyMedication"
             android:exported="false"
             android:launchMode="singleTask"
             android:showWhenLocked="true"
@@ -44,6 +54,10 @@
 
         <receiver
             android:name=".domain.notifications.medication.AlarmReceiver"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
+        <receiver
+            android:name=".domain.notifications.appointment.AlarmAppointmentReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
     </application>

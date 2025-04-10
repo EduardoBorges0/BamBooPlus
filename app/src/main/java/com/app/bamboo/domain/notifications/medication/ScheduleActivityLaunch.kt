@@ -28,7 +28,7 @@ fun scheduleNotification(
     }
 
     val intent = Intent(context, AlarmReceiver::class.java).apply {
-        putExtra("medication_id", id.toLong())
+        putExtra("id", id.toLong())
         putExtra("medication_name", medicationName)
     }
 
