@@ -1,6 +1,9 @@
 package com.app.bamboo.appointments
 
 import com.app.bamboo.data.models.AppointmentEntities
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 object FakeAppointments {
     val fakeData = listOf(
@@ -10,7 +13,7 @@ object FakeAppointments {
             hospitalName = "Caxias DOr",
             doctorName = "Eduardo Borges",
             onlineOrOnSite = "Online",
-            appointmentDate = "10/12/2025",
+            appointmentDate = "10/02/2025",
             appointmentTime = "16:30",
             accomplish = true
         ),
@@ -20,8 +23,8 @@ object FakeAppointments {
             hospitalName = "Hospital Albert Einstein",
             doctorName = "Alex Pacheco",
             onlineOrOnSite = "On site",
-            appointmentDate = "20/06/2025",
-            appointmentTime = "12:30",
+            appointmentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+            appointmentTime = LocalTime.now().minusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm")),
             accomplish = false
         ),
         AppointmentEntities(

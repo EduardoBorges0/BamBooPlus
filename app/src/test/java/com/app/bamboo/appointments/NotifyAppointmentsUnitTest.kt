@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.app.bamboo.data.models.AppointmentSummary
 import com.app.bamboo.domain.repositories.AppointmentRepository
 import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
+import com.app.bamboo.utils.TimeUtils
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -20,6 +21,9 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import kotlin.test.Test
 
 class NotifyAppointmentsUnitTest {
@@ -44,29 +48,19 @@ class NotifyAppointmentsUnitTest {
     fun `updateAccomplishAppointmentIsNull should call updateAccomplish when appointment is expired`() =
         runTest {
             // Arrange
-            val expiredAppointment = listOf(
+            val list = FakeAppointments.fakeData
+
+            val expiredAppointments = list.map {
                 AppointmentSummary(
-                    id = 1,
-                    appointmentType = "Consulta",
-                    appointmentDate = "20/03/2025",
-                    appointmentTime = "13:00"
-                ),
-                AppointmentSummary(
-                    id = 2,
-                    appointmentType = "Exame A",
-                    appointmentDate = "11/04/2025",
-                    appointmentTime = "12:00"
-                ),
-                AppointmentSummary(
-                    id = 3,
-                    appointmentType = "Exame B",
-                    appointmentDate = "20/06/2025",
-                    appointmentTime = "17:00"
+                    id = it.id,
+                    appointmentType = it.appointmentType,
+                    appointmentDate = it.appointmentDate,
+                    appointmentTime = it.appointmentTime
                 )
-            )
+            }
 
             val liveData = MutableLiveData<List<AppointmentSummary>>().apply {
-                value = expiredAppointment
+                value = expiredAppointments
             }
 
             every { repository.getAppointmentSummaries() } returns liveData
@@ -80,5 +74,6 @@ class NotifyAppointmentsUnitTest {
 
             // Assert
             coVerify(exactly = 1) { repository.updateAccomplish(1, false) }
+            coVerify(exactly = 1) { repository.updateAccomplish(2, false) }
         }
 }
