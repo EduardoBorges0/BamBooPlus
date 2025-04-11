@@ -4,4 +4,6 @@
     <string name="title_activity_nav_controller">NavController</string>
     <string name="title_activity_main_notify_appointment">MainNotifyAppointment</string>
     <string name="title_activity_main_appointment_notify">MainAppointmentNotify</string>
+
+    <string name="appointmentHistoryIsNullOrEmpty">Sem nenhuma ida ao médico passada.</string>
 </resources>

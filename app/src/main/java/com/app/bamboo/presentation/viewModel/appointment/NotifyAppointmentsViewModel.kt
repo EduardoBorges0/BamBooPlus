@@ -43,8 +43,9 @@ class NotifyAppointmentsViewModel @Inject constructor(private val repository: Ap
             }
             if (filteredAppointments != null) {
                 if (filteredAppointments.isNotEmpty()) {
-                    repository.updateAccomplish(filteredAppointments[0].id, false)
-                }
+                    filteredAppointments.forEach {
+                        repository.updateAccomplish(it.id, false)
+                    }                }
             }
         }
     }

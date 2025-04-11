@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
+import com.app.bamboo.R
 import com.app.bamboo.data.models.AppointmentEntities
 import com.app.bamboo.domain.repositories.AppointmentRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +20,18 @@ class HistoryViewModel @Inject constructor(private val repository: AppointmentRe
     private val _isAccomplish = MutableLiveData<List<AppointmentEntities>>()
     val isAccomplish: LiveData<List<AppointmentEntities>> = _isAccomplish
 
+    private val _isNullOrEmpty = MutableLiveData<Boolean>()
+    val isNullOrEmpty: LiveData<Boolean> = _isNullOrEmpty
+
     fun appointmentHistory() {
         viewModelScope.launch {
             val filterIsAccomplish = repository.getAllAppointment().value?.filter {
                 it.accomplish == false || it.accomplish == true
             }
-            if(filterIsAccomplish != null){
+            if(filterIsAccomplish != null && filterIsAccomplish.isNotEmpty()){
                 _isAccomplish.value = filterIsAccomplish
+            }else{
+                _isNullOrEmpty.value = true
             }
         }
     }
