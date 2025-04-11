@@ -25,7 +25,6 @@ class MedicationsViewModel @Inject constructor(private val repository: Medicatio
 
     fun getAllMedications() {
         viewModelScope.launch {
-            Log.d("MEDICACAO", "MEDICACAO ${repository.getAllMedications().value}")
             if(repository.getAllMedications().value != null){
                 _getAllMedications.value = repository.getAllMedications().value
             }

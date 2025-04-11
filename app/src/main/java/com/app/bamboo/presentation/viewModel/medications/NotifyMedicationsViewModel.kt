@@ -48,7 +48,6 @@ class NotifyMedicationsViewModel @Inject constructor(
 
     fun getMedicationById(id: Long){
         viewModelScope.launch {
-            Log.d("Medication", "ID: $id")
             _medication.value = medicationRepository.getMedicationsById(id)
         }
     }
@@ -57,10 +56,5 @@ class NotifyMedicationsViewModel @Inject constructor(
         viewModelScope.launch {
             medicationRepository.updateAccomplish(id, accomplish)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        medicationTimes.removeObserver { }
     }
 }

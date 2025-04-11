@@ -37,7 +37,7 @@ class InsertMedicationsViewModel @Inject constructor(
                     medicationTime = medicationTime,
                     time = day
                 )
-                insertSchedules(medicationId, medicationTime, day.toInt(), medicationName)
+                insertSchedules(medicationId, medicationTime, daysOrHour, day.toInt(), medicationName)
             }else{
                 val medicationId = repository.insertMedication(
                     medicationName = medicationName,
@@ -47,13 +47,14 @@ class InsertMedicationsViewModel @Inject constructor(
                     medicationTime = medicationTime,
                     time = time
                 )
-                insertSchedules(medicationId, medicationTime, time.toInt(), medicationName)
+                insertSchedules(medicationId, medicationTime, daysOrHour, time.toInt(), medicationName)
             }
         }
     }
 
     private suspend fun insertSchedules(
         medicationId: Long,
+        daysOrHour: String,
         startTime: String,
         intervalHours: Int,
         medicationName: String,
@@ -62,7 +63,7 @@ class InsertMedicationsViewModel @Inject constructor(
 
         val schedules = mutableListOf<MedicationSchedule>()
 
-        repeat(24 / intervalHours) {
+        repeat(if(daysOrHour == "Hours") 24 / intervalHours else intervalHours / 24) {
             schedules.add(
                 MedicationSchedule(
                     medicationId = medicationId,
