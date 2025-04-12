@@ -1,7 +1,6 @@
 package com.app.bamboo.medications
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.bamboo.data.models.MedicationSchedule
 import com.app.bamboo.domain.repositories.MedicationRepository
 import com.app.bamboo.domain.repositories.MedicationScheduleRepository
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
@@ -46,54 +45,124 @@ class InsertMedicationsViewModelTest {
     }
 
     @Test
-    fun `insertMedication with Hours should insert medication and schedules correctly`() = runTest {
+    fun `insertMedication with Days should insert medication correctly`() = runTest {
         // Arrange
-        val medicationName = "Paracetamol"
-        val description = "Para dor"
-        val pillOrDrop = "Pill"
-        val daysOrHour = "Hours"
-        val medicationTime = "08:00"
-        val intervalHours = 6L
-        val expectedMedicationId = 1L
+        val medication = FakeMedications.fakeMedications[1]
+        val expectedId = 1L
+        val daysInHours = medication.time * 24
 
         coEvery {
             medicationRepository.insertMedication(
-                any(), any(), any(), any(), any(), any()
+                medicationName = medication.medicationName,
+                description = medication.description,
+                pillOrDrop = medication.pillOrDrop,
+                daysOrHour = medication.daysOrHours,
+                medicationTime = medication.medicationTime,
+                time = daysInHours
             )
-        } returns expectedMedicationId
+        } returns expectedId
+
+        coEvery { scheduleRepository.insertSchedule(any()) } returns Unit
 
         // Act
         viewModel.insertMedication(
-            medicationName = medicationName,
-            description = description,
-            pillOrDrop = pillOrDrop,
-            daysOrHour = daysOrHour,
-            medicationTime = medicationTime,
-            time = intervalHours
+            medicationName = medication.medicationName,
+            description = medication.description,
+            pillOrDrop = medication.pillOrDrop,
+            daysOrHour = medication.daysOrHours,
+            medicationTime = medication.medicationTime,
+            time = medication.time
         )
 
-        advanceUntilIdle() // Aguarda coroutines
+        advanceUntilIdle()
 
         // Assert
         coVerify(exactly = 1) {
             medicationRepository.insertMedication(
-                medicationName,
-                description,
-                pillOrDrop,
-                daysOrHour,
-                medicationTime,
-                intervalHours
+                medicationName = medication.medicationName,
+                description = medication.description,
+                pillOrDrop = medication.pillOrDrop,
+                daysOrHour = medication.daysOrHours,
+                medicationTime = medication.medicationTime,
+                time = daysInHours
             )
         }
+    }
+    @Test
+    fun `insertMedication with Hours should insert medication correctly`() = runTest {
+        // Arrange
+        val medication = FakeMedications.fakeMedications[0]
+        val expectedId = 1L
+        val daysInHours = medication.time
 
+        coEvery {
+            medicationRepository.insertMedication(
+                medicationName = medication.medicationName,
+                description = medication.description,
+                pillOrDrop = medication.pillOrDrop,
+                daysOrHour = medication.daysOrHours,
+                medicationTime = medication.medicationTime,
+                time = daysInHours
+            )
+        } returns expectedId
+
+        coEvery { scheduleRepository.insertSchedule(any()) } returns Unit
+
+        // Act
+        viewModel.insertMedication(
+            medicationName = medication.medicationName,
+            description = medication.description,
+            pillOrDrop = medication.pillOrDrop,
+            daysOrHour = medication.daysOrHours,
+            medicationTime = medication.medicationTime,
+            time = medication.time
+        )
+
+        advanceUntilIdle()
+
+        // Assert
         coVerify(exactly = 1) {
-            scheduleRepository.insertSchedule(match {
-                it.size == 4 &&
-                        it[0].scheduledTime.startsWith("08") &&
-                        it[1].scheduledTime.startsWith("14") &&
-                        it[2].scheduledTime.startsWith("20") &&
-                        it[3].scheduledTime.startsWith("02")
-            })
+            medicationRepository.insertMedication(
+                medicationName = medication.medicationName,
+                description = medication.description,
+                pillOrDrop = medication.pillOrDrop,
+                daysOrHour = medication.daysOrHours,
+                medicationTime = medication.medicationTime,
+                time = daysInHours
+            )
         }
+    }
+    @Test
+    fun `generateSchedules with Hours should return correct number of schedules`() = runTest {
+        val medications = FakeMedications.fakeMedications[0]
+
+        val result = viewModel.insertSchedules(
+            medicationId = medications.id,
+            daysOrHour = medications.daysOrHours,
+            startTime = medications.medicationTime,
+            intervalHours = medications.time.toInt(),
+            medicationName = medications.medicationName
+        )
+
+        assertEquals(3, result.size)
+        assertEquals("10:00", result[0].scheduledTime)
+        assertEquals("18:00", result[1].scheduledTime)
+        assertEquals("02:00", result[2].scheduledTime)
+    }
+    @Test
+    fun `generateSchedules with Days should return correct number of schedules`() = runTest {
+        val medications = FakeMedications.fakeMedications[1]
+
+        val result = viewModel.insertSchedules(
+            medicationId = medications.id,
+            daysOrHour = medications.daysOrHours,
+            startTime = medications.medicationTime,
+            intervalHours = medications.time.toInt(),
+            medicationName = medications.medicationName
+        )
+
+        assertEquals(2, result.size)
+        assertEquals("10:00", result[0].scheduledTime)
+        assertEquals("10:00", result[1].scheduledTime)
     }
 }

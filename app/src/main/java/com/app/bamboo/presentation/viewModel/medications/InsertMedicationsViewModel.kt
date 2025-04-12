@@ -37,7 +37,7 @@ class InsertMedicationsViewModel @Inject constructor(
                     medicationTime = medicationTime,
                     time = day
                 )
-                insertSchedules(medicationId, medicationTime, daysOrHour, day.toInt(), medicationName)
+                insertSchedules(medicationId, daysOrHour, medicationTime, day.toInt(), medicationName)
             }else{
                 val medicationId = repository.insertMedication(
                     medicationName = medicationName,
@@ -47,23 +47,23 @@ class InsertMedicationsViewModel @Inject constructor(
                     medicationTime = medicationTime,
                     time = time
                 )
-                insertSchedules(medicationId, medicationTime, daysOrHour, time.toInt(), medicationName)
+                insertSchedules(medicationId, daysOrHour, medicationTime, time.toInt(), medicationName)
             }
         }
     }
 
-    private suspend fun insertSchedules(
+    suspend fun insertSchedules(
         medicationId: Long,
         daysOrHour: String,
         startTime: String,
         intervalHours: Int,
         medicationName: String,
-    ) {
+    ): List<MedicationSchedule> {
         var nextTime = TimeUtils.formattedLocalTime(startTime)
 
         val schedules = mutableListOf<MedicationSchedule>()
-
-        repeat(if(daysOrHour == "Hours") 24 / intervalHours else intervalHours / 24) {
+        val intervalDays = intervalHours * 24
+        repeat(if(daysOrHour == "Hours") 24 / intervalHours else intervalDays / 24) {
             schedules.add(
                 MedicationSchedule(
                     medicationId = medicationId,
@@ -71,10 +71,14 @@ class InsertMedicationsViewModel @Inject constructor(
                     scheduledTime = nextTime.toString()
                 )
             )
-            nextTime = nextTime.plusHours(intervalHours.toLong())
-        }
+            nextTime = if (daysOrHour == "Hours") {
+                nextTime.plusHours(intervalHours.toLong())
+            } else {
+                nextTime.plusHours(intervalDays.toLong())  // Incrementa 1 dia para "Days"
+            }        }
         if (schedules.isNotEmpty()) {
             medicationScheduleRepository.insertSchedule(schedules)
         }
+        return schedules
     }
 }

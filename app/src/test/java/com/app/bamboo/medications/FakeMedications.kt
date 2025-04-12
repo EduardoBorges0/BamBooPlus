@@ -8,7 +8,7 @@ object FakeMedications {
             medicationName = "Dorflex",
             description = "To Pain",
             pillOrDrop = "Pill",
-            daysOrHours = "Hour",
+            daysOrHours = "Hours",
             medicationTime = "10:00",
             time = 8
         ),
