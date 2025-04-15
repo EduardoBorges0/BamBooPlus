@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.app.bamboo.presentation.view.mainMedicationScreen.AppNavigation
+import com.app.bamboo.presentation.view.mainMedicationScreen.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
@@ -58,7 +58,7 @@ fun NavControllerComposable() {
                     notifyViewModel.showMedicationNotifications(context = context, activity = activity)
                 }
             }
-            AppNavigation(navController)
+            MainMedicationComposable(navController)
         }
     }
 }

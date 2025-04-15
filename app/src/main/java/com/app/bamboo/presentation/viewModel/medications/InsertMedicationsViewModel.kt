@@ -27,7 +27,7 @@ class InsertMedicationsViewModel @Inject constructor(
         time: Long,
     ) {
         viewModelScope.launch {
-            if(daysOrHour == "Days"){
+            if (daysOrHour == "Days") {
                 val day = time * 24
                 val medicationId = repository.insertMedication(
                     medicationName = medicationName,
@@ -37,8 +37,14 @@ class InsertMedicationsViewModel @Inject constructor(
                     medicationTime = medicationTime,
                     time = day
                 )
-                insertSchedules(medicationId, daysOrHour, medicationTime, day.toInt(), medicationName)
-            }else{
+                insertSchedules(
+                    medicationId,
+                    daysOrHour,
+                    medicationTime,
+                    day.toInt(),
+                    medicationName
+                )
+            } else {
                 val medicationId = repository.insertMedication(
                     medicationName = medicationName,
                     description = description,
@@ -47,7 +53,13 @@ class InsertMedicationsViewModel @Inject constructor(
                     medicationTime = medicationTime,
                     time = time
                 )
-                insertSchedules(medicationId, daysOrHour, medicationTime, time.toInt(), medicationName)
+                insertSchedules(
+                    medicationId,
+                    daysOrHour,
+                    medicationTime,
+                    time.toInt(),
+                    medicationName
+                )
             }
         }
     }
@@ -63,7 +75,7 @@ class InsertMedicationsViewModel @Inject constructor(
 
         val schedules = mutableListOf<MedicationSchedule>()
         val intervalDays = intervalHours * 24
-        repeat(if(daysOrHour == "Hours") 24 / intervalHours else intervalDays / 24) {
+        repeat(if (daysOrHour == "Hours") 24 / intervalHours else intervalDays / 24) {
             schedules.add(
                 MedicationSchedule(
                     medicationId = medicationId,
@@ -74,8 +86,9 @@ class InsertMedicationsViewModel @Inject constructor(
             nextTime = if (daysOrHour == "Hours") {
                 nextTime.plusHours(intervalHours.toLong())
             } else {
-                nextTime.plusHours(intervalDays.toLong())  // Incrementa 1 dia para "Days"
-            }        }
+                nextTime.plusHours(intervalDays.toLong())
+            }
+        }
         if (schedules.isNotEmpty()) {
             medicationScheduleRepository.insertSchedule(schedules)
         }
