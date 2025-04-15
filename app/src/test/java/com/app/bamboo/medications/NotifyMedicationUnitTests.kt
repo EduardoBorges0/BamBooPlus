@@ -18,7 +18,6 @@ import org.junit.Before
 import org.junit.Rule
 
 class NotifyMedicationUnitTests {
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -37,4 +36,5 @@ class NotifyMedicationUnitTests {
     fun tearDown() {
         Dispatchers.resetMain()
     }
+
 }

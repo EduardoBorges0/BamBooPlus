@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MainMedication -->
+    <string name="What_medication_search_you">¿Qué medicamento estás buscando?</string>
+    <string name="medicationIsNullOrEmpty">¡Aún no has añadido ningún medicamento!</string>
+    <string name="nextMedication">Tu próxima medicación será: </string>
+
+    <!-- InsertMedication -->
+    <string name="What_medication_you_take">¿Qué medicamento vas a tomar?</string>
+    <string name="Do_you_quantity_in_the_stock">¿Cuántos tienes en stock?</string>
+    <string name="What_first_time_you_take_medication">¿A qué hora tomarás el primer medicamento?</string>
+    <string name="What_interval_hour">¿Cada cuántas horas?</string>
+    <string name="What_interval_days">¿Cada cuántos días?</string>
+    <string name="You_take_medication_in_days_or_hours">¿Lo tomas cada x horas o cada x días?</string>
+    <string name="Hours">Horas</string>
+    <string name="Days">Días</string>
+    <string name="Pills">Píldora</string>
+    <string name="Drop">Gota</string>
+    <string name="How_many_mg">¿Cuántos miligramos?</string>
+    <string name="How_many_pills">¿Cuántas píldoras?</string>
+    <string name="next">Continuar</string>
+    <string name="confirm">Confirmar</string>
+
+    <!-- Appointments -->
+    <string name="appointmentHistoryIsNullOrEmpty">Sin citas médicas pasadas.</string>
+    <string name="appointmentIsNullOrEmpty">Sin próximas citas médicas.</string>
+
+</resources>
