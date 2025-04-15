@@ -1,6 +1,7 @@
 package com.app.bamboo.medications
 
 import com.app.bamboo.data.models.MedicationEntities
+import com.app.bamboo.data.models.MedicationSchedule
 
 object FakeMedications {
     val fakeMedications = listOf(
@@ -18,7 +19,54 @@ object FakeMedications {
             pillOrDrop = "Pill",
             daysOrHours = "Days",
             medicationTime = "10:00",
-            time = 2
+            time = 4
+        ),
+    )
+    val fakeScheduleMedications = listOf(
+        MedicationSchedule(
+            medicationName = "Dorflex",
+            medicationId = 1,
+            scheduledTime = "10:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Luftal",
+            medicationId = 2,
+            scheduledTime = "10:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Luftal",
+            medicationId = 2,
+            scheduledTime = "14:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Luftal",
+            medicationId = 2,
+            scheduledTime = "18:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Dorflex",
+            medicationId = 1,
+            scheduledTime = "18:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Luftal",
+            medicationId = 2,
+            scheduledTime = "22:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Luftal",
+            medicationId = 2,
+            scheduledTime = "02:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Dorflex",
+            medicationId = 1,
+            scheduledTime = "02:00",
+        ),
+        MedicationSchedule(
+            medicationName = "Luftal",
+            medicationId = 2,
+            scheduledTime = "06:00",
         ),
     )
 }

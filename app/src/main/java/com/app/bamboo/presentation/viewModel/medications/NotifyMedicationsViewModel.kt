@@ -1,11 +1,9 @@
 package com.app.bamboo.presentation.viewModel.medications
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.app.bamboo.data.models.MedicationEntities
 import com.app.bamboo.data.models.MedicationSchedule
 import com.app.bamboo.domain.repositories.MedicationRepository

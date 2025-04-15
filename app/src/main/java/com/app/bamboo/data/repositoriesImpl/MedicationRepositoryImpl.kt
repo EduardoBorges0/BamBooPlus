@@ -62,8 +62,8 @@ class MedicationRepositoryImpl @Inject constructor(
         medicationDao.updateAccomplish(id = id, accomplish = accomplish)
     }
 
-    override fun getMedicationsTime(): Flow<List<String>> {
-        return medicationDao.getMedicationsTime().asFlow()
+    override fun getMedicationsTime(): LiveData<List<String>> {
+        return medicationDao.getMedicationsTime()
     }
 
     override suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>{

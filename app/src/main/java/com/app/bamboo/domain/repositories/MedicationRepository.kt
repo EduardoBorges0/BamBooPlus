@@ -28,7 +28,7 @@ interface MedicationRepository {
 
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
-    fun getMedicationsTime(): Flow<List<String>>
+    fun getMedicationsTime(): LiveData<List<String>>
 
     suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>
 }
