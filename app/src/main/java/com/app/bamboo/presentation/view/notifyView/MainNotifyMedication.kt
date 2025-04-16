@@ -12,6 +12,7 @@ import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
 import com.app.bamboo.presentation.view.utils.notify.MainNotifyView
 import com.app.bamboo.presentation.viewModel.medications.NotifyMedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class MainNotifyMedication : ComponentActivity() {
@@ -31,6 +32,10 @@ class MainNotifyMedication : ComponentActivity() {
                     time = time.toString(),
                     confirmClick = {
                         notifyMedicationsViewModel.updateAccomplish(medicationId, true)
+                        notifyMedicationsViewModel.insertMedicationHistory(medicationId,
+                            medicationList?.medicationName ?: "",
+                            time.toString(),
+                            LocalDate.now().dayOfWeek.value.toString())
                         val intent = Intent(this, MainNavController::class.java)
                         startActivity(intent)
                         finish()

@@ -1,11 +1,11 @@
-package com.app.bamboo.data.database.dao
+package com.app.bamboo.data.database.dao.medication
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.app.bamboo.data.models.MedicationEntities
+import com.app.bamboo.data.models.medications.MedicationEntities
 
 @Dao
 interface MedicationDao {
@@ -14,6 +14,9 @@ interface MedicationDao {
 
     @Query("SELECT * FROM medication_entity WHERE id= :id")
     suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>
+
+    @Query("UPDATE medication_entity SET date= :date WHERE id = :id")
+    suspend fun updateDate(date: String, id: Long)
 
     @Insert
     suspend fun insertMedication(medicationEntities: MedicationEntities) : Long

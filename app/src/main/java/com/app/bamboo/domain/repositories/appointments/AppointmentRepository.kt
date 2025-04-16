@@ -1,8 +1,8 @@
-package com.app.bamboo.domain.repositories
+package com.app.bamboo.domain.repositories.appointments
 
 import androidx.lifecycle.LiveData
-import com.app.bamboo.data.models.AppointmentEntities
-import com.app.bamboo.data.models.AppointmentSummary
+import com.app.bamboo.data.models.appointments.AppointmentEntities
+import com.app.bamboo.data.models.appointments.AppointmentSummary
 
 interface AppointmentRepository {
     suspend fun getAllAppointment(): LiveData<List<AppointmentEntities>>

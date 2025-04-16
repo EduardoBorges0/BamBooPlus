@@ -1,17 +1,15 @@
-package com.app.bamboo.data.repositoriesImpl
+package com.app.bamboo.data.repositoriesImpl.medication
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asFlow
-import com.app.bamboo.data.database.dao.MedicationDao
-import com.app.bamboo.data.models.MedicationEntities
-import com.app.bamboo.domain.repositories.MedicationRepository
-import kotlinx.coroutines.flow.Flow
+import com.app.bamboo.data.database.dao.medication.MedicationDao
+import com.app.bamboo.data.models.medications.MedicationEntities
+import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import javax.inject.Inject
 
 class MedicationRepositoryImpl @Inject constructor(
     private val medicationDao: MedicationDao,
-) :
-    MedicationRepository {
+) :MedicationRepository {
+
     override suspend fun getAllMedications(): LiveData<List<MedicationEntities>> {
         return medicationDao.getAllMedications()
     }
@@ -22,6 +20,7 @@ class MedicationRepositoryImpl @Inject constructor(
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
+        date: String,
         time: Long,
     ): Long {
         val medication = MedicationEntities(
@@ -30,6 +29,7 @@ class MedicationRepositoryImpl @Inject constructor(
             pillOrDrop = pillOrDrop,
             daysOrHours = daysOrHour,
             medicationTime = medicationTime,
+            date = date,
             time = time
         )
         return medicationDao.insertMedication(medication)
@@ -45,7 +45,8 @@ class MedicationRepositoryImpl @Inject constructor(
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
-        time: Long,
+        date: String,
+        time: Long
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -53,10 +54,16 @@ class MedicationRepositoryImpl @Inject constructor(
             pillOrDrop = pillOrDrop,
             daysOrHours = daysOrHour,
             medicationTime = medicationTime,
+            date = date,
             time = time
         )
         medicationDao.updateMedication(medication)
     }
+
+    override suspend fun updateDate(date: String, id: Long){
+        medicationDao.updateDate(date, id)
+    }
+
 
     override suspend fun updateAccomplish(id: Long, accomplish: Boolean) {
         medicationDao.updateAccomplish(id = id, accomplish = accomplish)

@@ -1,4 +1,4 @@
-package com.app.bamboo.data.models
+package com.app.bamboo.data.models.appointments
 
 import androidx.room.ColumnInfo
 

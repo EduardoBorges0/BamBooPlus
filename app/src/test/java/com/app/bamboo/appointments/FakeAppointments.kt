@@ -1,6 +1,6 @@
 package com.app.bamboo.appointments
 
-import com.app.bamboo.data.models.AppointmentEntities
+import com.app.bamboo.data.models.appointments.AppointmentEntities
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter

@@ -1,13 +1,12 @@
-package com.app.bamboo.data.database.dao
+package com.app.bamboo.data.database.dao.appointments
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.app.bamboo.data.models.AppointmentEntities
-import com.app.bamboo.data.models.AppointmentSummary
-import com.app.bamboo.data.models.MedicationEntities
+import com.app.bamboo.data.models.appointments.AppointmentEntities
+import com.app.bamboo.data.models.appointments.AppointmentSummary
 
 @Dao
 interface AppointmentDao {

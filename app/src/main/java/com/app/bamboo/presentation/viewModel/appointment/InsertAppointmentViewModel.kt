@@ -3,7 +3,7 @@ package com.app.bamboo.presentation.viewModel.appointment
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,10 +1,10 @@
 package com.app.bamboo.medications
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.bamboo.data.models.MedicationSchedule
-import com.app.bamboo.domain.repositories.AppointmentRepository
-import com.app.bamboo.domain.repositories.MedicationRepository
-import com.app.bamboo.domain.repositories.MedicationScheduleRepository
+import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
+import com.app.bamboo.domain.repositories.medications.MedicationRepository
+import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
 import com.app.bamboo.presentation.viewModel.appointment.HistoryViewModel
 import com.app.bamboo.presentation.viewModel.medications.NotifyMedicationsViewModel
 import io.mockk.mockk

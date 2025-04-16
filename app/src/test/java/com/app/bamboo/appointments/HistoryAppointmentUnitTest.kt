@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.MutableLiveData
 import com.app.bamboo.R
-import com.app.bamboo.data.models.AppointmentEntities
-import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.data.models.appointments.AppointmentEntities
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import com.app.bamboo.presentation.viewModel.appointment.HistoryViewModel
 import io.mockk.coEvery
 import io.mockk.every

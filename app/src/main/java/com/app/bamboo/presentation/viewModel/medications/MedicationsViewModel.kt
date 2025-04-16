@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.data.models.MedicationEntities
-import com.app.bamboo.data.models.MedicationSchedule
-import com.app.bamboo.domain.repositories.MedicationRepository
-import com.app.bamboo.domain.repositories.MedicationScheduleRepository
+import com.app.bamboo.data.models.medications.MedicationEntities
+import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.domain.repositories.medications.MedicationRepository
+import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

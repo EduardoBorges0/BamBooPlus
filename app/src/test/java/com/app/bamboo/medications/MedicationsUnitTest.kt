@@ -3,9 +3,9 @@ package com.app.bamboo.medications
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.app.bamboo.data.models.MedicationSchedule
-import com.app.bamboo.domain.repositories.MedicationRepository
-import com.app.bamboo.domain.repositories.MedicationScheduleRepository
+import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.domain.repositories.medications.MedicationRepository
+import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import io.mockk.every

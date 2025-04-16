@@ -1,4 +1,4 @@
-package com.app.bamboo.data.models
+package com.app.bamboo.data.models.medications
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
             entity = MedicationEntities::class,
             parentColumns = ["id"],
             childColumns = ["medication_id"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.Companion.CASCADE
         )
     ]
 )
@@ -21,5 +21,8 @@ data class MedicationSchedule(
     @ColumnInfo("medication_name") val medicationName: String,
     @ColumnInfo(name = "medication_id") val medicationId: Long,
     @ColumnInfo(name = "scheduled_time") val scheduledTime: String,
+    @ColumnInfo(name = "date") val date: String,
+    @ColumnInfo(name = "interval_time") val intervalTime: String,
+    @ColumnInfo(name = "hour_or_days") val hoursOrDays: String,
     @ColumnInfo(name = "accomplish") val accomplish: Boolean? = null
 )

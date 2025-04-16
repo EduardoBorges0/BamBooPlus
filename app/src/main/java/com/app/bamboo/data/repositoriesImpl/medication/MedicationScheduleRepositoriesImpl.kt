@@ -1,9 +1,9 @@
-package com.app.bamboo.data.repositoriesImpl
+package com.app.bamboo.data.repositoriesImpl.medication
 
 import androidx.lifecycle.LiveData
-import com.app.bamboo.data.database.dao.MedicationScheduleDao
-import com.app.bamboo.data.models.MedicationSchedule
-import com.app.bamboo.domain.repositories.MedicationScheduleRepository
+import com.app.bamboo.data.database.dao.medication.MedicationScheduleDao
+import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
 import javax.inject.Inject
 
 class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicationScheduleDao: MedicationScheduleDao) :
@@ -28,7 +28,7 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
         return medicationScheduleDao.getAllMedicationId()
     }
 
-    override fun getMedicationsName(): LiveData<List<String>>{
+    override fun getMedicationsName(): LiveData<List<String>> {
         return medicationScheduleDao.getMedicationsName()
     }
 

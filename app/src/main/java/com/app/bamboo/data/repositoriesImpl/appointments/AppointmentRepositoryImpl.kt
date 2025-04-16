@@ -1,10 +1,10 @@
-package com.app.bamboo.data.repositoriesImpl
+package com.app.bamboo.data.repositoriesImpl.appointments
 
 import androidx.lifecycle.LiveData
-import com.app.bamboo.data.database.dao.AppointmentDao
-import com.app.bamboo.data.models.AppointmentEntities
-import com.app.bamboo.data.models.AppointmentSummary
-import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.data.database.dao.appointments.AppointmentDao
+import com.app.bamboo.data.models.appointments.AppointmentEntities
+import com.app.bamboo.data.models.appointments.AppointmentSummary
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import javax.inject.Inject
 
 class AppointmentRepositoryImpl @Inject constructor(private val appointmentDao: AppointmentDao) :
@@ -59,7 +59,7 @@ class AppointmentRepositoryImpl @Inject constructor(private val appointmentDao: 
         appointmentDao.updateAccomplish(id = id, accomplish = accomplish)
     }
 
-    override fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>>{
+    override fun getAppointmentSummaries(): LiveData<List<AppointmentSummary>> {
         return appointmentDao.getAppointmentSummaries()
     }
 

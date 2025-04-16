@@ -2,10 +2,9 @@ package com.app.bamboo.appointments
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.app.bamboo.data.models.AppointmentSummary
-import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.data.models.appointments.AppointmentSummary
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
-import com.app.bamboo.utils.TimeUtils
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -21,9 +20,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import kotlin.test.Test
 
 class NotifyAppointmentsUnitTest {

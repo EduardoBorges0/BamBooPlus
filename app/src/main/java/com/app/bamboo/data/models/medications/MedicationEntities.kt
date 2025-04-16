@@ -1,4 +1,4 @@
-package com.app.bamboo.data.models
+package com.app.bamboo.data.models.medications
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,6 +17,8 @@ data class MedicationEntities(
     val daysOrHours: String,
     @ColumnInfo(name = "medication_time")
     val medicationTime: String,
+    @ColumnInfo(name = "date")
+    val date: String,
     val time: Long,
     @ColumnInfo(name = "accomplish")
     val accomplish: Boolean? = null

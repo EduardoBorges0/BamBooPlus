@@ -1,15 +1,15 @@
-package com.app.bamboo.data.database.dao
+package com.app.bamboo.data.database.dao.medication
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.app.bamboo.data.models.MedicationSchedule
+import com.app.bamboo.data.models.medications.MedicationSchedule
 
 @Dao
 interface MedicationScheduleDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertSchedule(schedule: List<MedicationSchedule>)
 
     @Query("SELECT scheduled_time FROM medication_schedule WHERE medication_id = :medicationId")

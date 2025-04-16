@@ -1,7 +1,7 @@
 package com.app.bamboo.medications
 
-import com.app.bamboo.data.models.MedicationEntities
-import com.app.bamboo.data.models.MedicationSchedule
+import com.app.bamboo.data.models.medications.MedicationEntities
+import com.app.bamboo.data.models.medications.MedicationSchedule
 
 object FakeMedications {
     val fakeMedications = listOf(

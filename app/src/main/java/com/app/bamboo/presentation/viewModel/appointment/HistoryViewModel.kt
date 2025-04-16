@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.app.bamboo.R
-import com.app.bamboo.data.models.AppointmentEntities
-import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.data.models.appointments.AppointmentEntities
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

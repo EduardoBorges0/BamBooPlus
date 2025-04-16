@@ -30,11 +30,6 @@
             android:label="@string/title_activity_main_appointment_notify"
             android:theme="@style/Theme.BamBoo" />
         <activity
-            android:name=".presentation.view.MainNotifyAppointment"
-            android:exported="false"
-            android:label="@string/title_activity_main_notify_appointment"
-            android:theme="@style/Theme.BamBoo" />
-        <activity
             android:name=".presentation.view.notifyView.MainNotifyMedication"
             android:exported="false"
             android:launchMode="singleTask"

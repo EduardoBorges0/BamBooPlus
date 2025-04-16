@@ -1,7 +1,7 @@
-package com.app.bamboo.domain.repositories
+package com.app.bamboo.domain.repositories.medications
 
 import androidx.lifecycle.LiveData
-import com.app.bamboo.data.models.MedicationSchedule
+import com.app.bamboo.data.models.medications.MedicationSchedule
 
 interface MedicationScheduleRepository {
     fun getAllSchedules(): LiveData<List<String>>
@@ -10,5 +10,4 @@ interface MedicationScheduleRepository {
     fun getAllMedicationSchedules(): LiveData<List<MedicationSchedule>>
     fun getAllMedicationId(): LiveData<List<Long>>
     fun getMedicationsName(): LiveData<List<String>>
-
 }

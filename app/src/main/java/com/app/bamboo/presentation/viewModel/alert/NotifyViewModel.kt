@@ -11,26 +11,25 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.data.models.AppointmentSummary
+import com.app.bamboo.data.models.appointments.AppointmentSummary
+import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.notifications.appointment.scheduleAppointment
-import com.app.bamboo.domain.repositories.MedicationScheduleRepository
-import com.app.bamboo.domain.notifications.medication.EnqueueReminder
-import com.app.bamboo.domain.repositories.AppointmentRepository
+import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
+import com.app.bamboo.domain.notifications.medication.scheduleNotification
+import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
+import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class NotifyViewModel @Inject constructor(
-    private val scheduleNextNotification: EnqueueReminder,
     private val medicationScheduleRepository: MedicationScheduleRepository,
+    private val medicationRepository: MedicationRepository,
     private val appointmentRepository: AppointmentRepository,
 ) : ViewModel() {
     val timeSchedules: LiveData<List<String>> =
@@ -41,6 +40,8 @@ class NotifyViewModel @Inject constructor(
 
     val medicationName: LiveData<List<String>> = medicationScheduleRepository.getMedicationsName()
 
+    val getAllMedications: LiveData<List<MedicationSchedule>> =
+        medicationScheduleRepository.getAllMedicationSchedules()
     val appointments: LiveData<List<AppointmentSummary>> =
         appointmentRepository.getAppointmentSummaries()
 
@@ -61,11 +62,29 @@ class NotifyViewModel @Inject constructor(
                     }
                 }
             }
-            scheduleNextNotification.invoke(
-                timeSchedules.value,
-                medicationId.value,
-                medicationName.value
-            )
+
+            getAllMedications.value?.map {
+                val formatter = TimeUtils.formattedLocalDateTime(it.scheduledTime)
+                val date = TimeUtils.formattedLocalDate(it.date)
+                Log.d(
+                    "ALARME",
+                    "ESTA É A AGENDA ${formatter.hour}, ${it.medicationId}, ${it.medicationName}"
+                )
+                scheduleNotification(
+                    context = context,
+                    medicationRepository = medicationRepository,
+                    hourOrDay = it.hoursOrDays,
+                    interval = it.intervalTime.toInt(),
+                    hour = formatter.hour.toInt(),
+                    minute = formatter.minute.toInt(),
+                    day = date.dayOfMonth.toInt(),
+                    month = date.monthValue.toInt(),
+                    year = date.year.toInt(),
+                    medicationName = it.medicationName,
+                    date = date,
+                    id = it.medicationId.toString()
+                )
+            }
         }
     }
 

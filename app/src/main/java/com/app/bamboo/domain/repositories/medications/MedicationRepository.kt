@@ -1,8 +1,8 @@
-package com.app.bamboo.domain.repositories
+package com.app.bamboo.domain.repositories.medications
 
 import androidx.lifecycle.LiveData
-import com.app.bamboo.data.models.MedicationEntities
-import kotlinx.coroutines.flow.Flow
+import com.app.bamboo.data.models.medications.MedicationEntities
+import java.sql.Date
 
 interface MedicationRepository {
     suspend fun getAllMedications(): LiveData<List<MedicationEntities>>
@@ -13,6 +13,7 @@ interface MedicationRepository {
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
+        date: String,
         time: Long
     ): Long
 
@@ -23,8 +24,10 @@ interface MedicationRepository {
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
+        date: String,
         time: Long
     )
+    suspend fun updateDate(date: String, id: Long)
 
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
