@@ -60,14 +60,12 @@ suspend fun scheduleNotification(
         putExtra("id", id.toLong())
         putExtra("medication_name", medicationName)
     }
-
     val pendingIntent = PendingIntent.getBroadcast(
         context,
         requestCode,
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
-
     alarmManager.setAlarmClock(
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent),
         pendingIntent

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.app.bamboo.data.database.dao.medication.MedicationScheduleDao
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicationScheduleDao: MedicationScheduleDao) :
@@ -20,7 +21,7 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
         return medicationScheduleDao.getAllSchedules()
     }
 
-    override fun getAllMedicationSchedules(): LiveData<List<MedicationSchedule>> {
+    override fun getAllMedicationSchedules(): Flow<List<MedicationSchedule>> {
         return medicationScheduleDao.getAllMedicationSchedules()
     }
 
@@ -30,6 +31,14 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
 
     override fun getMedicationsName(): LiveData<List<String>> {
         return medicationScheduleDao.getMedicationsName()
+    }
+
+    override suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean) {
+        medicationScheduleDao.updateAccomplishSchedule(id, accomplish)
+    }
+
+    override fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>>{
+        return medicationScheduleDao.getAllMedicationsScheduleById(id)
     }
 
 }

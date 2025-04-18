@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.app.bamboo.data.models.medications.MedicationEntities
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MedicationDao {
     @Query("SELECT * FROM medication_entity")
-    fun getAllMedications() : LiveData<List<MedicationEntities>>
+    fun getAllMedications() : Flow<List<MedicationEntities>>
 
     @Query("SELECT * FROM medication_entity WHERE id= :id")
     suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>

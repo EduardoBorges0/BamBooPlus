@@ -9,7 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
-import com.app.bamboo.presentation.view.utils.notify.MainNotifyView
+import com.app.bamboo.presentation.view.notifyView.notifyScreen.MainNotifyView
 import com.app.bamboo.presentation.viewModel.medications.NotifyMedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -19,19 +19,25 @@ class MainNotifyMedication : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val medicationId = intent.getLongExtra("medication_id", -1L)
+        val medicationId = intent.getLongExtra("id", -1L)
         setContent {
             val notifyMedicationsViewModel: NotifyMedicationsViewModel = hiltViewModel()
+            notifyMedicationsViewModel.getMedicationById(medicationId)
             val medicationList = notifyMedicationsViewModel.medication.observeAsState().value?.get(0)
             val time = notifyMedicationsViewModel.time.observeAsState().value
-            notifyMedicationsViewModel.getMedicationById(medicationId)
             BamBooTheme {
+                notifyMedicationsViewModel.insertMedicationHistory(
+                    medicationId = medicationId,
+                    medicationName = medicationList?.medicationName.toString(),
+                    medicationTime = time.toString(),
+                    dayOfWeek = LocalDate.now().dayOfWeek.toString()
+                )
                 MainNotifyView(
                     title = medicationList?.medicationName ?: "",
                     description = medicationList?.description ?: "",
                     time = time.toString(),
                     confirmClick = {
-                        notifyMedicationsViewModel.updateAccomplish(medicationId, true)
+                        notifyMedicationsViewModel.updateAccomplishSchedule(medicationId, true)
                         notifyMedicationsViewModel.insertMedicationHistory(medicationId,
                             medicationList?.medicationName ?: "",
                             time.toString(),
@@ -41,7 +47,7 @@ class MainNotifyMedication : ComponentActivity() {
                         finish()
                     },
                     cancelClick = {
-                        notifyMedicationsViewModel.updateAccomplish(medicationId, false)
+                        notifyMedicationsViewModel.updateAccomplishSchedule(medicationId, false)
                         val intent = Intent(this, MainNavController::class.java)
                         startActivity(intent)
                         finish()

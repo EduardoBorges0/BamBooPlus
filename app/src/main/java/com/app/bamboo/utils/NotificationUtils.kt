@@ -46,7 +46,7 @@ object NotificationUtils {
 
         val intent = Intent(context, activity).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("id", id)
+            putExtra("id", id?.toLong())
         }
         val pendingIntent = PendingIntent.getActivity(
             context,

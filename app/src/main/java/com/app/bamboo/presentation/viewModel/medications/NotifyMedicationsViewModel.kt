@@ -10,6 +10,7 @@ import com.app.bamboo.domain.repositories.medications.MedicationHistoryRepositor
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class NotifyMedicationsViewModel @Inject constructor(
     private val medicationRepository: MedicationRepository,
     private val medicationHistoryRepository: MedicationHistoryRepository
 ) : ViewModel() {
-    val medicationTimes: LiveData<List<MedicationSchedule>> =
+    val medicationTimes: Flow<List<MedicationSchedule>> =
         scheduleRepository.getAllMedicationSchedules()
 
     private val _medication = MutableLiveData<List<MedicationEntities>>()
@@ -30,9 +31,11 @@ class NotifyMedicationsViewModel @Inject constructor(
     val time: LiveData<String> = _time
 
     init {
-        medicationTimes.observeForever { list ->
-            list?.let {
-                getLastTime(it)
+        viewModelScope.launch {
+            medicationTimes.collect { list ->
+                list.let {
+                    getLastTime(it)
+                }
             }
         }
     }
@@ -53,13 +56,18 @@ class NotifyMedicationsViewModel @Inject constructor(
         }
     }
 
-    fun updateAccomplish(id: Long, accomplish: Boolean) {
+    fun updateAccomplishSchedule(id: Long, accomplish: Boolean) {
         viewModelScope.launch {
-            medicationRepository.updateAccomplish(id, accomplish)
+            scheduleRepository.updateAccomplishSchedule(id, accomplish)
         }
     }
 
-    fun insertMedicationHistory(medicationId: Long, medicationName: String, medicationTime: String, dayOfWeek: String) {
+    fun insertMedicationHistory(
+        medicationId: Long,
+        medicationName: String,
+        medicationTime: String,
+        dayOfWeek: String
+    ) {
         viewModelScope.launch {
             medicationHistoryRepository.insertMedication(
                 medicationId = medicationId,

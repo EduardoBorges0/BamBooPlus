@@ -2,10 +2,11 @@ package com.app.bamboo.domain.repositories.medications
 
 import androidx.lifecycle.LiveData
 import com.app.bamboo.data.models.medications.MedicationEntities
+import kotlinx.coroutines.flow.Flow
 import java.sql.Date
 
 interface MedicationRepository {
-    suspend fun getAllMedications(): LiveData<List<MedicationEntities>>
+    suspend fun getAllMedications(): Flow<List<MedicationEntities>>
 
     suspend fun insertMedication(
         medicationName: String,

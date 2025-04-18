@@ -26,4 +26,9 @@ class MedicationHistoryRepositoryImpl @Inject constructor(private val dao: Medic
     override fun getMedicationHistoryByDayOfWeek(selectedDay: String): LiveData<List<MedicationHistoryEntities>> {
         return dao.getMedicationHistory(selectedDay)
     }
+
+    override suspend fun deleteAllMedicationHistory(){
+        return dao.deleteAllMedicationHistory()
+    }
+
 }

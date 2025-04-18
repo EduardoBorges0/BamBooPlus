@@ -13,4 +13,7 @@ interface MedicationHistoryDao {
 
     @Query("SELECT * FROM medication_history WHERE day_of_week = :selectedDay")
     fun getMedicationHistory(selectedDay: String): LiveData<List<MedicationHistoryEntities>>
+
+    @Query("DELETE FROM medication_history")
+    suspend fun deleteAllMedicationHistory()
 }

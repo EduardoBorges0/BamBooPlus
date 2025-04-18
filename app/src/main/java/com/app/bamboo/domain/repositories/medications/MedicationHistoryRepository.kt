@@ -12,4 +12,7 @@ interface MedicationHistoryRepository {
         dayOfWeek: String
     ): Long
     fun getMedicationHistoryByDayOfWeek(selectedDay: String): LiveData<List<MedicationHistoryEntities>>
+
+    suspend fun deleteAllMedicationHistory()
+
 }

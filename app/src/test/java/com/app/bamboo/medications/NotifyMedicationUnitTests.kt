@@ -3,6 +3,7 @@ package com.app.bamboo.medications
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
+import com.app.bamboo.domain.repositories.medications.MedicationHistoryRepository
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
 import com.app.bamboo.presentation.viewModel.appointment.HistoryViewModel
@@ -23,13 +24,15 @@ class NotifyMedicationUnitTests {
 
     private val medicationRepository: MedicationRepository = mockk()
     private val scheduleRepository: MedicationScheduleRepository = mockk()
+    private val medicationHistoryRepository: MedicationHistoryRepository = mockk()
+
 
     private lateinit var viewModel: NotifyMedicationsViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(StandardTestDispatcher())
-        viewModel = NotifyMedicationsViewModel(scheduleRepository, medicationRepository)
+        viewModel = NotifyMedicationsViewModel(scheduleRepository, medicationRepository, medicationHistoryRepository)
     }
 
     @After

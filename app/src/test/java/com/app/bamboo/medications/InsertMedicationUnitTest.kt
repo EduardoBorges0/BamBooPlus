@@ -58,7 +58,8 @@ class InsertMedicationsViewModelTest {
                 pillOrDrop = medication.pillOrDrop,
                 daysOrHour = medication.daysOrHours,
                 medicationTime = medication.medicationTime,
-                time = daysInHours
+                time = daysInHours,
+                date = medication.date
             )
         } returns expectedId
 
@@ -71,7 +72,8 @@ class InsertMedicationsViewModelTest {
             pillOrDrop = medication.pillOrDrop,
             daysOrHour = medication.daysOrHours,
             medicationTime = medication.medicationTime,
-            time = medication.time
+            time = medication.time,
+            date = medication.date
         )
 
         advanceUntilIdle()
@@ -84,7 +86,8 @@ class InsertMedicationsViewModelTest {
                 pillOrDrop = medication.pillOrDrop,
                 daysOrHour = medication.daysOrHours,
                 medicationTime = medication.medicationTime,
-                time = daysInHours
+                time = daysInHours,
+                date = medication.date
             )
         }
     }
@@ -102,7 +105,9 @@ class InsertMedicationsViewModelTest {
                 pillOrDrop = medication.pillOrDrop,
                 daysOrHour = medication.daysOrHours,
                 medicationTime = medication.medicationTime,
-                time = daysInHours
+                time = daysInHours,
+                date = medication.date
+
             )
         } returns expectedId
 
@@ -115,7 +120,9 @@ class InsertMedicationsViewModelTest {
             pillOrDrop = medication.pillOrDrop,
             daysOrHour = medication.daysOrHours,
             medicationTime = medication.medicationTime,
-            time = medication.time
+            time = medication.time,
+            date = medication.date
+
         )
 
         advanceUntilIdle()
@@ -128,7 +135,9 @@ class InsertMedicationsViewModelTest {
                 pillOrDrop = medication.pillOrDrop,
                 daysOrHour = medication.daysOrHours,
                 medicationTime = medication.medicationTime,
-                time = daysInHours
+                time = daysInHours,
+                date = medication.date
+
             )
         }
     }
@@ -141,7 +150,8 @@ class InsertMedicationsViewModelTest {
             daysOrHour = medications.daysOrHours,
             startTime = medications.medicationTime,
             intervalHours = medications.time.toInt(),
-            medicationName = medications.medicationName
+            medicationName = medications.medicationName,
+            date = medications.date
         )
 
         assertEquals(3, result.size)
@@ -158,7 +168,8 @@ class InsertMedicationsViewModelTest {
             daysOrHour = medications.daysOrHours,
             startTime = medications.medicationTime,
             intervalHours = medications.time.toInt(),
-            medicationName = medications.medicationName
+            medicationName = medications.medicationName,
+            date = medications.date
         )
 
         assertEquals(2, result.size)

@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.app.bamboo.data.worker.deleteAllHistoryMedication
 import com.app.bamboo.presentation.view.mainMedicationScreen.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
@@ -27,52 +28,32 @@ class MainNavController : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        deleteAllHistoryMedication(applicationContext)
         setContent {
             val notifyViewModel: NotifyViewModel = hiltViewModel()
-            val insert : InsertMedicationsViewModel = hiltViewModel()
-            LaunchedEffect(Unit) {
-//               insert.insertMedication(
-//                   medicationName = "Dorflex",
-//                   description = "Para dor",
-//                   pillOrDrop = "Pill",
-//                   daysOrHour = "Days",
-//                   medicationTime = "12:00",
-//                   date = "2025-04-16",
-//                   time = 4
-//               )
-            }
-
-            val appointmentSummary by notifyViewModel.appointments.observeAsState()
-            notifyViewModel.showMedicationNotifications(this@MainNavController, this@MainNavController)
-
-            LaunchedEffect(appointmentSummary) {
-                notifyViewModel.showAppointmentNotification(this@MainNavController)
-            }
+            notifyViewModel.showMedicationNotifications(
+                this,
+                this
+            )
             NavControllerComposable()
         }
     }
 }
+
 @Composable
 fun NavControllerComposable() {
     val navController = rememberNavController()
-    val notifyViewModel: NotifyViewModel = hiltViewModel()
     val context = LocalContext.current
     val activity = context as Activity
-
-    // Observar as mudanças nas listas
-    val medications = notifyViewModel.getAllMedications.observeAsState(emptyList())
-
-    LaunchedEffect(Unit) {
-        notifyViewModel.showMedicationNotifications(activity, context)
-    }
-
-    // Garanta que o log seja chamado sempre que a lista for observada
-    medications.value.forEach { medication ->
-        Log.d("ALARME", "Medicamento: ${medication.medicationName}")
-    }
+    val notifyViewModel: NotifyViewModel = hiltViewModel()
+    notifyViewModel.showMedicationNotifications(activity, context)
 
     NavHost(navController = navController, startDestination = "mainMedication") {
         composable("mainMedication") {
+            val medicationsViewModel: MedicationsViewModel = hiltViewModel()
+            medicationsViewModel.getScheduleContainsAccomplishTrue(1)
+            medicationsViewModel.getAllMedications()
+            medicationsViewModel.percentMedicationsTrue(1)
             MainMedicationComposable(navController)
         }
     }

@@ -21,6 +21,7 @@ import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -40,8 +41,9 @@ class NotifyViewModel @Inject constructor(
 
     val medicationName: LiveData<List<String>> = medicationScheduleRepository.getMedicationsName()
 
-    val getAllMedications: LiveData<List<MedicationSchedule>> =
+    val getAllMedications: Flow<List<MedicationSchedule>> =
         medicationScheduleRepository.getAllMedicationSchedules()
+
     val appointments: LiveData<List<AppointmentSummary>> =
         appointmentRepository.getAppointmentSummaries()
 
@@ -62,8 +64,12 @@ class NotifyViewModel @Inject constructor(
                     }
                 }
             }
-
-            getAllMedications.value?.map {
+            Log.d(
+                "ALARME",
+                "esta chegando aq ${getAllMedications}"
+            )
+            getAllMedications.collect {
+                it.map {
                 val formatter = TimeUtils.formattedLocalDateTime(it.scheduledTime)
                 val date = TimeUtils.formattedLocalDate(it.date)
                 Log.d(
@@ -84,6 +90,7 @@ class NotifyViewModel @Inject constructor(
                     date = date,
                     id = it.medicationId.toString()
                 )
+            }
             }
         }
     }

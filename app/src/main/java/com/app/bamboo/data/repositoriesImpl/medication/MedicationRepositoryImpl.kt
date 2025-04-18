@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import com.app.bamboo.data.database.dao.medication.MedicationDao
 import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import javax.inject.Inject
 
 class MedicationRepositoryImpl @Inject constructor(
     private val medicationDao: MedicationDao,
 ) :MedicationRepository {
 
-    override suspend fun getAllMedications(): LiveData<List<MedicationEntities>> {
+    override suspend fun getAllMedications(): Flow<List<MedicationEntities>> {
         return medicationDao.getAllMedications()
     }
 
