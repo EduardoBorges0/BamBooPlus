@@ -14,8 +14,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.R
+import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.NotifyCancelButton
-import com.app.bamboo.presentation.view.ui.theme.NotifyConfirmButton
 
 @Composable
 fun ConfirmOrCancelButtons(confirmClick: () -> Unit, cancelClick: () -> Unit, modifier: Modifier) {
@@ -29,7 +29,7 @@ fun ConfirmOrCancelButtons(confirmClick: () -> Unit, cancelClick: () -> Unit, mo
                 .padding(horizontal = 30.dp)
                 .size(heigthSize / 10),
             colors = ButtonDefaults.buttonColors(
-                containerColor = NotifyConfirmButton, contentColor = Color.White
+                containerColor = MainColor, contentColor = Color.White
             )
         ) {
             Icon(

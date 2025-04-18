@@ -69,7 +69,6 @@ class MedicationsViewModel @Inject constructor(
             val trueAccomplishedSize = getScheduleContainsAccomplishTrue.value?.size ?: 0
             val percent =
                 ((trueAccomplishedSize.toDouble() / schedules.size.toDouble()))
-            Log.d("PERCENT", "PERCENT $percent")
         }
     }
 
