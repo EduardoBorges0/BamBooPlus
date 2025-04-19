@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.sql.Date
 
 interface MedicationRepository {
-    suspend fun getAllMedications(): Flow<List<MedicationEntities>>
+    fun getAllMedications(): Flow<List<MedicationEntities>>
 
     suspend fun insertMedication(
         medicationName: String,

@@ -20,6 +20,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.app.bamboo.data.worker.deleteAllHistoryMedication
+import com.app.bamboo.presentation.view.appointments.AppointmentsMain
+import com.app.bamboo.presentation.view.checkIn.CheckInMain
 import com.app.bamboo.presentation.view.mainMedicationScreen.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.appointment.NotifyAppointmentsViewModel
@@ -65,7 +67,13 @@ fun NavControllerComposable(navController: NavHostController) {
             medicationsViewModel.getScheduleContainsAccomplishTrue(1)
             medicationsViewModel.getAllMedications()
             medicationsViewModel.percentMedicationsTrue(1)
-            MainMedicationComposable(navController)
+            MainMedicationComposable(navController, medicationsViewModel)
+        }
+        composable("checkIn"){
+            CheckInMain()
+        }
+        composable("appointments") {
+            AppointmentsMain()
         }
     }
 }

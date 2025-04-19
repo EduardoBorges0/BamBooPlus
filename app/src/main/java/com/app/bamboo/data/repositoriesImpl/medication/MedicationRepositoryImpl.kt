@@ -12,7 +12,7 @@ class MedicationRepositoryImpl @Inject constructor(
     private val medicationDao: MedicationDao,
 ) :MedicationRepository {
 
-    override suspend fun getAllMedications(): Flow<List<MedicationEntities>> {
+    override fun getAllMedications(): Flow<List<MedicationEntities>> {
         return medicationDao.getAllMedications()
     }
 

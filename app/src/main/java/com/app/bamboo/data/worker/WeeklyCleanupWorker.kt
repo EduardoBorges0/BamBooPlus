@@ -30,7 +30,6 @@ class WeeklyCleanupWorker @AssistedInject constructor(
                 now.hour == 23 &&
                 now.minute >= 55
 
-        // Já executou essa semana?
         val alreadyCleanedToday = lastCleanupDate == todayString
 
         if (isSundayLate && !alreadyCleanedToday) {
