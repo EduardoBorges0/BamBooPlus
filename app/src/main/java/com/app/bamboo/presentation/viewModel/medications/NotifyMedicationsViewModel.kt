@@ -24,8 +24,8 @@ class NotifyMedicationsViewModel @Inject constructor(
     val medicationTimes: Flow<List<MedicationSchedule>> =
         scheduleRepository.getAllMedicationSchedules()
 
-    private val _medication = MutableLiveData<List<MedicationEntities>>()
-    val medication: LiveData<List<MedicationEntities>> = _medication
+    private val _medication = MutableLiveData<List<MedicationSchedule>>()
+    val medication: LiveData<List<MedicationSchedule>> = _medication
 
     private val _time = MutableLiveData<String>()
     val time: LiveData<String> = _time
@@ -52,7 +52,7 @@ class NotifyMedicationsViewModel @Inject constructor(
 
     fun getMedicationById(id: Long) {
         viewModelScope.launch {
-            _medication.value = medicationRepository.getMedicationsById(id)
+            _medication.value = scheduleRepository.getSchedulesMedicationsById(id)
         }
     }
 

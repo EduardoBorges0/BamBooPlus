@@ -43,6 +43,9 @@ class MedicationsViewModel @Inject constructor(
     private val _getMedicationsTimeById = MutableStateFlow<List<MedicationEntities>>(emptyList())
     val getMedicationsTimeById: Flow<List<MedicationEntities>> = _getMedicationsTimeById
 
+    private val _getPercentById = MutableStateFlow<Float>(0f)
+    val getPercentById: Flow<Float> = _getPercentById
+
     private val _getNextMedication = MutableLiveData<MedicationSchedule>()
     val getNextMedication: LiveData<MedicationSchedule> = _getNextMedication
 
@@ -78,8 +81,7 @@ class MedicationsViewModel @Inject constructor(
         viewModelScope.launch {
             val schedules = repositorySchedule.getAllMedicationsScheduleById(id).first()
             val trueAccomplishedSize = getScheduleContainsAccomplishTrue.value?.size ?: 0
-            val percent =
-                ((trueAccomplishedSize.toDouble() / schedules.size.toDouble()))
+            _getPercentById.value = ((trueAccomplishedSize.toDouble() / schedules.size.toDouble())).toFloat()
         }
     }
 

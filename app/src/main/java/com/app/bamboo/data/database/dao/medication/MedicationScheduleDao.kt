@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import kotlinx.coroutines.flow.Flow
 
@@ -19,14 +20,20 @@ interface MedicationScheduleDao {
     @Query("SELECT scheduled_time FROM medication_schedule")
     fun getAllSchedules(): LiveData<List<String>>
 
-    @Query("UPDATE medication_schedule SET accomplish = :accomplish WHERE medication_id = :id")
-    suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean)
+    @Query("SELECT * FROM medication_schedule WHERE id= :id")
+    suspend fun getSchedulesMedicationsById(id: Long?) : List<MedicationSchedule>
+
+    @Query("UPDATE medication_schedule SET accomplish = :accomplish WHERE id = :id")
+    suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean?)
 
     @Query("SELECT * FROM medication_schedule WHERE medication_id= :id")
     fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>>
 
     @Query("SELECT medication_id FROM medication_schedule")
     fun getAllMedicationId(): LiveData<List<Long>>
+
+    @Query("SELECT id FROM medication_schedule WHERE accomplish = 1")
+    fun getAllId(): Flow<List<Long>>
 
     @Query("SELECT medication_name FROM medication_schedule")
     fun getMedicationsName(): LiveData<List<String>>

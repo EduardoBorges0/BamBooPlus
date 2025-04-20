@@ -1,4 +1,4 @@
-package com.app.bamboo.domain.notifications.medication
+package com.app.bamboo.domain.alarmManager.notifications.medication
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -66,6 +66,8 @@ suspend fun scheduleNotification(
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
+    Log.d("ESSE É O ID", "ID A: $id")
+
     alarmManager.setAlarmClock(
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent),
         pendingIntent

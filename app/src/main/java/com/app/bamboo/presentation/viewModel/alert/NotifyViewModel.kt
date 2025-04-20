@@ -13,17 +13,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.bamboo.data.models.appointments.AppointmentSummary
 import com.app.bamboo.data.models.medications.MedicationSchedule
-import com.app.bamboo.domain.notifications.appointment.scheduleAppointment
+import com.app.bamboo.domain.alarmManager.notifications.appointment.scheduleAppointment
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
-import com.app.bamboo.domain.notifications.medication.scheduleNotification
+import com.app.bamboo.domain.alarmManager.notifications.medication.scheduleNotification
 import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -88,7 +86,7 @@ class NotifyViewModel @Inject constructor(
                     year = date.year.toInt(),
                     medicationName = it.medicationName,
                     date = date,
-                    id = it.medicationId.toString()
+                    id = it.id.toString()
                 )
             }
             }

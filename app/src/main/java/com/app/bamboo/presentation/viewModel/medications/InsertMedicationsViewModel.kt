@@ -38,12 +38,13 @@ class InsertMedicationsViewModel @Inject constructor(
                 time = time
             )
             insertSchedules(
-                medicationId,
-                daysOrHour,
-                date,
-                medicationTime,
-                time.toInt(),
-                medicationName
+                medicationId = medicationId,
+                daysOrHour = daysOrHour,
+                date = date,
+                startTime = medicationTime,
+                intervalHours = time.toInt(),
+                medicationName = medicationName,
+                description = description
             )
         }
     }
@@ -54,6 +55,7 @@ class InsertMedicationsViewModel @Inject constructor(
         date: String,
         startTime: String,
         intervalHours: Int,
+        description: String,
         medicationName: String,
     ): List<MedicationSchedule> {
         var nextTime = TimeUtils.formattedLocalDateTime(startTime)
@@ -68,6 +70,7 @@ class InsertMedicationsViewModel @Inject constructor(
                         scheduledTime = nextTime.toString(),
                         date = date,
                         hoursOrDays = daysOrHour,
+                        description = description,
                         intervalTime = intervalHours.toString()
                     )
                 )
@@ -82,7 +85,8 @@ class InsertMedicationsViewModel @Inject constructor(
                     scheduledTime = nextTime.toString(),
                     date = futureDateTime.toString(),
                     intervalTime = intervalHours.toString(),
-                    hoursOrDays = daysOrHour
+                    hoursOrDays = daysOrHour,
+                    description = description
                 )
             )
         }

@@ -24,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BamBoo"
         tools:targetApi="31">
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
+
         <activity
             android:name=".presentation.view.notifyView.MainAppointmentNotify"
             android:exported="false"
@@ -48,11 +53,16 @@
         </activity>
 
         <receiver
-            android:name=".domain.notifications.medication.AlarmReceiver"
+            android:name=".domain.alarmManager.worker.DailysCleanupReceiver"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+        <receiver
+            android:name=".domain.alarmManager.notifications.medication.AlarmReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
         <receiver
-            android:name=".domain.notifications.appointment.AlarmAppointmentReceiver"
+            android:name=".domain.alarmManager.notifications.appointment.AlarmAppointmentReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
     </application>

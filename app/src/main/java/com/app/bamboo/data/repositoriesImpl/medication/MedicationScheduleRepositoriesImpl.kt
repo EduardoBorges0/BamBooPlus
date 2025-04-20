@@ -21,8 +21,16 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
         return medicationScheduleDao.getAllSchedules()
     }
 
+    override fun getAllId(): Flow<List<Long>> {
+        return medicationScheduleDao.getAllId()
+    }
+
     override fun getAllMedicationSchedules(): Flow<List<MedicationSchedule>> {
         return medicationScheduleDao.getAllMedicationSchedules()
+    }
+
+    override suspend fun getSchedulesMedicationsById(id: Long?): List<MedicationSchedule> {
+        return medicationScheduleDao.getSchedulesMedicationsById(id)
     }
 
     override fun getAllMedicationId(): LiveData<List<Long>> {
@@ -33,11 +41,11 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
         return medicationScheduleDao.getMedicationsName()
     }
 
-    override suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean) {
+    override suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean?) {
         medicationScheduleDao.updateAccomplishSchedule(id, accomplish)
     }
 
-    override fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>>{
+    override fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>> {
         return medicationScheduleDao.getAllMedicationsScheduleById(id)
     }
 

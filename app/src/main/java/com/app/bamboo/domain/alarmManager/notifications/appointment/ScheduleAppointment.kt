@@ -1,13 +1,10 @@
-package com.app.bamboo.domain.notifications.appointment
+package com.app.bamboo.domain.alarmManager.notifications.appointment
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 fun scheduleAppointment(
     context: Context,

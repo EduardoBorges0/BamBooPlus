@@ -1,4 +1,4 @@
-package com.app.bamboo.domain.notifications
+package com.app.bamboo.domain.alarmManager.notifications
 
 import android.content.Context
 import com.app.bamboo.presentation.view.notifyView.MainAppointmentNotify

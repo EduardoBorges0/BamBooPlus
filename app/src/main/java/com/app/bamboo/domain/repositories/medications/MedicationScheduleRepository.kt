@@ -11,7 +11,9 @@ interface MedicationScheduleRepository {
     fun getAllMedicationSchedules(): Flow<List<MedicationSchedule>>
     fun getAllMedicationId(): LiveData<List<Long>>
     fun getMedicationsName(): LiveData<List<String>>
-    suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean)
+    suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean?)
     fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>>
+    fun getAllId(): Flow<List<Long>>
+    suspend fun getSchedulesMedicationsById(id: Long?): List<MedicationSchedule>
 
 }
