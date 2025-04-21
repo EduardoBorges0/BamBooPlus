@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications
+package com.app.bamboo.presentation.view.usefulCompounds
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,12 +23,15 @@ fun LoadingProgressMedication(modifier: Modifier, percent: Float) {
             color = Color.White,
             modifier = Modifier
                 .fillMaxWidth()
+
+                .height(5.dp)
         )
 
         Divider(
             color = SecondaryColor,
             modifier = Modifier
                 .fillMaxWidth(percent)
+                .height(5.dp)
         )
     }
 }

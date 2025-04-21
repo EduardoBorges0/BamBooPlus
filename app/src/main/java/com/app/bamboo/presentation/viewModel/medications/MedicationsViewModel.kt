@@ -43,19 +43,17 @@ class MedicationsViewModel @Inject constructor(
     private val _getMedicationsTimeById = MutableStateFlow<List<MedicationEntities>>(emptyList())
     val getMedicationsTimeById: Flow<List<MedicationEntities>> = _getMedicationsTimeById
 
-    private val _getPercentById = MutableStateFlow<Float>(0f)
-    val getPercentById: Flow<Float> = _getPercentById
+    private val _percentMap = MutableStateFlow<Map<Long, Float>>(emptyMap())
+    val percentMap: StateFlow<Map<Long, Float>> = _percentMap
 
-    private val _getNextMedication = MutableLiveData<MedicationSchedule>()
-    val getNextMedication: LiveData<MedicationSchedule> = _getNextMedication
+
+    private val _getNextMedication = MutableStateFlow<List<MedicationSchedule>>(emptyList())
+    val getNextMedication: Flow<List<MedicationSchedule>> = _getNextMedication
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    private val _getScheduleContainsAccomplishTrue = MutableLiveData<List<MedicationSchedule>>()
-    val getScheduleContainsAccomplishTrue: LiveData<List<MedicationSchedule>> = _getScheduleContainsAccomplishTrue
-
-    internal val medicationTimes = MutableLiveData<List<MedicationSchedule>>()
+    val medicationTimes: Flow<List<MedicationSchedule>> = repositorySchedule.getAllMedicationSchedules()
 
 
     fun getAllMedications(): Flow<List<MedicationEntities>>  {
@@ -67,36 +65,41 @@ class MedicationsViewModel @Inject constructor(
         return getAllMedications
     }
 
-    fun getScheduleContainsAccomplishTrue(id: Long) {
-        viewModelScope.launch {
-            repositorySchedule.getAllMedicationsScheduleById(id).collect { list ->
-                _getScheduleContainsAccomplishTrue.value =
-                    list.filter { it.accomplish == true && it.id == id }
-            }
-        }
-    }
-
-
     fun percentMedicationsTrue(id: Long) {
         viewModelScope.launch {
             val schedules = repositorySchedule.getAllMedicationsScheduleById(id).first()
-            val trueAccomplishedSize = getScheduleContainsAccomplishTrue.value?.size ?: 0
-            _getPercentById.value = ((trueAccomplishedSize.toDouble() / schedules.size.toDouble())).toFloat()
+            val trueAccomplishedSize = schedules.count { it.accomplish == true }
+            val percent = if (schedules.isNotEmpty()) {
+                (trueAccomplishedSize.toDouble() / schedules.size.toDouble()).toFloat()
+            } else 0f
+
+            _percentMap.value = _percentMap.value.toMutableMap().apply {
+                put(id, percent)
+            }
+
+            Log.d("PERCENT", "ID: $id, PERCENT: $percent")
         }
     }
-
 
     fun updateNextMedication(now: LocalTime = LocalTime.now()) {
         viewModelScope.launch {
-            val nextMedication = medicationTimes.value?.filter {
-                LocalTime.parse(it.scheduledTime).isAfter(now)
-            }?.minByOrNull { LocalTime.parse(it.scheduledTime) }
-
-            if (nextMedication != null) {
-                _getNextMedication.value = nextMedication
+            val upcomingMedications = medicationTimes.first().let { list ->
+                val futureMedications = list.filter {
+                    LocalTime.parse(it.scheduledTime).isAfter(now)
+                }
+                val nextTime = futureMedications.minByOrNull {
+                    LocalTime.parse(it.scheduledTime)
+                }?.scheduledTime
+                futureMedications.filter {
+                    it.scheduledTime == nextTime
+                }
+            }
+            if (true) {
+                _getNextMedication.value = upcomingMedications
             }
         }
     }
+
     fun getMedicationsTime(id: Long): Flow<List<MedicationSchedule>>{
         return repositorySchedule.getAllMedicationsScheduleById(id)
     }

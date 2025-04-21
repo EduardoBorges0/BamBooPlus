@@ -18,6 +18,7 @@
     <string name="What_interval_days">De quantos em quantos dias?</string>
     <string name="You_take_medication_in_days_or_hours">Você toma a cada x horas ou a cada x dias?</string>
     <string name="Hours">Horas</string>
+    <string name="Minutes">Minutos</string>
     <string name="Days">Dias</string>
     <string name="Pills">Pílula</string>
     <string name="Drop">Gota</string>
@@ -29,4 +30,11 @@
     Appointments
     <string name="appointmentHistoryIsNullOrEmpty">Sem nenhuma ida ao médico passada.</string>
     <string name="appointmentIsNullOrEmpty">Sem nenhuma ida próxima ao médico.</string>
+
+    MainMedication
+    <string name="next_medication_will_be">Sua próxima medicação será:</string>
+    <string name="next_hour">horas e</string>
+    <string name="next_minute">minutos</string>
+    <string name="rest">Faltam</string>
+
 </resources>

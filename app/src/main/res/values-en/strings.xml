@@ -13,6 +13,8 @@
     <string name="What_interval_days">Every how many days?</string>
     <string name="You_take_medication_in_days_or_hours">Do you take it every x hours or x days?</string>
     <string name="Hours">Hours</string>
+    <string name="Minutes">Minutes</string>
+
     <string name="Days">Days</string>
     <string name="Pills">Pill</string>
     <string name="Drop">Drop</string>
@@ -23,5 +25,9 @@
     <!-- Appointments -->
     <string name="appointmentHistoryIsNullOrEmpty">No past doctors appointments.</string>
     <string name="appointmentIsNullOrEmpty">No upcoming doctors appointments.</string>
-
+    <!-- MainMedication -->
+    <string name="next_medication_will_be">Your next medication will be: </string>
+    <string name="next_hour">hours and</string>
+    <string name="next_minute">minutes</string>
+    <string name="rest">Rest</string>
 </resources>

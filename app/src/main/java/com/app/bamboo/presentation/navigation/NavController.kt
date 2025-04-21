@@ -61,6 +61,7 @@ fun NavControllerComposable(navController: NavHostController) {
         composable("main") {
             val medicationsViewModel: MedicationsViewModel = hiltViewModel()
             medicationsViewModel.getAllMedications()
+            medicationsViewModel.updateNextMedication()
             MainMedicationComposable(navController, medicationsViewModel)
         }
         composable("checkIn"){

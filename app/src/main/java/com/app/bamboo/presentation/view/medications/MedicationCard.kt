@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
+import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedication
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -42,7 +43,7 @@ fun MedicationCards(
             medicationName,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = if(times.size > 5) 20.dp else 30.dp),
+                .padding(top = if (times.size > 5) 20.dp else 30.dp),
             fontSize = 17.sp,
             color = textColor
         )
