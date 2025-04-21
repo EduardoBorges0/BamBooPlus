@@ -46,7 +46,8 @@ fun NextMedication(
     val rest = Duration.between(currentTime.value, time)
     val hours = rest.toHours()
     val minutes = rest.minusHours(hours).toMinutes()
-    val phrase = stringResource(R.string.rest)
+
+    val phrase = stringResource(R.string.left)
     val nextHour = stringResource(R.string.next_hour)
     val nextMinute = stringResource(R.string.next_minute)
 

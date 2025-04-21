@@ -30,6 +30,6 @@
     <string name="next_medication_will_be">Tu próximo medicamento será: </string>
     <string name="next_hour">horas y</string>
     <string name="next_minute">minutos</string>
-    <string name="rest">Restan</string>
+    <string name="left">Restan</string>
 
 </resources>

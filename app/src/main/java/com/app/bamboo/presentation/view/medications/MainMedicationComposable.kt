@@ -4,10 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,6 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import com.app.bamboo.R
+import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
+import com.app.bamboo.presentation.view.usefulCompounds.ElevatedButtonAdd
 import com.app.bamboo.presentation.view.usefulCompounds.SearchTextField
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import com.app.bamboo.utils.TimeUtils
@@ -32,12 +43,17 @@ fun MainMedicationComposable(
     val searchResults by medicationsViewModel.searchResults.collectAsState()
     val nextMedication by medicationsViewModel.getNextMedication.collectAsState(emptyList())
     Box(modifier = Modifier.fillMaxSize()) {
+        AsyncImage(
+            model = R.drawable.logo,
+            contentDescription = "",
+            modifier = Modifier.align(Alignment.TopCenter).height(heightSize / 5)
+        )
         LazyRow(modifier = Modifier.align(Alignment.Center)) {
             items(nextMedication.size) {
                 NextMedication(
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
-                        .padding(top = 120.dp),
+                        .padding(top = heightSize * .21f),
                     heightSize,
                     widthSize,
                     nextMedication.get(it).medicationName,
@@ -62,7 +78,7 @@ fun MainMedicationComposable(
                     medicationName = searchResults[it].medicationName,
                     times = times.value,
                     modifier = Modifier
-                        .padding(top = heightSize * .2f)
+                        .padding(top = heightSize * .26f)
                         .padding(horizontal = 20.dp),
                     heightSize = heightSize,
                     widthSize = widthSize,
@@ -73,11 +89,16 @@ fun MainMedicationComposable(
         SearchTextField(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .width(widthSize / 1.2f),
+                .padding(top = heightSize * 0.09f)
+                .width(widthSize / 1.15f),
             value = searchQuery,
             onValueChange = medicationsViewModel::onSearchQueryChanged,
             label = "Buscar Medicamento"
         )
-
+        ElevatedButtonAdd(
+            modifier = Modifier.align(Alignment.BottomEnd),
+            action = {},
+            heightSize
+        )
     }
 }
