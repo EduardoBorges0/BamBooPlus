@@ -28,7 +28,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.lang.Thread.State
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,32 +76,55 @@ class MedicationsViewModel @Inject constructor(
             val percent = if (schedules.isNotEmpty()) {
                 (trueAccomplishedSize.toDouble() / schedules.size.toDouble()).toFloat()
             } else 0f
-
             _percentMap.value = _percentMap.value.toMutableMap().apply {
                 put(id, percent)
             }
-
-            Log.d("PERCENT", "ID: $id, PERCENT: $percent")
         }
     }
 
-    fun updateNextMedication(now: LocalTime = LocalTime.now()) {
+    fun updateNextMedication(currentTime: LocalTime = LocalTime.now()) {
         viewModelScope.launch {
+            val formatter = DateTimeFormatter.ofPattern("HH:mm")
+            val now = currentTime.format(formatter)
+            val nowParsed = LocalTime.parse(now, formatter)
+
             val upcomingMedications = medicationTimes.first().let { list ->
-                val futureMedications = list.filter {
-                    LocalTime.parse(it.scheduledTime).isAfter(now)
-                }
-                val nextTime = futureMedications.minByOrNull {
+                val sortedMedications = list.sortedBy {
                     LocalTime.parse(it.scheduledTime)
-                }?.scheduledTime
-                futureMedications.filter {
-                    it.scheduledTime == nextTime
+                }
+                val futureToday = sortedMedications.filter {
+                    LocalTime.parse(it.scheduledTime).isAfter(nowParsed)
+                }
+
+                if (futureToday.isNotEmpty()) {
+                    val nextTime = futureToday.minByOrNull {
+                        LocalTime.parse(it.scheduledTime)
+                    }?.scheduledTime
+
+                    futureToday.filter { it.scheduledTime == nextTime }
+                } else {
+                    val firstTime = sortedMedications.minByOrNull {
+                        LocalTime.parse(it.scheduledTime)
+                    }?.scheduledTime
+
+                    sortedMedications.filter { it.scheduledTime == firstTime }
                 }
             }
-            if (true) {
-                _getNextMedication.value = upcomingMedications
-            }
+            _getNextMedication.value = upcomingMedications
         }
+    }
+
+    fun getTimeUntilNextAlarm(currentTime: LocalTime, scheduledTime: LocalTime): Pair<Long, Long> {
+        val today = LocalDate.now()
+        var nextAlarm = LocalDateTime.of(today, scheduledTime)
+        val now = LocalDateTime.of(today, currentTime)
+        if (scheduledTime.isBefore(currentTime) || scheduledTime == currentTime) {
+            nextAlarm = nextAlarm.plusDays(1)
+        }
+        val duration = Duration.between(now, nextAlarm)
+        val hours = duration.toHours()
+        val minutes = duration.minusHours(hours).toMinutes()
+        return Pair(hours, minutes)
     }
 
     fun getMedicationsTime(id: Long): Flow<List<MedicationSchedule>>{

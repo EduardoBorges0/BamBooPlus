@@ -1,5 +1,6 @@
 package com.app.bamboo.presentation.view.insertMedications.medicationsAndStock
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import com.app.bamboo.presentation.view.usefulCompounds.NextButton
 fun MedicationAndStock(navController: NavController) {
     var medicationName by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
     val height = LocalConfiguration.current.screenHeightDp.dp
@@ -34,6 +36,8 @@ fun MedicationAndStock(navController: NavController) {
         MedicationInputFields(
             medicationName = medicationName,
             quantity = quantity,
+            description = description,
+            onDescriptionChange = { description = it },
             onMedicationNameChange = { medicationName = it },
             onQuantityChange = { quantity = it },
             isError = isError,
@@ -43,7 +47,10 @@ fun MedicationAndStock(navController: NavController) {
             onClick = {
                 isError = medicationName.isBlank() || quantity.isBlank()
                 if (!isError) {
-                    navController.navigate("medicationTime?medicationName=${medicationName}&quantity=${quantity}")
+                    val encodedMedicationName = Uri.encode(medicationName)
+                    val encodedQuantity = Uri.encode(quantity)
+                    val encodedDescription = Uri.encode(description)
+                    navController.navigate("medicationTime?medicationName=$encodedMedicationName&quantity=$encodedQuantity&description=$encodedDescription")
                 }
             },
             text = stringResource(R.string.next),

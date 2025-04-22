@@ -8,11 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import com.app.bamboo.utils.TimeUtils
 
 @Composable
 fun NextMedicationList(
     modifier: Modifier,
+    medicationsViewModel: MedicationsViewModel,
     nextMedication: List<MedicationSchedule>,
     heightSize: Dp,
     widthSize: Dp
@@ -20,13 +22,14 @@ fun NextMedicationList(
     LazyRow(modifier = modifier) {
         items(nextMedication.size) {
             NextMedication(
+                medicationsViewModel = medicationsViewModel,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = heightSize * .21f),
-                heightSize,
-                widthSize,
-                nextMedication.get(it).medicationName,
-                TimeUtils.formattedLocalDateTime(nextMedication.get(it).scheduledTime)
+                height = heightSize,
+                width = widthSize,
+                medicationName = nextMedication.get(it).medicationName,
+                time = TimeUtils.formattedLocalDateTime(nextMedication.get(it).scheduledTime)
             )
         }
     }

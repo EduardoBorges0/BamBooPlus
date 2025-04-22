@@ -1,6 +1,7 @@
 package com.app.bamboo.presentation.view.insertMedications.medicationTime
 
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,9 +33,10 @@ import com.app.bamboo.presentation.view.usefulCompounds.NextButton
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 @Composable
-fun MedicationTime(navController: NavController, medicationName: String, quantity: String) {
+fun MedicationTime(navController: NavController, medicationName: String, quantity: String, description: String) {
     var selectedDate: Long? by remember { mutableStateOf(0L) }
     var firstTime: String by remember { mutableStateOf("") }
     var intervalTime: String by remember { mutableStateOf("") }
@@ -43,12 +45,15 @@ fun MedicationTime(navController: NavController, medicationName: String, quantit
     var isError: Boolean by remember { mutableStateOf(false) }
     var hourOrDays: String by remember { mutableStateOf("") }
 
-    var formattedDate = selectedDate?.let {
+    val formattedDate = selectedDate?.let {
         val locale = Locale.getDefault()
         val pattern = if (locale.language == "pt") "dd/MM/yyyy" else "MM/dd/yyyy"
         val sdf = SimpleDateFormat(pattern, locale)
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
         sdf.format(Date(it))
     } ?: ""
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         BackIcon(navController)
@@ -69,6 +74,11 @@ fun MedicationTime(navController: NavController, medicationName: String, quantit
         NextButton(
             onClick = {
                 isError = firstTime.isBlank() || hourOrDays.isEmpty() || intervalTime.isBlank()
+                if(!isError){
+                    navController.navigate(
+                        "pillOrDrop?medicationName=$medicationName&quantity=$quantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$description"
+                    )
+                }
             },
             text = stringResource(R.string.next),
             modifier = Modifier.align(Alignment.BottomCenter)
@@ -93,17 +103,16 @@ fun MedicationTime(navController: NavController, medicationName: String, quantit
                 )
             }
         }
-        if(isError){
+        if (isError) {
             AlertDialogComposable(
-                onDismiss = { isError = false },
                 onConfirm = { isError = false },
-                title = "",
-                confirmText = "",
+                onDismiss = { isError = false },
+                title = stringResource(R.string.fill_everything),
+                text = stringResource(R.string.fill_every_fields),
+                confirmText = stringResource(R.string.try_again),
                 dismissText = "",
-                needDismiss = false,
-                text = ""
+                needDismiss = false
             )
         }
-
     }
 }

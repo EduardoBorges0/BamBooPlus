@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
+import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import kotlinx.coroutines.delay
 import java.time.Duration
 import java.time.LocalTime
@@ -30,6 +31,7 @@ import java.time.LocalTime
 @Composable
 fun NextMedication(
     modifier: Modifier,
+    medicationsViewModel: MedicationsViewModel,
     height: Dp,
     width: Dp,
     medicationName: String,
@@ -45,8 +47,7 @@ fun NextMedication(
     }
 
     val rest = Duration.between(currentTime.value, time)
-    val hours = rest.toHours()
-    val minutes = rest.minusHours(hours).toMinutes()
+    val (hours, minutes) = medicationsViewModel.getTimeUntilNextAlarm(currentTime.value, time)
 
     val phrase = stringResource(R.string.left)
     val nextHour = stringResource(R.string.next_hour)

@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
+import com.app.bamboo.presentation.view.usefulCompounds.TwoOptionToggle
 
 @Composable
 fun TimeForm(
@@ -55,13 +56,19 @@ fun TimeForm(
             label = "Qual dia você começa?",
             trailingIcon = Icons.Filled.DateRange
         )
-        HoursOrDays(hoursOrDays, onHoursOrDaysChange, isError)
+        TwoOptionToggle(
+            value = hoursOrDays,
+            onChange = onHoursOrDaysChange,
+            isError = isError,
+            button1 = stringResource(R.string.Hours),
+            button2 = stringResource(R.string.Days)
+        )
         CustomTextField(
             modifier = Modifier.padding(top = 20.dp),
             value = intervalTime,
             onValueChange = onIntervalTimeChange,
             keyboardType = KeyboardType.Number,
-            label = stringResource(R.string.What_interval_hour),
+            label = if(hoursOrDays == "Hours") stringResource(R.string.What_interval_hour) else stringResource(R.string.What_interval_days),
             isError = isError
         )
     }

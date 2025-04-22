@@ -26,6 +26,7 @@ import com.app.bamboo.presentation.view.insertMedications.PillOrDrop
 import com.app.bamboo.presentation.view.insertMedications.medicationTime.MedicationTime
 import com.app.bamboo.presentation.view.medications.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
+import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,24 +74,58 @@ fun NavControllerComposable(navController: NavHostController) {
             medicationsViewModel.updateNextMedication()
             MainMedicationComposable(navController, medicationsViewModel)
         }
-        composable("pillOrDrop") {
-            PillOrDrop()
-        }
         composable(
-            route = "medicationTime?medicationName={medicationName}&quantity={quantity}",
+            route = "medicationTime?medicationName={medicationName}&quantity={quantity}&description={description}",
             arguments = listOf(
-                navArgument("medicationName") { type = NavType.StringType },
-                navArgument("quantity") { type = NavType.StringType }
+                navArgument("medicationName") { type = NavType.StringType; defaultValue = "" },
+                navArgument("quantity") { type = NavType.StringType; defaultValue = "" },
+                navArgument("description") { type = NavType.StringType; defaultValue = "" }
             )
         ) {
             val medicationName = it.arguments?.getString("medicationName") ?: ""
             val quantity = it.arguments?.getString("quantity") ?: ""
-            MedicationTime(navController, medicationName, quantity)
+            val description = it.arguments?.getString("description") ?: ""
+
+            MedicationTime(navController, medicationName, quantity, description)
         }
+        composable(
+            route = "pillOrDrop?medicationName={medicationName}&quantity={quantity}&firstTime={firstTime}&selectedDate={selectedDate}&hoursOrDays={hoursOrDays}&intervalTime={intervalTime}&description={description}",
+            arguments = listOf(
+                navArgument("description") { type = NavType.StringType; defaultValue = "" },
+                navArgument("medicationName") { type = NavType.StringType; defaultValue = "" },
+                navArgument("quantity") { type = NavType.StringType; defaultValue = "" },
+                navArgument("firstTime") { type = NavType.StringType; defaultValue = "" },
+                navArgument("selectedDate") { type = NavType.StringType; defaultValue = "" },
+                navArgument("hoursOrDays") { type = NavType.StringType; defaultValue = "" },
+                navArgument("intervalTime") { type = NavType.StringType; defaultValue = "" }
+            )
+        ) {
+            val insertMedicationsViewModel: InsertMedicationsViewModel = hiltViewModel()
+            val medicationName = it.arguments?.getString("medicationName") ?: ""
+            val description = it.arguments?.getString("description") ?: ""
+            val quantity = it.arguments?.getString("quantity") ?: ""
+            val firstTime = it.arguments?.getString("firstTime") ?: ""
+            val selectedDate = it.arguments?.getString("selectedDate") ?: ""
+            val hoursOrDays = it.arguments?.getString("hoursOrDays") ?: ""
+            val intervalTime = it.arguments?.getString("intervalTime") ?: ""
+
+            PillOrDrop(
+                navController,
+                description,
+                insertMedicationsViewModel = insertMedicationsViewModel,
+                medicationName,
+                quantity,
+                firstTime,
+                selectedDate,
+                hoursOrDays,
+                intervalTime
+            )
+        }
+
         composable("medicationAndStock") {
             MedicationAndStock(navController)
         }
-        composable("checkIn"){
+        composable("checkIn") {
             CheckInMain()
         }
         composable("appointments") {

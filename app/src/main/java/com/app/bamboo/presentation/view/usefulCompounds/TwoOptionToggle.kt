@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.insertMedications.medicationTime
+package com.app.bamboo.presentation.view.usefulCompounds
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -11,10 +11,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,9 +23,11 @@ import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 
 @Composable
-fun HoursOrDays(
-    hoursOrDays: String,
-    onHoursOrDaysChange: (String) -> Unit,
+fun TwoOptionToggle(
+    value: String,
+    onChange: (String) -> Unit,
+    button1: String,
+    button2: String,
     isError: Boolean
 ) {
     val widthSize = LocalConfiguration.current.screenWidthDp.dp
@@ -53,31 +51,31 @@ fun HoursOrDays(
         Row(modifier = Modifier.padding(top = 5.dp)) {
             Button(
                 onClick = {
-                    onHoursOrDaysChange("Hours")
+                    onChange(button1)
                 },
                 modifier = Modifier
                     .size(width = widthSize / 3, height = heigthSize / 15)
                     .padding(horizontal = 5.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (hoursOrDays == "Hours") SecondaryColor else MainColor
+                    containerColor = if (value == button1) SecondaryColor else MainColor
                 )
             ) {
-                Text(stringResource(R.string.Hours))
+                Text(button1)
             }
             Button(
                 onClick = {
-                    onHoursOrDaysChange("Days")
+                    onChange(button2)
                 },
                 modifier = Modifier
                     .size(width = widthSize / 3, height = heigthSize / 15)
                     .padding(horizontal = 5.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (hoursOrDays == "Days") SecondaryColor else MainColor
+                    containerColor = if (value == button2) SecondaryColor else MainColor
                 )
             ) {
-                Text(stringResource(R.string.Days))
+                Text(button2)
             }
         }
     }

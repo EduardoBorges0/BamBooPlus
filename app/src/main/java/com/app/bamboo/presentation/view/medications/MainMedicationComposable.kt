@@ -52,9 +52,10 @@ fun MainMedicationComposable(
         )
         NextMedicationList(
             modifier = Modifier.align(Alignment.Center),
-            nextMedication,
-            heightSize,
-            widthSize
+            medicationsViewModel = medicationsViewModel,
+            nextMedication = nextMedication,
+            heightSize = heightSize,
+            widthSize = widthSize
         )
         if (searchResults.isEmpty()) {
             WithoutMedications()

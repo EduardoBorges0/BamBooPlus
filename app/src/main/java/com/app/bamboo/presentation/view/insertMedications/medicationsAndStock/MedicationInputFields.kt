@@ -15,6 +15,8 @@ import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
 fun MedicationInputFields(
     modifier: Modifier,
     medicationName: String,
+    description: String,
+    onDescriptionChange: (String) -> Unit,
     quantity: String,
     onMedicationNameChange: (String) -> Unit,
     onQuantityChange: (String) -> Unit,
@@ -28,6 +30,14 @@ fun MedicationInputFields(
             keyboardType = KeyboardType.Text,
             isError = isError,
             label = stringResource(R.string.What_medication_you_take)
+        )
+        CustomTextField(
+            value = description,
+            onValueChange = onDescriptionChange,
+            modifier = Modifier.padding(top = 20.dp),
+            keyboardType = KeyboardType.Text,
+            isError = isError,
+            label = "descrição"
         )
         CustomTextField(
             value = quantity,
