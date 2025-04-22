@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.insertMedications.medicationsAndStock
+package com.app.bamboo.presentation.view.usefulCompounds
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -8,7 +8,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 
@@ -22,7 +21,7 @@ fun NextButton(onClick: () -> Unit, text: String, modifier: Modifier) {
         colors = ButtonDefaults.buttonColors(
             containerColor = SecondaryColor
         ),
-        shape = RoundedCornerShape(23.dp)
+        shape = RoundedCornerShape(23.dp, 23.dp, 0.dp, 0.dp)
     ) {
         Text(text)
     }

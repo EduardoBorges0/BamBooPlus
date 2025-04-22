@@ -1,11 +1,7 @@
 package com.app.bamboo.presentation.view.insertMedications.medicationsAndStock
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,11 +13,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.app.bamboo.R
+import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
-import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedication
+import com.app.bamboo.presentation.view.usefulCompounds.NextButton
 
 @Composable
 fun MedicationAndStock(navController: NavController) {
@@ -32,28 +28,9 @@ fun MedicationAndStock(navController: NavController) {
     val height = LocalConfiguration.current.screenHeightDp.dp
     Box(modifier = Modifier.fillMaxSize()) {
         BackIcon(
-            modifier = Modifier
-                .padding(39.dp)
-                .padding(top = 25.dp)
-                .clickable {
-                    navController.popBackStack()
-                }
+            navController
         )
-        Column(
-            modifier = Modifier.padding(top = 90.dp)
-        ) {
-            AsyncImage(
-                model = R.drawable.boo,
-                contentDescription = "boo",
-                modifier = Modifier
-                    .height(height / 4)
-                    .align(Alignment.CenterHorizontally)
-            )
-            LoadingProgressMedication(
-                modifier = Modifier.padding(horizontal = 90.dp),
-                percent = 0.0f
-            )
-        }
+        AdvancePercentage(0.00f)
         MedicationInputFields(
             medicationName = medicationName,
             quantity = quantity,
@@ -65,6 +42,9 @@ fun MedicationAndStock(navController: NavController) {
         NextButton(
             onClick = {
                 isError = medicationName.isBlank() || quantity.isBlank()
+                if (!isError) {
+                    navController.navigate("medicationTime?medicationName=${medicationName}&quantity=${quantity}")
+                }
             },
             text = stringResource(R.string.next),
             modifier = Modifier.align(Alignment.BottomCenter)

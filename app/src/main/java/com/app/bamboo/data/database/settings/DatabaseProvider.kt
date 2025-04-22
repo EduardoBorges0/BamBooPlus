@@ -20,7 +20,7 @@ object DatabaseProvider {
             INSTANCE ?: Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "app_database"
-            ).addMigrations(MIGRATION_12_13)
+            ).addMigrations(MIGRATION_12_13).fallbackToDestructiveMigration()
                 .build().also { INSTANCE = it }
         }
     }

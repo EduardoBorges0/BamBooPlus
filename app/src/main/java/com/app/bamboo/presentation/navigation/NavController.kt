@@ -11,17 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.app.bamboo.data.worker.deleteMedicationHistory.deleteAllHistoryMedication
 import com.app.bamboo.domain.alarmManager.worker.scheduleDailyCleanupAlarm
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
-import com.app.bamboo.presentation.view.insertMedications.HourOrDays
 import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
 import com.app.bamboo.presentation.view.insertMedications.PillOrDrop
+import com.app.bamboo.presentation.view.insertMedications.medicationTime.MedicationTime
 import com.app.bamboo.presentation.view.medications.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
@@ -74,8 +76,16 @@ fun NavControllerComposable(navController: NavHostController) {
         composable("pillOrDrop") {
             PillOrDrop()
         }
-        composable("hourOrDay") {
-            HourOrDays()
+        composable(
+            route = "medicationTime?medicationName={medicationName}&quantity={quantity}",
+            arguments = listOf(
+                navArgument("medicationName") { type = NavType.StringType },
+                navArgument("quantity") { type = NavType.StringType }
+            )
+        ) {
+            val medicationName = it.arguments?.getString("medicationName") ?: ""
+            val quantity = it.arguments?.getString("quantity") ?: ""
+            MedicationTime(navController, medicationName, quantity)
         }
         composable("medicationAndStock") {
             MedicationAndStock(navController)
