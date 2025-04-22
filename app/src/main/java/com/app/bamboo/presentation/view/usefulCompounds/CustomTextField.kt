@@ -1,7 +1,6 @@
 package com.app.bamboo.presentation.view.usefulCompounds
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
@@ -12,10 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.app.bamboo.presentation.view.ui.theme.textColor
 
 @Composable
-fun SearchTextField(
+fun CustomTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,

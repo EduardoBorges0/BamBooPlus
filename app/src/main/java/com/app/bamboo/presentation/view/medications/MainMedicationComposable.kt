@@ -1,44 +1,28 @@
 package com.app.bamboo.presentation.view.medications
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.app.bamboo.R
-import com.app.bamboo.presentation.view.medications.medicationList.MedicationCards
 import com.app.bamboo.presentation.view.medications.medicationList.MedicationList
 import com.app.bamboo.presentation.view.medications.medicationList.WithoutMedications
-import com.app.bamboo.presentation.view.medications.nextMedication.NextMedication
 import com.app.bamboo.presentation.view.medications.nextMedication.NextMedicationList
-import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
+import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
 import com.app.bamboo.presentation.view.usefulCompounds.ElevatedButtonAdd
-import com.app.bamboo.presentation.view.usefulCompounds.SearchTextField
-import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
-import com.app.bamboo.utils.TimeUtils
 
 @Composable
 fun MainMedicationComposable(
@@ -82,7 +66,7 @@ fun MainMedicationComposable(
             )
         }
 
-        SearchTextField(
+        CustomTextField(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 60.dp)

@@ -20,7 +20,7 @@ import com.app.bamboo.domain.alarmManager.worker.scheduleDailyCleanupAlarm
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
 import com.app.bamboo.presentation.view.insertMedications.HourOrDays
-import com.app.bamboo.presentation.view.insertMedications.MedicationAndStock
+import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
 import com.app.bamboo.presentation.view.insertMedications.PillOrDrop
 import com.app.bamboo.presentation.view.medications.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
