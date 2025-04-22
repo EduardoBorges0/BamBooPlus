@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
+import com.app.bamboo.presentation.view.ui.theme.loading
 
 @Composable
 fun LoadingProgressMedication(modifier: Modifier, percent: Float) {
@@ -20,10 +21,9 @@ fun LoadingProgressMedication(modifier: Modifier, percent: Float) {
             .height(4.dp)
     ) {
         Divider(
-            color = Color.White,
+            color = loading,
             modifier = Modifier
                 .fillMaxWidth()
-
                 .height(5.dp)
         )
 

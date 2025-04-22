@@ -13,6 +13,8 @@ data class MedicationEntities(
     val description: String,
     @ColumnInfo(name = "pill_or_drop")
     val pillOrDrop: String,
+    @ColumnInfo(name = "quantity")
+    val quantity: Int,
     @ColumnInfo(name = "days_or_hours")
     val daysOrHours: String,
     @ColumnInfo(name = "medication_time")

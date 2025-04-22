@@ -13,11 +13,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.bamboo.data.worker.deleteMedicationHistory.deleteAllHistoryMedication
 import com.app.bamboo.domain.alarmManager.worker.scheduleDailyCleanupAlarm
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
+import com.app.bamboo.presentation.view.insertMedications.HourOrDays
+import com.app.bamboo.presentation.view.insertMedications.MedicationAndStock
+import com.app.bamboo.presentation.view.insertMedications.PillOrDrop
 import com.app.bamboo.presentation.view.medications.MainMedicationComposable
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
@@ -32,21 +36,24 @@ class MainNavController : ComponentActivity() {
         deleteAllHistoryMedication(applicationContext)
         scheduleDailyCleanupAlarm(this)
         setContent {
-
-            val notifyViewModel: NotifyViewModel = hiltViewModel()
             val navController = rememberNavController()
+            val notifyViewModel: NotifyViewModel = hiltViewModel()
+            notifyViewModel.showMedicationNotifications(this, this)
 
-            notifyViewModel.showMedicationNotifications(
-                this,
-                this
-            )
-            Scaffold(bottomBar = {
-                BottomNavigationBar(navController)
+            val navBackStackEntry = navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry.value?.destination?.route
 
-            }) {
+            Scaffold(
+                bottomBar = {
+                    if (currentRoute in listOf("main", "appointments", "checkIn")) {
+                        BottomNavigationBar(navController)
+                    }
+                }
+            ) {
                 NavControllerComposable(navController)
             }
         }
+
     }
 }
 
@@ -63,6 +70,15 @@ fun NavControllerComposable(navController: NavHostController) {
             medicationsViewModel.getAllMedications()
             medicationsViewModel.updateNextMedication()
             MainMedicationComposable(navController, medicationsViewModel)
+        }
+        composable("pillOrDrop") {
+            PillOrDrop()
+        }
+        composable("hourOrDay") {
+            HourOrDays()
+        }
+        composable("medicationAndStock") {
+            MedicationAndStock(navController)
         }
         composable("checkIn"){
             CheckInMain()

@@ -9,6 +9,7 @@ val Pink80 = Color(0xFFEFB8C8)
 val MainColor = Color(0xFFA0D995)
 val SecondaryColor = Color(0xFF6f9f66)
 val textColor = Color(0xFFf8f8f8)
+val loading = Color(0xFFe0e0e0)
 val NotifyCancelButton = Color(0xFFCB6B6B)
 
 val Purple40 = Color(0xFF6650a4)

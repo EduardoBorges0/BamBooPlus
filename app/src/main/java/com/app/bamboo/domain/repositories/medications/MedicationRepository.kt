@@ -15,6 +15,7 @@ interface MedicationRepository {
         daysOrHour: String,
         medicationTime: String,
         date: String,
+        quantity: Int,
         time: Long
     ): Long
 
@@ -26,6 +27,7 @@ interface MedicationRepository {
         daysOrHour: String,
         medicationTime: String,
         date: String,
+        quantity: Int,
         time: Long
     )
     suspend fun updateDate(date: String, id: Long)

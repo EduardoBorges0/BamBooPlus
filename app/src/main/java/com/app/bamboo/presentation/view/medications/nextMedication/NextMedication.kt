@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications
+package com.app.bamboo.presentation.view.medications.nextMedication
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
+import kotlinx.coroutines.delay
 import java.time.Duration
 import java.time.LocalTime
 
@@ -38,7 +39,7 @@ fun NextMedication(
 
     LaunchedEffect(Unit) {
         while (true) {
-            kotlinx.coroutines.delay(60_000L)
+            delay(60_000L)
             currentTime.value = LocalTime.now()
         }
     }
@@ -67,7 +68,7 @@ fun NextMedication(
         Column(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 50.dp)
+                .padding(top = height / 14.9f)
         ) {
             Text(
                 nextMedicationWillBe,

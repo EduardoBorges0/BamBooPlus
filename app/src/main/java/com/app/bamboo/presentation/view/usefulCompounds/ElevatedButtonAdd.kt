@@ -19,7 +19,7 @@ import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 fun ElevatedButtonAdd(modifier: Modifier, action: () -> Unit, heightSize: Dp){
     ElevatedButton(
         onClick = {
-            action
+            action()
         },
         modifier = modifier
             .padding(bottom = heightSize / 6)

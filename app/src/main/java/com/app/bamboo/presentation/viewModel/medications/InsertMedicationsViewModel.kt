@@ -25,6 +25,7 @@ class InsertMedicationsViewModel @Inject constructor(
         daysOrHour: String,
         medicationTime: String,
         date: String,
+        quantity: Int,
         time: Long,
     ) {
         viewModelScope.launch {
@@ -35,6 +36,7 @@ class InsertMedicationsViewModel @Inject constructor(
                 daysOrHour = daysOrHour,
                 medicationTime = medicationTime,
                 date = date,
+                quantity = quantity,
                 time = time
             )
             insertSchedules(
