@@ -7,6 +7,8 @@
 
     <!-- InsertMedication -->
     <string name="What_medication_you_take">¿Qué medicamento vas a tomar?</string>
+    <string name="What_its_medication_make">¿Para qué sirve?</string>
+    <string name="When_must_alert_you">¿Con cuántos en el stock debemos avisarte?</string>
     <string name="Do_you_quantity_in_the_stock">¿Cuántos tienes en stock?</string>
     <string name="What_first_time_you_take_medication">¿A qué hora tomarás el primer medicamento?</string>
     <string name="What_interval_hour">¿Cada cuántas horas?</string>

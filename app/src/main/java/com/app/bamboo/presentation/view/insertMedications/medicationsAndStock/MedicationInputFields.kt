@@ -16,6 +16,8 @@ fun MedicationInputFields(
     modifier: Modifier,
     medicationName: String,
     description: String,
+    quantityThreshold: String,
+    onQuantityThreshold: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     quantity: String,
     onMedicationNameChange: (String) -> Unit,
@@ -26,7 +28,7 @@ fun MedicationInputFields(
         CustomTextField(
             value = medicationName,
             onValueChange = onMedicationNameChange,
-            modifier = Modifier,
+            modifier = Modifier.padding(horizontal = 20.dp),
             keyboardType = KeyboardType.Text,
             isError = isError,
             label = stringResource(R.string.What_medication_you_take)
@@ -34,20 +36,30 @@ fun MedicationInputFields(
         CustomTextField(
             value = description,
             onValueChange = onDescriptionChange,
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier.padding(top = 20.dp).padding(horizontal = 20.dp),
             keyboardType = KeyboardType.Text,
             isError = isError,
-            label = "descrição"
+            label = stringResource(R.string.What_its_medication_make)
         )
         CustomTextField(
             value = quantity,
             onValueChange = {
                 if (it.all { char -> char.isDigit() }) onQuantityChange(it)
             },
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier.padding(top = 20.dp).padding(horizontal = 20.dp),
             keyboardType = KeyboardType.Number,
             isError = isError,
             label = stringResource(R.string.Do_you_quantity_in_the_stock)
+        )
+        CustomTextField(
+            value = quantityThreshold,
+            onValueChange = {
+                if (it.all { char -> char.isDigit() }) onQuantityThreshold(it)
+            },
+            modifier = Modifier.padding(top = 20.dp).padding(horizontal = 20.dp),
+            keyboardType = KeyboardType.Number,
+            isError = isError,
+            label = stringResource(R.string.When_must_alert_you)
         )
     }
 }

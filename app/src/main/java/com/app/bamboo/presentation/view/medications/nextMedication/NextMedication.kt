@@ -45,10 +45,7 @@ fun NextMedication(
             currentTime.value = LocalTime.now()
         }
     }
-
-    val rest = Duration.between(currentTime.value, time)
     val (hours, minutes) = medicationsViewModel.getTimeUntilNextAlarm(currentTime.value, time)
-
     val phrase = stringResource(R.string.left)
     val nextHour = stringResource(R.string.next_hour)
     val nextMinute = stringResource(R.string.next_minute)

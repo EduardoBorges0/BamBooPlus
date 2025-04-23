@@ -7,6 +7,9 @@
 
     <!-- InsertMedication -->
     <string name="What_medication_you_take">Which medication will you take?</string>
+    <string name="What_its_medication_make">What is it used for?</string>
+    <string name="When_must_alert_you">At what stock level should we alert you?</string>
+
     <string name="Do_you_quantity_in_the_stock">How many do you have in stock?</string>
     <string name="What_first_time_you_take_medication">What time will you take your first dose?</string>
     <string name="What_interval_hour">Every how many hours?</string>

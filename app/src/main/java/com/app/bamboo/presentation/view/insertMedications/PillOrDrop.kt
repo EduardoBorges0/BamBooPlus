@@ -33,6 +33,7 @@ fun PillOrDrop(
     insertMedicationsViewModel: InsertMedicationsViewModel,
     medicationName: String,
     quantity: String,
+    quantityThreshold: String,
     firstTime: String,
     selectedDate: String,
     hoursOrDay: String,
@@ -78,7 +79,8 @@ fun PillOrDrop(
                         medicationTime = firstTime,
                         date = selectedDate,
                         quantity = quantity.toInt(),
-                        time = intervalTime.toLong()
+                        time = intervalTime.toLong(),
+                        quantityThreshold = quantityThreshold.toInt()
                     )
                     navController.navigate("main"){
                         popUpTo(navController.graph.startDestinationId) {

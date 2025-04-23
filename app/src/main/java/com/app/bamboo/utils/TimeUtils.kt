@@ -10,9 +10,6 @@ import java.util.Date
 import java.util.Locale
 
 object TimeUtils {
-    private val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-
     fun formattedLocalDateTime(time: String): LocalTime {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         return LocalTime.parse(time, formatter)
@@ -32,6 +29,22 @@ object TimeUtils {
                 LocalDate.parse(date, dateFormat2)
             }
         }
+    }
+    fun parseToLocalDateTime(date: String, time: String): LocalDateTime {
+        val formatters = listOf(
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm")
+        )
+        val dateTimeString = "$date $time"
+        for (formatter in formatters) {
+            try {
+                return LocalDateTime.parse(dateTimeString, formatter)
+            } catch (e: DateTimeParseException) {
+                // tenta o próximo formato
+            }
+        }
+        throw IllegalArgumentException("Formato de data e hora inválido: $dateTimeString")
     }
 
 }

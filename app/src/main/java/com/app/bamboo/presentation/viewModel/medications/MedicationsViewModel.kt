@@ -1,38 +1,32 @@
 package com.app.bamboo.presentation.viewModel.medications
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.repositories.medications.MedicationHistoryRepository
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
+import com.app.bamboo.utils.TimeUtils.parseToLocalDateTime
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,12 +38,8 @@ class MedicationsViewModel @Inject constructor(
     private val _getAllMedications = MutableStateFlow<List<MedicationEntities>>(emptyList())
     val getAllMedications: Flow<List<MedicationEntities>> = _getAllMedications
 
-    private val _getMedicationsTimeById = MutableStateFlow<List<MedicationEntities>>(emptyList())
-    val getMedicationsTimeById: Flow<List<MedicationEntities>> = _getMedicationsTimeById
-
     private val _percentMap = MutableStateFlow<Map<Long, Float>>(emptyMap())
     val percentMap: StateFlow<Map<Long, Float>> = _percentMap
-
 
     private val _getNextMedication = MutableStateFlow<List<MedicationSchedule>>(emptyList())
     val getNextMedication: Flow<List<MedicationSchedule>> = _getNextMedication
@@ -57,10 +47,18 @@ class MedicationsViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    val medicationTimes: Flow<List<MedicationSchedule>> = repositorySchedule.getAllMedicationSchedules()
+    private val _medicationScheduleTimes = MutableStateFlow<List<MedicationSchedule>>(emptyList())
+    val medicationScheduleTimes: StateFlow<List<MedicationSchedule>> = _medicationScheduleTimes
 
+    init {
+        viewModelScope.launch {
+            repositorySchedule.getAllMedicationSchedules().collect {
+                updateNextMedicationSchedule()
+            }
+        }
+    }
 
-    fun getAllMedications(): Flow<List<MedicationEntities>>  {
+    fun getAllMedications(): Flow<List<MedicationEntities>> {
         viewModelScope.launch {
             repository.getAllMedications().collect { medications ->
                 _getAllMedications.value = medications
@@ -69,7 +67,7 @@ class MedicationsViewModel @Inject constructor(
         return getAllMedications
     }
 
-    fun percentMedicationsTrue(id: Long) {
+    fun calculateTrueMedicationPercentage(id: Long) {
         viewModelScope.launch {
             val schedules = repositorySchedule.getAllMedicationsScheduleById(id).first()
             val trueAccomplishedSize = schedules.count { it.accomplish == true }
@@ -82,32 +80,23 @@ class MedicationsViewModel @Inject constructor(
         }
     }
 
-    fun updateNextMedication(currentTime: LocalTime = LocalTime.now()) {
+    fun updateNextMedicationSchedule(currentDateTime: LocalDateTime = LocalDateTime.now()) {
         viewModelScope.launch {
-            val formatter = DateTimeFormatter.ofPattern("HH:mm")
-            val now = currentTime.format(formatter)
-            val nowParsed = LocalTime.parse(now, formatter)
-
-            val upcomingMedications = medicationTimes.first().let { list ->
-                val sortedMedications = list.sortedBy {
-                    LocalTime.parse(it.scheduledTime)
+            _medicationScheduleTimes.value = repositorySchedule.getAllMedicationSchedules().first()
+            val upcomingMedications = medicationScheduleTimes.first().let { list ->
+                val scheduledDateTimes = list.map {
+                    val fullDateTime = parseToLocalDateTime(it.date, it.scheduledTime)
+                    it to fullDateTime
                 }
-                val futureToday = sortedMedications.filter {
-                    LocalTime.parse(it.scheduledTime).isAfter(nowParsed)
+                val futureMedications = scheduledDateTimes.filter { (_, dateTime) ->
+                    dateTime.isAfter(currentDateTime)
                 }
-
-                if (futureToday.isNotEmpty()) {
-                    val nextTime = futureToday.minByOrNull {
-                        LocalTime.parse(it.scheduledTime)
-                    }?.scheduledTime
-
-                    futureToday.filter { it.scheduledTime == nextTime }
+                if (futureMedications.isNotEmpty()) {
+                    val nextTime = futureMedications.minByOrNull { it.second }?.second
+                    futureMedications.filter { it.second == nextTime }.map { it.first }
                 } else {
-                    val firstTime = sortedMedications.minByOrNull {
-                        LocalTime.parse(it.scheduledTime)
-                    }?.scheduledTime
-
-                    sortedMedications.filter { it.scheduledTime == firstTime }
+                    val earliestTime = scheduledDateTimes.minByOrNull { it.second }?.second
+                    scheduledDateTimes.filter { it.second == earliestTime }.map { it.first }
                 }
             }
             _getNextMedication.value = upcomingMedications
@@ -127,21 +116,15 @@ class MedicationsViewModel @Inject constructor(
         return Pair(hours, minutes)
     }
 
-    fun getMedicationsTime(id: Long): Flow<List<MedicationSchedule>>{
+    fun getMedicationsTime(id: Long): Flow<List<MedicationSchedule>> {
         return repositorySchedule.getAllMedicationsScheduleById(id)
     }
+
     suspend fun deleteAllMedicationHistory() {
         medicationHistoryRepository.deleteAllMedicationHistory()
     }
 
-    private fun searchMedication(query: String): Flow<List<MedicationEntities>> {
-        return getAllMedications.map { list ->
-            list.filter {
-                it.medicationName.contains(query, ignoreCase = true)
-            }
-        }
-    }
-
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val searchResults: StateFlow<List<MedicationEntities>> = searchQuery
         .debounce(300)
         .flatMapLatest { query ->
@@ -151,6 +134,14 @@ class MedicationsViewModel @Inject constructor(
 
     fun onSearchQueryChanged(newQuery: String) {
         _searchQuery.value = newQuery
+    }
+
+    private suspend fun searchMedication(query: String): Flow<List<MedicationEntities>> {
+        return getAllMedications.map { list ->
+            list.filter {
+                it.medicationName.contains(query, ignoreCase = true)
+            }
+        }
     }
 
     fun deleteMedications(id: Long) {

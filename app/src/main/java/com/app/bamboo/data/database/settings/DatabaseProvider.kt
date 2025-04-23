@@ -6,9 +6,9 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 object DatabaseProvider {
-    val MIGRATION_12_13 = object : Migration(12, 13) {
+    val MIGRATION_13_14 = object : Migration(13, 14) {
         override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE medication_entity ADD COLUMN quantity INTEGER NOT NULL DEFAULT 0")
+            database.execSQL("ALTER TABLE medication_schedule ADD COLUMN quantityThreshold INTEGER NOT NULL DEFAULT 0")
         }
     }
 
@@ -20,7 +20,7 @@ object DatabaseProvider {
             INSTANCE ?: Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "app_database"
-            ).addMigrations(MIGRATION_12_13)
+            ).addMigrations(MIGRATION_13_14)
                 .build().also { INSTANCE = it }
         }
     }

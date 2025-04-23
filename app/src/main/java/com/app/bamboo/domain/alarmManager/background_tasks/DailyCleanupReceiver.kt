@@ -1,4 +1,4 @@
-package com.app.bamboo.domain.alarmManager.worker
+package com.app.bamboo.domain.alarmManager.background_tasks
 
 import android.content.BroadcastReceiver
 import android.content.Context

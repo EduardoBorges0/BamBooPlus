@@ -22,6 +22,7 @@ class MedicationRepositoryImpl @Inject constructor(
         pillOrDrop: String,
         daysOrHour: String,
         medicationTime: String,
+        quantityThreshold: Int,
         date: String,
         quantity: Int,
         time: Long,
@@ -34,7 +35,8 @@ class MedicationRepositoryImpl @Inject constructor(
             medicationTime = medicationTime,
             date = date,
             quantity = quantity,
-            time = time
+            time = time,
+            quantityThreshold = quantityThreshold
         )
         return medicationDao.insertMedication(medication)
     }
@@ -51,7 +53,8 @@ class MedicationRepositoryImpl @Inject constructor(
         medicationTime: String,
         date: String,
         quantity: Int,
-        time: Long
+        time: Long,
+        quantityThreshold: Int,
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -61,7 +64,8 @@ class MedicationRepositoryImpl @Inject constructor(
             medicationTime = medicationTime,
             date = date,
             quantity = quantity,
-            time = time
+            time = time,
+            quantityThreshold = quantityThreshold
         )
         medicationDao.updateMedication(medication)
     }

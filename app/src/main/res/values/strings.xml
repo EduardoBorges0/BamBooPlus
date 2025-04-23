@@ -12,6 +12,8 @@
 
     InsertMedication
     <string name="What_medication_you_take">Qual medicação você irá tomar?</string>
+    <string name="What_its_medication_make">Para o que serve?</string>
+    <string name="When_must_alert_you">Com quantos no estoque devemos te avisar?</string>
     <string name="Do_you_quantity_in_the_stock">Você tem quantos no estoque?</string>
     <string name="What_first_time_you_take_medication">Qual a primeira hora que você irá tomar o remédio?</string>
     <string name="What_interval_hour">De quantas em quantas horas?</string>

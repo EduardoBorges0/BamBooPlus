@@ -36,7 +36,13 @@ import java.util.Locale
 import java.util.TimeZone
 
 @Composable
-fun MedicationTime(navController: NavController, medicationName: String, quantity: String, description: String) {
+fun MedicationTime(
+    navController: NavController,
+    medicationName: String,
+    quantity: String,
+    description: String,
+    quantityThreshold: String
+) {
     var selectedDate: Long? by remember { mutableStateOf(0L) }
     var firstTime: String by remember { mutableStateOf("") }
     var intervalTime: String by remember { mutableStateOf("") }
@@ -74,9 +80,9 @@ fun MedicationTime(navController: NavController, medicationName: String, quantit
         NextButton(
             onClick = {
                 isError = firstTime.isBlank() || hourOrDays.isEmpty() || intervalTime.isBlank()
-                if(!isError){
+                if (!isError) {
                     navController.navigate(
-                        "pillOrDrop?medicationName=$medicationName&quantity=$quantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$description"
+                        "pillOrDrop?medicationName=$medicationName&quantity=$quantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$description&quantityThreshold={quantityThreshold}"
                     )
                 }
             },

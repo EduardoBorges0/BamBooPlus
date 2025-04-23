@@ -39,7 +39,7 @@ fun MainMedicationComposable(
     LaunchedEffect(Unit) {
         searchResults.forEach { item ->
             val medicationId = item.id
-            medicationsViewModel.percentMedicationsTrue(medicationId)
+            medicationsViewModel.calculateTrueMedicationPercentage(medicationId)
         }
     }
     Box(modifier = Modifier.fillMaxSize()) {

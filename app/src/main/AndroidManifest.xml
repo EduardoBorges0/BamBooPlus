@@ -53,7 +53,7 @@
         </activity>
 
         <receiver
-            android:name=".domain.alarmManager.worker.DailysCleanupReceiver"
+            android:name=".domain.alarmManager.background_tasks.DailysCleanupReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
 

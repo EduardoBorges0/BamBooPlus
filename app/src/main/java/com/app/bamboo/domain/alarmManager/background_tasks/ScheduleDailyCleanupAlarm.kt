@@ -1,10 +1,9 @@
-package com.app.bamboo.domain.alarmManager.worker
+package com.app.bamboo.domain.alarmManager.background_tasks
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import java.util.Calendar
 
 fun scheduleDailyCleanupAlarm(context: Context) {
@@ -13,8 +12,6 @@ fun scheduleDailyCleanupAlarm(context: Context) {
         set(Calendar.MINUTE, 0)
         set(Calendar.SECOND, 0)
         set(Calendar.MILLISECOND, 0)
-
-        // Se já passou da meia-noite hoje, agenda para amanhã
         if (timeInMillis < System.currentTimeMillis()) {
             add(Calendar.DAY_OF_YEAR, 1)
         }
@@ -35,6 +32,4 @@ fun scheduleDailyCleanupAlarm(context: Context) {
         calendar.timeInMillis,
         pendingIntent
     )
-
-    Log.d("ALARM", "Alarm agendado para: ${calendar.time}")
 }

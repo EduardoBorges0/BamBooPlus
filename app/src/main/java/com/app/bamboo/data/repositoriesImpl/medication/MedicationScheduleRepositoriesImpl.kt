@@ -4,7 +4,11 @@ import androidx.lifecycle.LiveData
 import com.app.bamboo.data.database.dao.medication.MedicationScheduleDao
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import javax.inject.Inject
 
 class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicationScheduleDao: MedicationScheduleDao) :
@@ -27,6 +31,12 @@ class MedicationScheduleRepositoriesImpl @Inject constructor(private val medicat
 
     override fun getAllMedicationSchedules(): Flow<List<MedicationSchedule>> {
         return medicationScheduleDao.getAllMedicationSchedules()
+    }
+
+    override fun updateDateSchedule(id: Long, date: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            medicationScheduleDao.updateDateSchedule(id, date)
+        }
     }
 
     override suspend fun getSchedulesMedicationsById(id: Long?): List<MedicationSchedule> {

@@ -25,6 +25,8 @@ fun MedicationAndStock(navController: NavController) {
     var medicationName by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    var quantityThreshold by remember { mutableStateOf("") }
+
     var isError by remember { mutableStateOf(false) }
 
     val height = LocalConfiguration.current.screenHeightDp.dp
@@ -34,6 +36,8 @@ fun MedicationAndStock(navController: NavController) {
         )
         AdvancePercentage(0.00f)
         MedicationInputFields(
+            quantityThreshold = quantityThreshold,
+            onQuantityThreshold = { quantityThreshold = it },
             medicationName = medicationName,
             quantity = quantity,
             description = description,
@@ -50,7 +54,7 @@ fun MedicationAndStock(navController: NavController) {
                     val encodedMedicationName = Uri.encode(medicationName)
                     val encodedQuantity = Uri.encode(quantity)
                     val encodedDescription = Uri.encode(description)
-                    navController.navigate("medicationTime?medicationName=$encodedMedicationName&quantity=$encodedQuantity&description=$encodedDescription")
+                    navController.navigate("medicationTime?medicationName=$encodedMedicationName&quantity=$encodedQuantity&description=$encodedDescription$quantityThreshold=$quantityThreshold")
                 }
             },
             text = stringResource(R.string.next),

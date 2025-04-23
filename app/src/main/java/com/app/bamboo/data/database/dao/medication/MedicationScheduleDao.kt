@@ -26,6 +26,9 @@ interface MedicationScheduleDao {
     @Query("UPDATE medication_schedule SET accomplish = :accomplish WHERE id = :id")
     suspend fun updateAccomplishSchedule(id: Long, accomplish: Boolean?)
 
+    @Query("UPDATE medication_schedule SET date = :date WHERE id = :id")
+    suspend fun updateDateSchedule(id: Long, date: String)
+
     @Query("SELECT * FROM medication_schedule WHERE medication_id= :id")
     fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>>
 

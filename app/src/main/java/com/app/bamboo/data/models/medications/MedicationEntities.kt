@@ -15,6 +15,8 @@ data class MedicationEntities(
     val pillOrDrop: String,
     @ColumnInfo(name = "quantity")
     val quantity: Int,
+    @ColumnInfo(name = "quantityThreshold")
+    val quantityThreshold: Int,
     @ColumnInfo(name = "days_or_hours")
     val daysOrHours: String,
     @ColumnInfo(name = "medication_time")

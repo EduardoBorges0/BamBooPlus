@@ -75,6 +75,7 @@ class NotifyViewModel @Inject constructor(
                     "ESTA É A AGENDA ${formatter.hour}, ${it.medicationId}, ${it.medicationName}"
                 )
                 scheduleNotification(
+                    scheduleRepository = medicationScheduleRepository,
                     context = context,
                     medicationRepository = medicationRepository,
                     hourOrDay = it.hoursOrDays,

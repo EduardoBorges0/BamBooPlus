@@ -25,6 +25,7 @@ class InsertMedicationsViewModel @Inject constructor(
         daysOrHour: String,
         medicationTime: String,
         date: String,
+        quantityThreshold: Int,
         quantity: Int,
         time: Long,
     ) {
@@ -37,7 +38,8 @@ class InsertMedicationsViewModel @Inject constructor(
                 medicationTime = medicationTime,
                 date = date,
                 quantity = quantity,
-                time = time
+                time = time,
+                quantityThreshold = quantityThreshold
             )
             insertSchedules(
                 medicationId = medicationId,
@@ -92,11 +94,9 @@ class InsertMedicationsViewModel @Inject constructor(
                 )
             )
         }
-
         if (schedules.isNotEmpty()) {
             medicationScheduleRepository.insertSchedule(schedules)
         }
-
         return schedules
     }
 

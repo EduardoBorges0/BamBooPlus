@@ -1,5 +1,6 @@
 package com.app.bamboo.presentation.view.medications.medicationList
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
+import kotlinx.coroutines.flow.first
 
 @Composable
 fun MedicationList(
@@ -22,9 +24,9 @@ fun MedicationList(
     LazyRow(modifier = modifier) {
         items(searchResults.size) {
             val percentMap by medicationsViewModel.percentMap.collectAsState()
-            val times = medicationsViewModel.getMedicationsTime(it.toLong() + 1)
-                .collectAsState(emptyList())
             val id = searchResults[it].id
+            val times = medicationsViewModel.getMedicationsTime(id)
+                .collectAsState(emptyList())
             val percent = percentMap[id] ?: 0f
             MedicationCards(
                 medicationName = searchResults[it].medicationName,

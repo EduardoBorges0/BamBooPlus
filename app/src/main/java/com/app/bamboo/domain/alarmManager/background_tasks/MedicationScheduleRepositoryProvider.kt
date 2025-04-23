@@ -1,7 +1,6 @@
-package com.app.bamboo.domain.alarmManager.worker
+package com.app.bamboo.domain.alarmManager.background_tasks
 
 import android.content.Context
-import com.app.bamboo.data.database.settings.AppDatabase
 import com.app.bamboo.data.database.settings.DatabaseProvider
 import com.app.bamboo.data.repositoriesImpl.medication.MedicationScheduleRepositoriesImpl
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository

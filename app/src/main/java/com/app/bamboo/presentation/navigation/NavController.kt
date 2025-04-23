@@ -8,6 +8,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -18,7 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.app.bamboo.data.worker.deleteMedicationHistory.deleteAllHistoryMedication
-import com.app.bamboo.domain.alarmManager.worker.scheduleDailyCleanupAlarm
+import com.app.bamboo.domain.alarmManager.background_tasks.scheduleDailyCleanupAlarm
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
 import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
@@ -70,30 +72,36 @@ fun NavControllerComposable(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "main") {
         composable("main") {
             val medicationsViewModel: MedicationsViewModel = hiltViewModel()
+            val nextMedication = medicationsViewModel.getNextMedication.collectAsState(emptyList())
             medicationsViewModel.getAllMedications()
-            medicationsViewModel.updateNextMedication()
+            LaunchedEffect(nextMedication) {
+                medicationsViewModel.updateNextMedicationSchedule()
+            }
             MainMedicationComposable(navController, medicationsViewModel)
         }
         composable(
-            route = "medicationTime?medicationName={medicationName}&quantity={quantity}&description={description}",
+            route = "medicationTime?medicationName={medicationName}&quantity={quantity}&description={description}&quantityThreshold={quantityThreshold}",
             arguments = listOf(
                 navArgument("medicationName") { type = NavType.StringType; defaultValue = "" },
                 navArgument("quantity") { type = NavType.StringType; defaultValue = "" },
+                navArgument("quantityThreshold") { type = NavType.StringType; defaultValue = "" },
                 navArgument("description") { type = NavType.StringType; defaultValue = "" }
             )
         ) {
             val medicationName = it.arguments?.getString("medicationName") ?: ""
+            val quantityThreshold = it.arguments?.getString("quantityThreshold") ?: ""
             val quantity = it.arguments?.getString("quantity") ?: ""
             val description = it.arguments?.getString("description") ?: ""
 
-            MedicationTime(navController, medicationName, quantity, description)
+            MedicationTime(navController, medicationName, quantity, description, quantityThreshold)
         }
         composable(
-            route = "pillOrDrop?medicationName={medicationName}&quantity={quantity}&firstTime={firstTime}&selectedDate={selectedDate}&hoursOrDays={hoursOrDays}&intervalTime={intervalTime}&description={description}",
+            route = "pillOrDrop?medicationName={medicationName}&quantity={quantity}&firstTime={firstTime}&selectedDate={selectedDate}&hoursOrDays={hoursOrDays}&intervalTime={intervalTime}&description={description}&quantityThreshold={quantityThreshold}",
             arguments = listOf(
                 navArgument("description") { type = NavType.StringType; defaultValue = "" },
                 navArgument("medicationName") { type = NavType.StringType; defaultValue = "" },
                 navArgument("quantity") { type = NavType.StringType; defaultValue = "" },
+                navArgument("quantityThreshold") { type = NavType.StringType; defaultValue = "" },
                 navArgument("firstTime") { type = NavType.StringType; defaultValue = "" },
                 navArgument("selectedDate") { type = NavType.StringType; defaultValue = "" },
                 navArgument("hoursOrDays") { type = NavType.StringType; defaultValue = "" },
@@ -103,6 +111,7 @@ fun NavControllerComposable(navController: NavHostController) {
             val insertMedicationsViewModel: InsertMedicationsViewModel = hiltViewModel()
             val medicationName = it.arguments?.getString("medicationName") ?: ""
             val description = it.arguments?.getString("description") ?: ""
+            val quantityThreshold = it.arguments?.getString("quantityThreshold") ?: ""
             val quantity = it.arguments?.getString("quantity") ?: ""
             val firstTime = it.arguments?.getString("firstTime") ?: ""
             val selectedDate = it.arguments?.getString("selectedDate") ?: ""
@@ -115,6 +124,7 @@ fun NavControllerComposable(navController: NavHostController) {
                 insertMedicationsViewModel = insertMedicationsViewModel,
                 medicationName,
                 quantity,
+                quantityThreshold,
                 firstTime,
                 selectedDate,
                 hoursOrDays,

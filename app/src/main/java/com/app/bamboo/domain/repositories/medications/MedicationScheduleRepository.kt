@@ -15,5 +15,6 @@ interface MedicationScheduleRepository {
     fun getAllMedicationsScheduleById(id: Long): Flow<List<MedicationSchedule>>
     fun getAllId(): Flow<List<Long>>
     suspend fun getSchedulesMedicationsById(id: Long?): List<MedicationSchedule>
+    fun updateDateSchedule(id: Long, date: String)
 
 }
