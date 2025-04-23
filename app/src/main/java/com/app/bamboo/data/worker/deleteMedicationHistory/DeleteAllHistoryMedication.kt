@@ -21,7 +21,6 @@ fun deleteAllHistoryMedication(context: Context) {
         .setInitialDelay(delay, TimeUnit.MILLISECONDS)
         .build()
 
-    // Enqueue the work
     WorkManager.getInstance(context).enqueueUniqueWork(
         "daily_cleanup_worker",
         ExistingWorkPolicy.REPLACE,

@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class MedicationRepositoryImpl @Inject constructor(
     private val medicationDao: MedicationDao,
-) :MedicationRepository {
+) : MedicationRepository {
 
     override fun getAllMedications(): Flow<List<MedicationEntities>> {
         return medicationDao.getAllMedications()
@@ -70,7 +70,7 @@ class MedicationRepositoryImpl @Inject constructor(
         medicationDao.updateMedication(medication)
     }
 
-    override suspend fun updateDate(date: String, id: Long){
+    override suspend fun updateDate(date: String, id: Long) {
         medicationDao.updateDate(date, id)
     }
 
@@ -83,7 +83,11 @@ class MedicationRepositoryImpl @Inject constructor(
         return medicationDao.getMedicationsTime()
     }
 
-    override suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>{
+    override suspend fun getIdIfQuantityLower(): List<MedicationEntities>{
+        return medicationDao.getIdIfQuantityLower()
+    }
+
+    override suspend fun getMedicationsById(id: Long?): List<MedicationEntities> {
         return medicationDao.getMedicationsById(id)
     }
 }

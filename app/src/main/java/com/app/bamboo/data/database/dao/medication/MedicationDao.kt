@@ -16,6 +16,9 @@ interface MedicationDao {
     @Query("SELECT * FROM medication_entity WHERE id= :id")
     suspend fun getMedicationsById(id: Long?) : List<MedicationEntities>
 
+    @Query("SELECT * FROM medication_entity WHERE quantity <= quantityThreshold")
+    suspend fun getIdIfQuantityLower() : List<MedicationEntities>
+
     @Query("UPDATE medication_entity SET date= :date WHERE id = :id")
     suspend fun updateDate(date: String, id: Long)
 

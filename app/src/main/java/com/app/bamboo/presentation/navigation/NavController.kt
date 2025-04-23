@@ -20,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.app.bamboo.data.worker.deleteMedicationHistory.deleteAllHistoryMedication
+import com.app.bamboo.data.worker.quantityThreshold.alertQuantityThreshold
 import com.app.bamboo.domain.alarmManager.background_tasks.scheduleDailyCleanupAlarm
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
@@ -39,6 +40,7 @@ class MainNavController : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         deleteAllHistoryMedication(applicationContext)
+        alertQuantityThreshold(applicationContext)
         scheduleDailyCleanupAlarm(this)
         setContent {
             val navController = rememberNavController()

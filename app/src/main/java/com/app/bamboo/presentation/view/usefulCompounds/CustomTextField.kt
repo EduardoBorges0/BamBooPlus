@@ -1,6 +1,7 @@
 package com.app.bamboo.presentation.view.usefulCompounds
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -37,7 +38,7 @@ fun CustomTextField(
             } else {
                 Modifier.border(0.dp, Color.Transparent, RoundedCornerShape(10.dp))
             }
-        ),
+        ).fillMaxWidth(),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType
         ),

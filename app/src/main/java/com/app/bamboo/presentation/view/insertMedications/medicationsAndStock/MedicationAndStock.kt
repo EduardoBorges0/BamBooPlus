@@ -54,7 +54,7 @@ fun MedicationAndStock(navController: NavController) {
                     val encodedMedicationName = Uri.encode(medicationName)
                     val encodedQuantity = Uri.encode(quantity)
                     val encodedDescription = Uri.encode(description)
-                    navController.navigate("medicationTime?medicationName=$encodedMedicationName&quantity=$encodedQuantity&description=$encodedDescription$quantityThreshold=$quantityThreshold")
+                    navController.navigate("medicationTime?medicationName=$encodedMedicationName&quantity=$encodedQuantity&description=$encodedDescription&quantityThreshold=$quantityThreshold")
                 }
             },
             text = stringResource(R.string.next),

@@ -82,7 +82,7 @@ fun MedicationTime(
                 isError = firstTime.isBlank() || hourOrDays.isEmpty() || intervalTime.isBlank()
                 if (!isError) {
                     navController.navigate(
-                        "pillOrDrop?medicationName=$medicationName&quantity=$quantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$description&quantityThreshold={quantityThreshold}"
+                        "pillOrDrop?medicationName=$medicationName&quantity=$quantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$description&quantityThreshold=$quantityThreshold"
                     )
                 }
             },

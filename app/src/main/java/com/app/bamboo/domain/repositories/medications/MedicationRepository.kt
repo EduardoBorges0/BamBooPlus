@@ -35,6 +35,8 @@ interface MedicationRepository {
         )
     suspend fun updateDate(date: String, id: Long)
 
+    suspend fun getIdIfQuantityLower() : List<MedicationEntities>
+
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
     fun getMedicationsTime(): LiveData<List<String>>

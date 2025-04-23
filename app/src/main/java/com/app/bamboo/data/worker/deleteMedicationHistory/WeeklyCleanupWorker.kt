@@ -17,9 +17,8 @@ class WeeklyCleanupWorker @AssistedInject constructor(
     private val medicationHistoryRepository: MedicationHistoryRepository
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result {
-        Log.d("RODANDO", "AQUI É O WORKER")
+        Log.d("ALARM WORKER 1"," AQUI OH")
         if (LocalDate.now().dayOfWeek.value == 7) {
-            Log.d("RODANDO", "AQUI É O WORKER NOS DOMINGOS" )
             medicationHistoryRepository.deleteAllMedicationHistory()
         }
         return Result.success()

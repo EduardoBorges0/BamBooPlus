@@ -1,6 +1,7 @@
 package com.app.bamboo.domain.alarmManager.notifications
 
 import android.content.Context
+import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.notifyView.MainAppointmentNotify
 import com.app.bamboo.presentation.view.notifyView.MainNotifyMedication
 import com.app.bamboo.utils.NotificationUtils
@@ -17,6 +18,18 @@ object ShowNotification {
            notificationDescription = "Clique aqui para confirmar",
            id = id
        )
+    }
+    fun showMedicationStock(context: Context, id: Long, medicationName: String) {
+        NotificationUtils.showNotification(
+            context = context,
+            channelId = "medication_notification",
+            channelName = "Medication Channel",
+            descriptionChannel = "Alarm Medication",
+            activity = MainNavController::class.java,
+            notificationTitle = "Está acabando estoque $medicationName",
+            notificationDescription = "Clique aqui para ir atualizar seu estoque",
+            id = id
+        )
     }
     fun showAppointmentNotification(context: Context, id: Long?, appointmentType: String, time: String) {
         NotificationUtils.showNotification(
