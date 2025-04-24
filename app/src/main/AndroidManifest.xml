@@ -51,12 +51,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name=".domain.alarmManager.background_tasks.DailysCleanupReceiver"
-            android:exported="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />
-
         <receiver
             android:name=".domain.alarmManager.notifications.medication.AlarmReceiver"
             android:exported="true"

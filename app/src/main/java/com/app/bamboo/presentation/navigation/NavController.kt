@@ -3,6 +3,8 @@ package com.app.bamboo.presentation.navigation
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,9 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.app.bamboo.data.worker.deleteMedicationHistory.deleteAllHistoryMedication
 import com.app.bamboo.data.worker.quantityThreshold.alertQuantityThreshold
-import com.app.bamboo.domain.alarmManager.background_tasks.scheduleDailyCleanupAlarm
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
 import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
@@ -39,10 +39,9 @@ class MainNavController : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        deleteAllHistoryMedication(applicationContext)
-        alertQuantityThreshold(applicationContext)
-        scheduleDailyCleanupAlarm(this)
+
         setContent {
+            alertQuantityThreshold(applicationContext)
             val navController = rememberNavController()
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             notifyViewModel.showMedicationNotifications(this, this)

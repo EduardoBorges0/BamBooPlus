@@ -17,14 +17,17 @@ class QuantityThresholdWorker @AssistedInject constructor(
     private val medicationRepository: MedicationRepository
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result {
-        medicationRepository.getIdIfQuantityLower().forEach {
-            ShowNotification.showMedicationStock(
-                applicationContext,
-                it.id,
-                it.medicationName
-            )
-            Log.d("ALARM WORKER", "Alarm chamando oooo")
+        if(medicationRepository.getIdIfQuantityLower().isNotEmpty()){
+            medicationRepository.getIdIfQuantityLower().forEach {
+                ShowNotification.showMedicationStock(
+                    applicationContext,
+                    it.id,
+                    it.medicationName
+                )
+            }
         }
+        Log.d("ALARM WORKER", "Alarm chamando oooo")
+
         return Result.success()
     }
 }

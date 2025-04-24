@@ -22,6 +22,7 @@ import com.app.bamboo.R
 import com.app.bamboo.presentation.view.medications.medicationList.MedicationList
 import com.app.bamboo.presentation.view.medications.medicationList.WithoutMedications
 import com.app.bamboo.presentation.view.medications.nextMedication.NextMedicationList
+import com.app.bamboo.presentation.view.usefulCompounds.BackgroundMain
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
 import com.app.bamboo.presentation.view.usefulCompounds.ElevatedButtonAdd
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
@@ -43,6 +44,7 @@ fun MainMedicationComposable(
         }
     }
     Box(modifier = Modifier.fillMaxSize()) {
+        BackgroundMain(modifier = Modifier.align(Alignment.BottomCenter))
         AsyncImage(
             model = R.drawable.logo,
             contentDescription = "logo",
