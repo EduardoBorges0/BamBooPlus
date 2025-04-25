@@ -63,6 +63,7 @@ fun MainMedicationComposable(
             WithoutMedications()
         } else {
             MedicationList(
+                navController,
                 modifier = Modifier.align(Alignment.TopCenter),
                 searchResults,
                 medicationsViewModel,

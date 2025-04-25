@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavArgument
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -29,8 +30,10 @@ import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.Me
 import com.app.bamboo.presentation.view.insertMedications.PillOrDrop
 import com.app.bamboo.presentation.view.insertMedications.medicationTime.MedicationTime
 import com.app.bamboo.presentation.view.medications.MainMedicationComposable
+import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.MainMedicationDetailsScreen
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
+import com.app.bamboo.presentation.viewModel.medications.MedicationDetailsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -135,8 +138,20 @@ fun NavControllerComposable(navController: NavHostController) {
             )
         }
 
-        composable("medicationAndStock") {
+        composable(
+            "medicationAndStock",
+            ) {
             MedicationAndStock(navController)
+        }
+        composable(
+            route = "medicationDetails?id={id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType; defaultValue = "" })
+        ) {
+            val medicationDetailsViewModel: MedicationDetailsViewModel = hiltViewModel()
+            val id = it.arguments?.getString("id") ?: ""
+            medicationDetailsViewModel.getMedicationsById(id.toLong())
+            medicationDetailsViewModel.getMedicationsTime(id.toLong())
+            MainMedicationDetailsScreen(navController, medicationDetailsViewModel)
         }
         composable("checkIn") {
             CheckInMain()

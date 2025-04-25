@@ -1,6 +1,7 @@
 package com.app.bamboo.presentation.view.medications.medicationList
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -18,8 +19,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.app.bamboo.R
 import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
 import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedication
@@ -27,7 +31,9 @@ import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedicatio
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MedicationCards(
+    navController: NavController,
     medicationName: String,
+    id: String,
     times: List<MedicationSchedule>,
     pillOrDrop: String,
     stockQuantity: Int,
@@ -47,6 +53,9 @@ fun MedicationCards(
             .background(MainColor)
             .height(heightSize / 5.5f)
             .width(widthSize / 1.7f)
+            .clickable{
+                navController.navigate("medicationDetails?id=$id")
+            }
     ) {
         Text(
             medicationName,
@@ -86,7 +95,7 @@ fun MedicationCards(
         LoadingProgressMedication(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = if (times.size > 5) 30.dp else 40.dp),
+                .padding(bottom = if (times.size > 3) 20.dp else 40.dp),
             percent = percent
         )
     }
