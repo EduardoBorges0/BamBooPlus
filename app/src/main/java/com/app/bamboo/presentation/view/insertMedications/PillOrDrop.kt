@@ -3,6 +3,7 @@ package com.app.bamboo.presentation.view.insertMedications
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.bamboo.R
 import com.app.bamboo.presentation.navigation.MainNavController
+import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
@@ -91,7 +93,8 @@ fun PillOrDrop(
                 }
             },
             text = stringResource(R.string.confirm),
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+            color = SecondaryColor
         )
         if (isError) {
             AlertDialogComposable(

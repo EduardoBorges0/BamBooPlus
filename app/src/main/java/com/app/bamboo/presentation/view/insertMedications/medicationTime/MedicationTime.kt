@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.app.bamboo.R
+import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
@@ -90,7 +91,8 @@ fun MedicationTime(
                 }
             },
             text = stringResource(R.string.next),
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+            color = SecondaryColor
         )
 
         if (isCalendar) {

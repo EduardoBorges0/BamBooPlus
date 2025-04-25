@@ -8,18 +8,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 
 @Composable
-fun NextButton(onClick: () -> Unit, text: String, modifier: Modifier) {
+fun NextButton(onClick: () -> Unit, text: String, modifier: Modifier, color: Color) {
     Button(
         onClick = onClick,
         modifier = modifier
-            .fillMaxWidth()
             .height(80.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = SecondaryColor
+            containerColor = color
         ),
         shape = RoundedCornerShape(23.dp, 23.dp, 0.dp, 0.dp)
     ) {
