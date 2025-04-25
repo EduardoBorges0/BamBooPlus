@@ -15,10 +15,10 @@ interface MedicationRepository {
         daysOrHour: String,
         medicationTime: String,
         quantityThreshold: Int,
-
         date: String,
         quantity: Int,
-        time: Long
+        time: Long,
+        amountMedication: Int
     ): Long
 
     suspend fun deleteMedication(id: Long)
@@ -31,9 +31,12 @@ interface MedicationRepository {
         date: String,
         quantity: Int,
         time: Long,
-        quantityThreshold: Int
+        quantityThreshold: Int,
+        amountMedication: Int
         )
     suspend fun updateDate(date: String, id: Long)
+
+    suspend fun updateQuantity(quantity: Int, id: Long)
 
     suspend fun getIdIfQuantityLower() : List<MedicationEntities>
 

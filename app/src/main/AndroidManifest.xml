@@ -52,6 +52,11 @@
             </intent-filter>
         </activity>
         <receiver
+            android:name=".domain.alarmManager.background_tasks.AlarmSchedulesFalse"
+            android:exported="true"
+            android:enabled="true" />
+
+        <receiver
             android:name=".domain.alarmManager.notifications.medication.AlarmReceiver"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" />

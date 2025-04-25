@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.app.bamboo.R
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
@@ -27,16 +29,23 @@ import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedicatio
 fun MedicationCards(
     medicationName: String,
     times: List<MedicationSchedule>,
+    pillOrDrop: String,
+    stockQuantity: Int,
+    quantityMedication: String,
     modifier: Modifier,
     percent: Float,
     heightSize: Dp,
     widthSize: Dp
 ) {
+    val pillsAndStock =
+        if (pillOrDrop == "Pill") "$quantityMedication ${stringResource(R.string.Pills)} | Estoque: $stockQuantity" else "$quantityMedication ${
+            "mg"
+        } | Estoque: $stockQuantity"
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(31.dp))
             .background(MainColor)
-            .height(heightSize / 6)
+            .height(heightSize / 5.5f)
             .width(widthSize / 1.7f)
     ) {
         Text(
@@ -47,12 +56,21 @@ fun MedicationCards(
             fontSize = 17.sp,
             color = textColor
         )
-
+        Text(
+            text = pillsAndStock,
+            modifier = Modifier
+                .padding(horizontal = 5.dp)
+                .padding(bottom = if(times.size > 3) 40.dp else 30.dp)
+                .align(Alignment.Center),
+            fontSize = 17.sp,
+            color = textColor
+        )
         FlowRow(
             modifier = Modifier
-                .align(Alignment.Center),
+                .align(Alignment.Center)
+                .padding(top = if (times.size > 3) 35.dp else 25.dp),
             maxItemsInEachRow = 4,
-            maxLines = 3
+            maxLines = 2
         ) {
             times.forEach {
                 Text(

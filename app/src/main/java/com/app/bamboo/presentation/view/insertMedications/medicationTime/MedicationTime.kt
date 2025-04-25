@@ -81,8 +81,11 @@ fun MedicationTime(
             onClick = {
                 isError = firstTime.isBlank() || hourOrDays.isEmpty() || intervalTime.isBlank()
                 if (!isError) {
+                    val encodedMedicationName = Uri.encode(medicationName)
+                    val encodedQuantity = Uri.encode(quantity)
+                    val encodedDescription = Uri.encode(description)
                     navController.navigate(
-                        "pillOrDrop?medicationName=$medicationName&quantity=$quantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$description&quantityThreshold=$quantityThreshold"
+                        "pillOrDrop?medicationName=$encodedMedicationName&quantity=$encodedQuantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$encodedDescription&quantityThreshold=$quantityThreshold"
                     )
                 }
             },

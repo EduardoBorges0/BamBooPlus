@@ -22,6 +22,9 @@ interface MedicationDao {
     @Query("UPDATE medication_entity SET date= :date WHERE id = :id")
     suspend fun updateDate(date: String, id: Long)
 
+    @Query("UPDATE medication_entity SET quantity= :quantity WHERE id = :id")
+    suspend fun updateQuantity(quantity: Int, id: Long)
+
     @Insert
     suspend fun insertMedication(medicationEntities: MedicationEntities) : Long
 

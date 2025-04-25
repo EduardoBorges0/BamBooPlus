@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.repositories.medications.MedicationHistoryRepository
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
@@ -47,6 +46,14 @@ class NotifyMedicationsViewModel @Inject constructor(
                 .filter { LocalTime.parse(it.scheduledTime).isBefore(now) }
                 .maxByOrNull { LocalTime.parse(it.scheduledTime) }
             _time.value = lastMedication?.scheduledTime
+        }
+    }
+
+    fun updateQuantity(id: Long){
+        viewModelScope.launch {
+            medicationRepository.getMedicationsById(id).map {
+                medicationRepository.updateQuantity(it.quantity.minus(1), id)
+            }
         }
     }
 

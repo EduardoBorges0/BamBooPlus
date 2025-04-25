@@ -22,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.app.bamboo.data.worker.quantityThreshold.alertQuantityThreshold
+import com.app.bamboo.domain.alarmManager.background_tasks.everyScheduleFalse
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
 import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
@@ -42,6 +43,7 @@ class MainNavController : ComponentActivity() {
 
         setContent {
             alertQuantityThreshold(applicationContext)
+            everyScheduleFalse(applicationContext)
             val navController = rememberNavController()
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             notifyViewModel.showMedicationNotifications(this, this)

@@ -20,7 +20,7 @@ import com.app.bamboo.data.models.medications.MedicationSchedule
         LanguageEntity::class,
         MedicationSchedule::class,
         MedicationHistoryEntities::class],
-    version = 13
+    version = 14
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun medicationDao(): MedicationDao

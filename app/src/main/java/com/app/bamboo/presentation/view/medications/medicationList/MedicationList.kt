@@ -36,6 +36,9 @@ fun MedicationList(
                     .padding(horizontal = 20.dp),
                 heightSize = heightSize,
                 widthSize = widthSize,
+                stockQuantity = searchResults[it].quantity,
+                pillOrDrop = searchResults[it].pillOrDrop,
+                quantityMedication = searchResults[it].amountMedication.toString(),
                 percent = percent
             )
         }

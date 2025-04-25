@@ -26,6 +26,7 @@ class MedicationRepositoryImpl @Inject constructor(
         date: String,
         quantity: Int,
         time: Long,
+        amountMedication: Int
     ): Long {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -36,7 +37,8 @@ class MedicationRepositoryImpl @Inject constructor(
             date = date,
             quantity = quantity,
             time = time,
-            quantityThreshold = quantityThreshold
+            quantityThreshold = quantityThreshold,
+            amountMedication = amountMedication
         )
         return medicationDao.insertMedication(medication)
     }
@@ -55,6 +57,7 @@ class MedicationRepositoryImpl @Inject constructor(
         quantity: Int,
         time: Long,
         quantityThreshold: Int,
+        amountMedication: Int,
     ) {
         val medication = MedicationEntities(
             medicationName = medicationName,
@@ -65,7 +68,8 @@ class MedicationRepositoryImpl @Inject constructor(
             date = date,
             quantity = quantity,
             time = time,
-            quantityThreshold = quantityThreshold
+            quantityThreshold = quantityThreshold,
+            amountMedication = amountMedication
         )
         medicationDao.updateMedication(medication)
     }
@@ -83,7 +87,12 @@ class MedicationRepositoryImpl @Inject constructor(
         return medicationDao.getMedicationsTime()
     }
 
-    override suspend fun getIdIfQuantityLower(): List<MedicationEntities>{
+    override suspend fun updateQuantity(quantity: Int, id: Long) {
+        medicationDao.updateQuantity(quantity, id)
+    }
+
+
+    override suspend fun getIdIfQuantityLower(): List<MedicationEntities> {
         return medicationDao.getIdIfQuantityLower()
     }
 

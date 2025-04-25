@@ -80,7 +80,8 @@ fun PillOrDrop(
                         date = selectedDate,
                         quantity = quantity.toInt(),
                         time = intervalTime.toLong(),
-                        quantityThreshold = quantityThreshold.toInt()
+                        quantityThreshold = quantityThreshold.toInt(),
+                        amountMedication = howMany.toInt()
                     )
                     navController.navigate("main"){
                         popUpTo(navController.graph.startDestinationId) {

@@ -28,6 +28,7 @@ class InsertMedicationsViewModel @Inject constructor(
         quantityThreshold: Int,
         quantity: Int,
         time: Long,
+        amountMedication: Int
     ) {
         viewModelScope.launch {
             val medicationId = repository.insertMedication(
@@ -39,7 +40,8 @@ class InsertMedicationsViewModel @Inject constructor(
                 date = date,
                 quantity = quantity,
                 time = time,
-                quantityThreshold = quantityThreshold
+                quantityThreshold = quantityThreshold,
+                amountMedication = amountMedication
             )
             insertSchedules(
                 medicationId = medicationId,

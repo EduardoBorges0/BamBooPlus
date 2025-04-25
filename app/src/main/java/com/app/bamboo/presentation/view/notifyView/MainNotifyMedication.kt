@@ -38,6 +38,7 @@ class MainNotifyMedication : ComponentActivity() {
                     time = time.toString(),
                     confirmClick = {
                         notifyMedicationsViewModel.updateAccomplishSchedule(medicationId, true)
+                        notifyMedicationsViewModel.updateQuantity(medicationList?.medicationId ?: 0)
                         notifyMedicationsViewModel.insertMedicationHistory(medicationId,
                             medicationList?.medicationName ?: "",
                             time.toString(),
