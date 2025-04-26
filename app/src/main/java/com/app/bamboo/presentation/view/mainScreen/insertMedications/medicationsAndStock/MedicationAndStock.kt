@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.insertMedications.medicationsAndStock
+package com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationsAndStock
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Box
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.app.bamboo.R
-import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.components.MedicationInputFields
+import com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationsAndStock.components.MedicationInputFields
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable

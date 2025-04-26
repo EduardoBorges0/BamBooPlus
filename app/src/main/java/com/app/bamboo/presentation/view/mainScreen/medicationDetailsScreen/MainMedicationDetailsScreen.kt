@@ -1,14 +1,11 @@
-package com.app.bamboo.presentation.view.medications.medicationDetailsScreen
+package com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,16 +16,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.bamboo.R
-import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.components.HowManyMedicine
-import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.components.MedicationDetailsButtons
-import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.components.PillOrDropDetails
-import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.components.PlusOrMinus
+import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.components.HowManyMedicine
+import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.components.MedicationDetailsButtons
+import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.components.PillOrDropDetails
+import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.components.PlusOrMinus
 import com.app.bamboo.presentation.view.ui.theme.NotifyCancelButton
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable

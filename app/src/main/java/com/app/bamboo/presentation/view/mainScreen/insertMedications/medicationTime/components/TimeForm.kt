@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.insertMedications.medicationTime.components
+package com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationTime.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -6,13 +6,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
-import com.app.bamboo.presentation.view.usefulCompounds.TwoOptionToggle
+import com.app.bamboo.presentation.view.mainScreen.insertMedications.nicheComponents.TwoOptionToggle
 
 @Composable
 fun TimeForm(
@@ -36,7 +37,7 @@ fun TimeForm(
         CustomTextField(
             value = firstTime,
             onValueChange = onFirstTimeChange,
-            modifier = Modifier.clickable { onFirstTimeClick() },
+            modifier = Modifier.clickable { onFirstTimeClick() }.padding(horizontal = 50.dp),
             keyboardType = KeyboardType.Text,
             isError = isError,
             isEnabledField = false,
@@ -47,7 +48,8 @@ fun TimeForm(
             onValueChange = {},
             modifier = Modifier
                 .clickable { onDateClick() }
-                .padding(top = 20.dp),
+                .padding(top = 20.dp)
+                .padding(horizontal = 50.dp),
             keyboardType = KeyboardType.Text,
             isError = isError,
             isEnabledField = false,
@@ -59,10 +61,12 @@ fun TimeForm(
             onChange = onHoursOrDaysChange,
             isError = isError,
             button1 = stringResource(R.string.Hours),
-            button2 = stringResource(R.string.Days)
+            button2 = stringResource(R.string.Days),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            title = R.string.You_take_medication_in_days_or_hours
         )
         CustomTextField(
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier.padding(top = 20.dp).padding(horizontal = 50.dp),
             value = intervalTime,
             onValueChange = onIntervalTimeChange,
             keyboardType = KeyboardType.Number,

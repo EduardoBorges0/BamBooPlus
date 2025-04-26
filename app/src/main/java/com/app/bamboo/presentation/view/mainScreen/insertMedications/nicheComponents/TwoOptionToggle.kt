@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.usefulCompounds
+package com.app.bamboo.presentation.view.mainScreen.insertMedications.nicheComponents
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -28,20 +28,22 @@ fun TwoOptionToggle(
     onChange: (String) -> Unit,
     button1: String,
     button2: String,
-    isError: Boolean
+    isError: Boolean,
+    title: Int,
+    modifier: Modifier,
 ) {
     val widthSize = LocalConfiguration.current.screenWidthDp.dp
     val heigthSize = LocalConfiguration.current.screenHeightDp.dp
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 20.dp)
             .border(2.dp, color = if(isError) Color.Red else MainColor, RoundedCornerShape(16.dp))
             .padding(10.dp)
             .width(widthSize / 1.56f)
     ) {
         Text(
-            stringResource(R.string.You_take_medication_in_days_or_hours),
+            stringResource(title),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 10.dp),

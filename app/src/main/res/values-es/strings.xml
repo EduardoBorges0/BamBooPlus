@@ -17,6 +17,7 @@
     <string name="When_must_alert_you">¿Con cuántos en el stock debemos avisarte?</string>
     <string name="Do_you_quantity_in_the_stock">¿Cuántos tienes en stock?</string>
     <string name="What_first_time_you_take_medication">¿A qué hora tomarás el primer medicamento?</string>
+    <string name="pillsOrDrop">¿Píldora o Gota?</string>
     <string name="What_interval_hour">¿Cada cuántas horas?</string>
     <string name="What_interval_days">¿Cada cuántos días?</string>
     <string name="You_take_medication_in_days_or_hours">¿Lo tomas cada x horas o cada x días?</string>

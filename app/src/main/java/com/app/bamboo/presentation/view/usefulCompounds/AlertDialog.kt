@@ -30,7 +30,7 @@ fun AlertDialogComposable(
         dismissButton = if (needDismiss) {
             {
                 TextButton(onClick = onDismiss) {
-                    Text(dismissText)
+                    Text(dismissText, color = Color.Black)
                 }
             }
         } else null,

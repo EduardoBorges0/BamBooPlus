@@ -25,6 +25,8 @@
     <string name="What_interval_hour">De quantas em quantas horas?</string>
     <string name="What_interval_days">De quantos em quantos dias?</string>
     <string name="You_take_medication_in_days_or_hours">Você toma a cada x horas ou a cada x dias?</string>
+    <string name="pillsOrDrop">Pilula ou Gota?</string>
+
     <string name="Hours">Horas</string>
     <string name="Minutes">Minutos</string>
     <string name="Days">Dias</string>

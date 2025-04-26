@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications
+package com.app.bamboo.presentation.view.mainScreen.mainMedication
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.getValue
@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.app.bamboo.R
-import com.app.bamboo.presentation.view.medications.medicationList.components.MedicationList
-import com.app.bamboo.presentation.view.medications.medicationList.WithoutMedications
-import com.app.bamboo.presentation.view.medications.nextMedication.components.NextMedicationList
+import com.app.bamboo.presentation.view.mainScreen.mainMedication.medicationList.components.MedicationList
+import com.app.bamboo.presentation.view.mainScreen.mainMedication.withoutMedication.WithoutMedications
+import com.app.bamboo.presentation.view.mainScreen.mainMedication.nextMedication.components.NextMedicationList
 import com.app.bamboo.presentation.view.usefulCompounds.BackgroundMain
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
 import com.app.bamboo.presentation.view.usefulCompounds.ElevatedButtonAdd
@@ -60,7 +60,7 @@ fun MainMedicationComposable(
             widthSize = widthSize
         )
         if (searchResults.isEmpty()) {
-            WithoutMedications()
+            WithoutMedications(heightSize, widthSize, modifier = Modifier.align(Alignment.Center))
         } else {
             MedicationList(
                 navController,

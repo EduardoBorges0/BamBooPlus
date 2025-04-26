@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications.medicationList.components
+package com.app.bamboo.presentation.view.mainScreen.mainMedication.medicationList.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

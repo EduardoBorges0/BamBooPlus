@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.components
+package com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationsAndStock.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

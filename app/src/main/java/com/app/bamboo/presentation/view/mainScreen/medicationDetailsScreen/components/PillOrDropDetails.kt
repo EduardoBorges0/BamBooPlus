@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications.medicationDetailsScreen.components
+package com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.components
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding

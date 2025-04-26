@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.insertMedications.pillOrDrop
+package com.app.bamboo.presentation.view.mainScreen.insertMedications.pillOrDrop
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
 import com.app.bamboo.presentation.view.usefulCompounds.CustomButton
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
-import com.app.bamboo.presentation.view.usefulCompounds.TwoOptionToggle
+import com.app.bamboo.presentation.view.mainScreen.insertMedications.nicheComponents.TwoOptionToggle
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 
 @Composable
@@ -54,10 +54,12 @@ fun PillOrDrop(
                 onChange = { pillOrDrop = it },
                 button1 = stringResource(R.string.Pills),
                 button2 = stringResource(R.string.Drop),
-                isError = isError
+                isError = isError,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                title = R.string.pillsOrDrop
             )
             CustomTextField(
-                modifier = Modifier.padding(top = 20.dp),
+                modifier = Modifier.padding(top = 20.dp).padding(horizontal = 50.dp),
                 value = howMany,
                 onValueChange = { howMany = it },
                 keyboardType = KeyboardType.Number,

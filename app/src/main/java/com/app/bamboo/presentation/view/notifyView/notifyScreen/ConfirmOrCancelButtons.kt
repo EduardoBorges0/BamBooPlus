@@ -1,5 +1,6 @@
 package com.app.bamboo.presentation.view.notifyView.notifyScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -43,6 +44,7 @@ fun ConfirmOrCancelButtons(confirmClick: () -> Unit, cancelClick: () -> Unit, mo
             onClick = cancelClick,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
+                .background(Color.Black)
                 .size(heigthSize / 10),
             colors = ButtonDefaults.buttonColors(
                 containerColor = NotifyCancelButton

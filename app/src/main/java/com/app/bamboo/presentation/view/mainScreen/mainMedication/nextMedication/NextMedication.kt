@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications.nextMedication
+package com.app.bamboo.presentation.view.mainScreen.mainMedication.nextMedication
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -24,7 +24,6 @@ import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import kotlinx.coroutines.delay
-import java.time.Duration
 import java.time.LocalTime
 
 @SuppressLint("DefaultLocale")

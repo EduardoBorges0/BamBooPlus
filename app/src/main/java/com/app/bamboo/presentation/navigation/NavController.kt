@@ -10,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -24,11 +23,11 @@ import com.app.bamboo.data.worker.quantityThreshold.alertQuantityThreshold
 import com.app.bamboo.domain.alarmManager.background_tasks.everyScheduleFalse
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
-import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
-import com.app.bamboo.presentation.view.insertMedications.pillOrDrop.PillOrDrop
-import com.app.bamboo.presentation.view.insertMedications.medicationTime.MedicationTime
-import com.app.bamboo.presentation.view.medications.MainMedicationComposable
-import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.MainMedicationDetailsScreen
+import com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationsAndStock.MedicationAndStock
+import com.app.bamboo.presentation.view.mainScreen.insertMedications.pillOrDrop.PillOrDrop
+import com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationTime.MedicationTime
+import com.app.bamboo.presentation.view.mainScreen.mainMedication.MainMedicationComposable
+import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.MainMedicationDetailsScreen
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationDetailsViewModel
@@ -44,7 +43,6 @@ class MainNavController : ComponentActivity() {
 
         setContent {
             alertQuantityThreshold(applicationContext)
-            everyScheduleFalse(applicationContext)
             val navController = rememberNavController()
             val notifyViewModel: NotifyViewModel = hiltViewModel()
             notifyViewModel.showMedicationNotifications(this, this)
