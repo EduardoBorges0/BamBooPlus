@@ -23,6 +23,7 @@ interface MedicationRepository {
 
     suspend fun deleteMedication(id: Long)
     suspend fun updateMedication(
+        id: Long,
         medicationName: String,
         description: String,
         pillOrDrop: String,

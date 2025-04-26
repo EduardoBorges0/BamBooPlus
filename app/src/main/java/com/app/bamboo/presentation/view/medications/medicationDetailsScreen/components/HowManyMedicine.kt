@@ -1,14 +1,12 @@
-package com.app.bamboo.presentation.view.medications.medicationDetailsScreen
+package com.app.bamboo.presentation.view.medications.medicationDetailsScreen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
@@ -27,13 +25,13 @@ import com.app.bamboo.presentation.view.ui.theme.textColor
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HowManyMedicine(
-    modifier: Modifier,
-    medications: MedicationEntities,
-    times: List<MedicationSchedule>
+    medicationName: String,
+    description: String,
+    times: List<MedicationSchedule>,
+    widthSize: Dp
 ) {
-    val widthSize = LocalConfiguration.current.screenWidthDp.dp
     Column(
-        modifier = modifier
+        modifier = Modifier
             .clip(RoundedCornerShape(31.dp))
             .wrapContentHeight()
             .width(widthSize / 1.5f)
@@ -41,14 +39,14 @@ fun HowManyMedicine(
             .padding(46.dp)
     ) {
         Text(
-            medications.medicationName,
+            medicationName,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             fontSize = 20.sp,
             color = textColor
         )
         Text(
-            medications.description,
+            description,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 5.dp),

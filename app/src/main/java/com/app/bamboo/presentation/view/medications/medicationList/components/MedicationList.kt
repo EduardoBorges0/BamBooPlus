@@ -1,6 +1,5 @@
-package com.app.bamboo.presentation.view.medications.medicationList
+package com.app.bamboo.presentation.view.medications.medicationList.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
@@ -12,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.bamboo.data.models.medications.MedicationEntities
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
-import kotlinx.coroutines.flow.first
 
 @Composable
 fun MedicationList(

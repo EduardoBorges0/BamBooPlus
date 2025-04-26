@@ -1,5 +1,6 @@
 package com.app.bamboo.data.repositoriesImpl.medication
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.app.bamboo.data.database.dao.medication.MedicationDao
 import com.app.bamboo.data.models.medications.MedicationEntities
@@ -48,6 +49,7 @@ class MedicationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateMedication(
+        id: Long,
         medicationName: String,
         description: String,
         pillOrDrop: String,
@@ -60,6 +62,7 @@ class MedicationRepositoryImpl @Inject constructor(
         amountMedication: Int,
     ) {
         val medication = MedicationEntities(
+            id = id,
             medicationName = medicationName,
             description = description,
             pillOrDrop = pillOrDrop,

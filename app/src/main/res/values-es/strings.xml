@@ -5,6 +5,12 @@
     <string name="medicationIsNullOrEmpty">¡Aún no has añadido ningún medicamento!</string>
     <string name="nextMedication">Tu próxima medicación será: </string>
 
+    <!--MainMedicationsDetails-->
+    <string name="stock">Stock:</string>
+    <string name="stock_alert">Alerta cuando haya esto en el stock:</string>
+    <string name="save">Guardar</string>
+    <string name="deletar">Eliminar</string>
+
     <!-- InsertMedication -->
     <string name="What_medication_you_take">¿Qué medicamento vas a tomar?</string>
     <string name="What_its_medication_make">¿Para qué sirve?</string>
@@ -16,11 +22,10 @@
     <string name="You_take_medication_in_days_or_hours">¿Lo tomas cada x horas o cada x días?</string>
     <string name="Hours">Horas</string>
     <string name="Minutes">Minutos</string>
-
     <string name="Days">Días</string>
     <string name="Pills">Píldora</string>
     <string name="Drop">Gota</string>
-    <string name="How_many_mg">¿Cuántos miligramos?</string>
+    <string name="How_many_ml">¿Cuántos ml?</string>
     <string name="How_many_pills">¿Cuántas píldoras?</string>
     <string name="next">Continuar</string>
     <string name="confirm">Confirmar</string>

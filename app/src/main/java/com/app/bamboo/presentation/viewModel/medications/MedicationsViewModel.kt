@@ -143,10 +143,4 @@ class MedicationsViewModel @Inject constructor(
             }
         }
     }
-
-    fun deleteMedications(id: Long) {
-        viewModelScope.launch {
-            repository.deleteMedication(id = id)
-        }
-    }
 }

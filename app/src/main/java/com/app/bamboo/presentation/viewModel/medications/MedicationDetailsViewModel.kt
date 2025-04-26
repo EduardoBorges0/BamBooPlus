@@ -30,9 +30,46 @@ class MedicationDetailsViewModel @Inject constructor(
             _everyMedications.value = repository.getMedicationsById(id)
         }
     }
+
     fun getMedicationsTime(id: Long) {
         viewModelScope.launch {
-            _everyMedicationsTime.value = scheduleRepository.getAllMedicationsScheduleById(id).first()
+            _everyMedicationsTime.value =
+                scheduleRepository.getAllMedicationsScheduleById(id).first()
+        }
+    }
+
+    fun updateMedications(
+        id: Long,
+        medicationName: String,
+        description: String,
+        pillOrDrop: String,
+        daysOrHour: String,
+        medicationTime: String,
+        date: String,
+        quantity: Int,
+        time: Long,
+        quantityThreshold: Int,
+        amountMedication: Int
+    ) {
+        viewModelScope.launch {
+            repository.updateMedication(
+                id,
+                medicationName,
+                description,
+                pillOrDrop,
+                daysOrHour,
+                medicationTime,
+                date,
+                quantity,
+                time,
+                quantityThreshold,
+                amountMedication
+            )
+        }
+    }
+    fun deleteMedications(id: Long) {
+        viewModelScope.launch {
+            repository.deleteMedication(id = id)
         }
     }
 }

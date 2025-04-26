@@ -1,11 +1,10 @@
-package com.app.bamboo.presentation.view.insertMedications
+package com.app.bamboo.presentation.view.insertMedications.pillOrDrop
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,13 +17,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.bamboo.R
-import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
+import com.app.bamboo.presentation.view.usefulCompounds.CustomButton
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
-import com.app.bamboo.presentation.view.usefulCompounds.NextButton
 import com.app.bamboo.presentation.view.usefulCompounds.TwoOptionToggle
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 
@@ -65,11 +63,11 @@ fun PillOrDrop(
                 keyboardType = KeyboardType.Number,
                 isError = isError,
                 label = if (pillOrDrop == "Pill") stringResource(R.string.How_many_pills) else stringResource(
-                    R.string.How_many_mg
+                    R.string.How_many_ml
                 )
             )
         }
-        NextButton(
+        CustomButton(
             onClick = {
                 isError = howMany.isBlank()
                 if(!isError){

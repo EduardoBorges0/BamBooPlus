@@ -11,16 +11,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.bamboo.R
+import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.components.MedicationInputFields
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
-import com.app.bamboo.presentation.view.usefulCompounds.NextButton
+import com.app.bamboo.presentation.view.usefulCompounds.CustomButton
 
 @Composable
 fun MedicationAndStock(navController: NavController) {
@@ -30,8 +29,6 @@ fun MedicationAndStock(navController: NavController) {
     var quantityThreshold by remember { mutableStateOf("") }
 
     var isError by remember { mutableStateOf(false) }
-
-    val height = LocalConfiguration.current.screenHeightDp.dp
     Box(modifier = Modifier.fillMaxSize()) {
         BackIcon(
             navController
@@ -49,7 +46,7 @@ fun MedicationAndStock(navController: NavController) {
             isError = isError,
             modifier = Modifier.align(Alignment.Center)
         )
-        NextButton(
+        CustomButton(
             onClick = {
                 isError = medicationName.isBlank() || quantity.isBlank()
                 if (!isError) {

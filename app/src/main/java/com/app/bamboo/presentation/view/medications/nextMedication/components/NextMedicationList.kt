@@ -1,13 +1,13 @@
-package com.app.bamboo.presentation.view.medications.nextMedication
+package com.app.bamboo.presentation.view.medications.nextMedication.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.presentation.view.medications.nextMedication.NextMedication
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import com.app.bamboo.utils.TimeUtils
 

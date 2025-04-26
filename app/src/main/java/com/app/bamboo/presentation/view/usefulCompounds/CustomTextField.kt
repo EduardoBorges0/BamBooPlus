@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.app.bamboo.presentation.view.ui.theme.textColor
 
@@ -26,6 +28,7 @@ fun CustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType,
+    textAlign: TextAlign = TextAlign.Unspecified,
     trailingIcon: ImageVector? = null,
     isEnabledField: Boolean = true,
     containerColor: Color = Color.Unspecified,
@@ -38,7 +41,7 @@ fun CustomTextField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(label, color = if(isError) Color.Red else Color.Black) },
+        label = { Text(label, color = if(isError) Color.Red else labelColor) },
         modifier = modifier.then(
             if (isError) {
                 Modifier.border(2.dp, Color.Red, RoundedCornerShape(10.dp))
@@ -53,6 +56,9 @@ fun CustomTextField(
         trailingIcon = trailingIcon?.let {
             { Icon(it, contentDescription = null) }
         },
+        textStyle = TextStyle(
+            textAlign = textAlign
+        ),
         shape = RoundedCornerShape(10.dp),
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
@@ -60,7 +66,7 @@ fun CustomTextField(
             disabledTextColor = textColor,
             focusedIndicatorColor = Color.Transparent,
             focusedTextColor = textColor,
-            focusedLabelColor = labelColor,
+            unfocusedTextColor = textColor,
             unfocusedContainerColor = containerColor,
             focusedContainerColor = containerColor
         )

@@ -1,4 +1,4 @@
-package com.app.bamboo.presentation.view.medications.medicationList
+package com.app.bamboo.presentation.view.medications.medicationList.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,10 +20,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.app.bamboo.R
 import com.app.bamboo.data.models.medications.MedicationSchedule
-import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
 import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedication

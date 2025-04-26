@@ -3,8 +3,6 @@ package com.app.bamboo.presentation.navigation
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,9 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavArgument
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -27,7 +25,7 @@ import com.app.bamboo.domain.alarmManager.background_tasks.everyScheduleFalse
 import com.app.bamboo.presentation.view.appointments.AppointmentsMain
 import com.app.bamboo.presentation.view.checkIn.CheckInMain
 import com.app.bamboo.presentation.view.insertMedications.medicationsAndStock.MedicationAndStock
-import com.app.bamboo.presentation.view.insertMedications.PillOrDrop
+import com.app.bamboo.presentation.view.insertMedications.pillOrDrop.PillOrDrop
 import com.app.bamboo.presentation.view.insertMedications.medicationTime.MedicationTime
 import com.app.bamboo.presentation.view.medications.MainMedicationComposable
 import com.app.bamboo.presentation.view.medications.medicationDetailsScreen.MainMedicationDetailsScreen
@@ -140,7 +138,7 @@ fun NavControllerComposable(navController: NavHostController) {
 
         composable(
             "medicationAndStock",
-            ) {
+        ) {
             MedicationAndStock(navController)
         }
         composable(
@@ -151,7 +149,10 @@ fun NavControllerComposable(navController: NavHostController) {
             val id = it.arguments?.getString("id") ?: ""
             medicationDetailsViewModel.getMedicationsById(id.toLong())
             medicationDetailsViewModel.getMedicationsTime(id.toLong())
-            MainMedicationDetailsScreen(navController, medicationDetailsViewModel)
+            MainMedicationDetailsScreen(
+                navController = navController,
+                medicationDetailsViewModel = medicationDetailsViewModel
+            )
         }
         composable("checkIn") {
             CheckInMain()

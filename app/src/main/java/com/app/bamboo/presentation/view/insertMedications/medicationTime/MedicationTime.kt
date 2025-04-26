@@ -2,14 +2,9 @@ package com.app.bamboo.presentation.view.insertMedications.medicationTime
 
 
 import android.net.Uri
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,19 +13,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.app.bamboo.R
+import com.app.bamboo.presentation.view.insertMedications.medicationTime.components.TimeForm
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
 import com.app.bamboo.presentation.view.usefulCompounds.ChoiceTime
-import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
+import com.app.bamboo.presentation.view.usefulCompounds.CustomButton
 import com.app.bamboo.presentation.view.usefulCompounds.DatePickerModal
-import com.app.bamboo.presentation.view.usefulCompounds.NextButton
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -78,7 +71,7 @@ fun MedicationTime(
             isError = isError,
             modifier = Modifier.align(Alignment.Center)
         )
-        NextButton(
+        CustomButton(
             onClick = {
                 isError = firstTime.isBlank() || hourOrDays.isEmpty() || intervalTime.isBlank()
                 if (!isError) {
