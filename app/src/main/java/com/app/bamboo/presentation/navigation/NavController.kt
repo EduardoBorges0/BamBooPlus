@@ -28,6 +28,7 @@ import com.app.bamboo.presentation.view.mainScreen.insertMedications.pillOrDrop.
 import com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationTime.MedicationTime
 import com.app.bamboo.presentation.view.mainScreen.mainMedication.MainMedicationComposable
 import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.MainMedicationDetailsScreen
+import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationDetailsViewModel
@@ -42,6 +43,7 @@ class MainNavController : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            everyScheduleFalse(applicationContext)
             alertQuantityThreshold(applicationContext)
             val navController = rememberNavController()
             val notifyViewModel: NotifyViewModel = hiltViewModel()
@@ -49,18 +51,18 @@ class MainNavController : ComponentActivity() {
 
             val navBackStackEntry = navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry.value?.destination?.route
-
-            Scaffold(
-                bottomBar = {
-                    if (currentRoute in listOf("main", "appointments", "checkIn")) {
-                        BottomNavigationBar(navController)
+            BamBooTheme {
+                Scaffold(
+                    bottomBar = {
+                        if (currentRoute in listOf("main", "appointments", "checkIn")) {
+                            BottomNavigationBar(navController)
+                        }
                     }
+                ) {
+                    NavControllerComposable(navController)
                 }
-            ) {
-                NavControllerComposable(navController)
             }
         }
-
     }
 }
 

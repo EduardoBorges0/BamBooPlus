@@ -1,5 +1,6 @@
 package com.app.bamboo.presentation.view.mainScreen.mainMedication
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,12 +9,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -34,16 +38,17 @@ fun MainMedicationComposable(
 ) {
     val heightSize = LocalConfiguration.current.screenHeightDp.dp
     val widthSize = LocalConfiguration.current.screenWidthDp.dp
+    val getAllmedications by medicationsViewModel.getAllMedications.collectAsState(emptyList())
     val searchQuery by medicationsViewModel.searchQuery.collectAsState()
     val searchResults by medicationsViewModel.searchResults.collectAsState()
     val nextMedication by medicationsViewModel.getNextMedication.collectAsState(emptyList())
-    LaunchedEffect(Unit) {
-        searchResults.forEach { item ->
-            val medicationId = item.id
-            medicationsViewModel.calculateTrueMedicationPercentage(medicationId)
-        }
+
+    searchResults.forEach { item ->
+        val medicationId = item.id
+        medicationsViewModel.calculateTrueMedicationPercentage(medicationId)
     }
-    Box(modifier = Modifier.fillMaxSize()) {
+
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         BackgroundMain(modifier = Modifier.align(Alignment.BottomCenter))
         AsyncImage(
             model = R.drawable.logo,
@@ -52,16 +57,26 @@ fun MainMedicationComposable(
                 .align(Alignment.TopCenter)
                 .height(heightSize / 5)
         )
-        NextMedicationList(
-            modifier = Modifier.align(Alignment.Center),
-            medicationsViewModel = medicationsViewModel,
-            nextMedication = nextMedication,
-            heightSize = heightSize,
-            widthSize = widthSize
-        )
-        if (searchResults.isEmpty()) {
-            WithoutMedications(heightSize, widthSize, modifier = Modifier.align(Alignment.Center))
+        if (getAllmedications.isEmpty()) {
+            WithoutMedications(
+                heightSize, widthSize, modifier = Modifier.align(Alignment.Center),
+                stringResource(R.string.Without_no_one_medicine)
+            )
+        } else if (searchResults.isEmpty()) {
+            WithoutMedications(
+                heightSize,
+                widthSize,
+                modifier = Modifier.align(Alignment.Center),
+                stringResource(R.string.Without_no_one_medicine_in_search)
+            )
         } else {
+            NextMedicationList(
+                modifier = Modifier.align(Alignment.Center),
+                medicationsViewModel = medicationsViewModel,
+                nextMedication = nextMedication,
+                heightSize = heightSize,
+                widthSize = widthSize
+            )
             MedicationList(
                 navController,
                 modifier = Modifier.align(Alignment.TopCenter),

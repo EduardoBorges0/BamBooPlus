@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.app.bamboo.presentation.view.ui.theme.textColor
 
 @Composable
 fun CustomButton(onClick: () -> Unit, text: String, modifier: Modifier, color: Color) {
@@ -21,6 +22,6 @@ fun CustomButton(onClick: () -> Unit, text: String, modifier: Modifier, color: C
         ),
         shape = RoundedCornerShape(23.dp, 23.dp, 0.dp, 0.dp)
     ) {
-        Text(text)
+        Text(text, color = textColor)
     }
 }

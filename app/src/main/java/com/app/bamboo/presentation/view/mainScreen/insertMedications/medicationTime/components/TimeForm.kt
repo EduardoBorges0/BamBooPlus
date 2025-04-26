@@ -70,7 +70,7 @@ fun TimeForm(
             value = intervalTime,
             onValueChange = onIntervalTimeChange,
             keyboardType = KeyboardType.Number,
-            label = if(hoursOrDays == "Hours") stringResource(R.string.What_interval_hour) else stringResource(R.string.What_interval_days),
+            label = if(hoursOrDays == stringResource(R.string.Hours)) stringResource(R.string.What_interval_hour) else stringResource(R.string.What_interval_days),
             isError = isError
         )
     }

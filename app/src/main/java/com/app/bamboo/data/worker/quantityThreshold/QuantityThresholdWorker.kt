@@ -26,8 +26,6 @@ class QuantityThresholdWorker @AssistedInject constructor(
                 )
             }
         }
-        Log.d("ALARM WORKER", "Alarm chamando oooo")
-
         return Result.success()
     }
 }

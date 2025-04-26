@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
@@ -33,7 +34,7 @@ fun BottomNavigationBar(navController: NavHostController) {
     )
 
     NavigationBar(
-        containerColor = MainColor,
+        containerColor = MaterialTheme.colorScheme.primary,
         contentColor = Color.White,
     ) {
         val navBackStackEntry = navController.currentBackStackEntryAsState()
@@ -54,9 +55,9 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = SecondaryColor,
+                    selectedIconColor = MaterialTheme.colorScheme.secondary,
                     unselectedIconColor = textColor,
-                    selectedTextColor = SecondaryColor,
+                    selectedTextColor = MaterialTheme.colorScheme.secondary,
                     unselectedTextColor = textColor,
                     indicatorColor = Color.Transparent
                 )

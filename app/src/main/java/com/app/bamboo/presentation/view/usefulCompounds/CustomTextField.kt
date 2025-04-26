@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -32,8 +33,8 @@ fun CustomTextField(
     trailingIcon: ImageVector? = null,
     isEnabledField: Boolean = true,
     containerColor: Color = Color.Unspecified,
-    textColor: Color = Color.Black,
-    labelColor: Color = Color.Black,
+    textColor: Color = MaterialTheme.colorScheme.tertiary,
+    labelColor: Color = MaterialTheme.colorScheme.tertiary,
     isError: Boolean,
     label: String = "Buscar"
 ) {
@@ -68,7 +69,7 @@ fun CustomTextField(
             focusedTextColor = textColor,
             unfocusedTextColor = textColor,
             unfocusedContainerColor = containerColor,
-            focusedContainerColor = containerColor
+            focusedContainerColor = containerColor,
         )
     )
 }

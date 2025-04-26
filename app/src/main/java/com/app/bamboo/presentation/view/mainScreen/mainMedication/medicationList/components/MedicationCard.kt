@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,7 +49,7 @@ fun MedicationCards(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(31.dp))
-            .background(MainColor)
+            .background(MaterialTheme.colorScheme.primary)
             .height(heightSize / 5.5f)
             .width(widthSize / 1.7f)
             .clickable{

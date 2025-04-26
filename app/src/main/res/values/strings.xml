@@ -5,10 +5,12 @@
     <string name="title_activity_main_notify_appointment">MainNotifyAppointment</string>
     <string name="title_activity_main_appointment_notify">MainAppointmentNotify</string>
 
-    MainMedication
+    <!--MainMedication-->
     <string name="What_medication_search_you">Qual medication você procura?</string>
     <string name="medicationIsNullOrEmpty">Você não tem nenhum medicamento adicionado ainda!!</string>
     <string name="nextMedication">Sua próxima medicação será: </string>
+    <string name="Without_no_one_medicine">Você não tem nenhuma medicação adicionada!</string>
+    <string name="Without_no_one_medicine_in_search">Você não tem nenhuma medicação com esse nome.</string>
 
     <!--MainMedicationsDetails-->
     <string name="stock">Estoque:</string>

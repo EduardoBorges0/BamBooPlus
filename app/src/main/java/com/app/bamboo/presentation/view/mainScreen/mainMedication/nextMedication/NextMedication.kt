@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,7 +61,7 @@ fun NextMedication(
         modifier = modifier
             .size(width = width / 1.2f, height = height / 3)
             .clip(RoundedCornerShape(31.dp))
-            .background(SecondaryColor)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         Column(
             modifier = Modifier

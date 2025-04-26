@@ -42,7 +42,10 @@ fun PillOrDrop(
     var pillOrDrop by remember { mutableStateOf("") }
     var howMany: String by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
-
+    val pillAndDrop =
+        if (pillOrDrop == stringResource(R.string.Pills)) "Pill" else "Drop"
+    val daysAndHours =
+        if (hoursOrDay == stringResource(R.string.Hours)) "Hours" else "Days"
     Box(modifier = Modifier.fillMaxSize()) {
         BackIcon(navController)
         AdvancePercentage(0.75f)
@@ -59,25 +62,27 @@ fun PillOrDrop(
                 title = R.string.pillsOrDrop
             )
             CustomTextField(
-                modifier = Modifier.padding(top = 20.dp).padding(horizontal = 50.dp),
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .padding(horizontal = 50.dp),
                 value = howMany,
                 onValueChange = { howMany = it },
                 keyboardType = KeyboardType.Number,
                 isError = isError,
-                label = if (pillOrDrop == "Pill") stringResource(R.string.How_many_pills) else stringResource(
-                    R.string.How_many_ml
+                label = if (pillOrDrop == stringResource(R.string.Pills)) stringResource(R.string.How_many_pills) else stringResource(
+                    R.string.Drop
                 )
             )
         }
         CustomButton(
             onClick = {
                 isError = howMany.isBlank()
-                if(!isError){
+                if (!isError) {
                     insertMedicationsViewModel.insertMedication(
                         medicationName = medicationName,
                         description = description,
-                        pillOrDrop = pillOrDrop,
-                        daysOrHour = hoursOrDay,
+                        pillOrDrop = pillAndDrop,
+                        daysOrHour = daysAndHours,
                         medicationTime = firstTime,
                         date = selectedDate,
                         quantity = quantity.toInt(),
@@ -85,7 +90,7 @@ fun PillOrDrop(
                         quantityThreshold = quantityThreshold.toInt(),
                         amountMedication = howMany.toInt()
                     )
-                    navController.navigate("main"){
+                    navController.navigate("main") {
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
                         }
@@ -93,7 +98,9 @@ fun PillOrDrop(
                 }
             },
             text = stringResource(R.string.confirm),
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter),
             color = SecondaryColor
         )
         if (isError) {

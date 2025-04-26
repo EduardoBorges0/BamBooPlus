@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
+import com.app.bamboo.presentation.view.ui.theme.textColor
 
 @Composable
 fun TwoOptionToggle(
@@ -47,7 +49,7 @@ fun TwoOptionToggle(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 10.dp),
-            color = if(isError) Color.Red else Color.Black,
+            color = if(isError) Color.Red else MaterialTheme.colorScheme.tertiary,
             fontSize = 15.sp
         )
         Row(modifier = Modifier.padding(top = 5.dp)) {
@@ -63,7 +65,7 @@ fun TwoOptionToggle(
                     containerColor = if (value == button1) SecondaryColor else MainColor
                 )
             ) {
-                Text(button1)
+                Text(button1, color = textColor)
             }
             Button(
                 onClick = {
@@ -77,9 +79,8 @@ fun TwoOptionToggle(
                     containerColor = if (value == button2) SecondaryColor else MainColor
                 )
             ) {
-                Text(button2)
+                Text(button2, color = textColor)
             }
         }
     }
-
 }

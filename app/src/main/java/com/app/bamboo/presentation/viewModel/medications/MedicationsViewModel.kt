@@ -77,6 +77,7 @@ class MedicationsViewModel @Inject constructor(
             _percentMap.value = _percentMap.value.toMutableMap().apply {
                 put(id, percent)
             }
+            Log.d("PERCENT", "PERCENT: $percent")
         }
     }
 

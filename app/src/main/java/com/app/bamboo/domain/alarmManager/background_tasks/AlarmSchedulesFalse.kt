@@ -26,7 +26,6 @@ class AlarmSchedulesFalse : BroadcastReceiver() {
             onlyTrue.map {
                 repository.updateAccomplishSchedule(it.id, false)
             }
-            Log.d("REPO", "REPO : $onlyTrue")
         }
     }
 }

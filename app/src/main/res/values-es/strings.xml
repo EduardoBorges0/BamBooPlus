@@ -7,6 +7,9 @@
 
     <!--MainMedicationsDetails-->
     <string name="stock">Stock:</string>
+    <string name="Without_no_one_medicine">¡No has agregado ningún medicamento!</string>
+    <string name="Without_no_one_medicine_in_search">No tienes ningún medicamento con ese nombre.</string>
+
     <string name="stock_alert">Alerta cuando haya esto en el stock:</string>
     <string name="save">Guardar</string>
     <string name="deletar">Eliminar</string>

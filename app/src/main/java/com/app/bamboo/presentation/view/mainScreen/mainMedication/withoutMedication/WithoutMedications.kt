@@ -2,8 +2,10 @@ package com.app.bamboo.presentation.view.mainScreen.mainMedication.withoutMedica
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.traceEventEnd
@@ -17,19 +19,19 @@ import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
 
 @Composable
-fun WithoutMedications(heightSize: Dp, widthSize: Dp, modifier: Modifier) {
+fun WithoutMedications(heightSize: Dp, widthSize: Dp, modifier: Modifier, title: String) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(31.dp))
             .size(height = heightSize / 3, width = widthSize / 1.3f)
             .background(
-                MainColor
+                MaterialTheme.colorScheme.primary
             )
     ) {
         Text(
-            "Você não adicionou remédios ainda!",
+            title,
             color = textColor,
-            modifier = modifier,
+            modifier = modifier.padding(horizontal = 40.dp),
             fontSize = 15.sp
         )
     }
