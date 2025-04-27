@@ -2,16 +2,19 @@ package com.app.bamboo.di
 
 import com.app.bamboo.data.database.dao.appointments.AppointmentDao
 import com.app.bamboo.data.database.dao.LanguageDao
+import com.app.bamboo.data.database.dao.ThemeDao
 import com.app.bamboo.data.database.dao.medication.MedicationDao
 import com.app.bamboo.data.database.dao.medication.MedicationHistoryDao
 import com.app.bamboo.data.database.dao.medication.MedicationScheduleDao
 import com.app.bamboo.data.repositoriesImpl.appointments.AppointmentRepositoryImpl
 import com.app.bamboo.data.repositoriesImpl.LanguageRepositoryImpl
+import com.app.bamboo.data.repositoriesImpl.ThemeModeRepositoryImpl
 import com.app.bamboo.data.repositoriesImpl.medication.MedicationHistoryRepositoryImpl
 import com.app.bamboo.data.repositoriesImpl.medication.MedicationRepositoryImpl
 import com.app.bamboo.data.repositoriesImpl.medication.MedicationScheduleRepositoriesImpl
 import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
 import com.app.bamboo.domain.repositories.LanguageRepository
+import com.app.bamboo.domain.repositories.ThemeModeRepository
 import com.app.bamboo.domain.repositories.medications.MedicationHistoryRepository
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
@@ -33,6 +36,15 @@ object RepositoriesModule {
     ): MedicationRepository {
         return MedicationRepositoryImpl(
             medicationDao = medicationDao,
+        )
+    }
+    @Provides
+    @Singleton
+    fun providerThemeModeRepository(
+        themeDao: ThemeDao
+    ): ThemeModeRepository {
+        return ThemeModeRepositoryImpl(
+            themeDao = themeDao
         )
     }
 

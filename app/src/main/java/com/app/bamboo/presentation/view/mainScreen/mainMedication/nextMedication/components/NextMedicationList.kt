@@ -1,5 +1,6 @@
 package com.app.bamboo.presentation.view.mainScreen.mainMedication.nextMedication.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
@@ -29,7 +30,8 @@ fun NextMedicationList(
                 height = heightSize,
                 width = widthSize,
                 medicationName = nextMedication.get(it).medicationName,
-                time = TimeUtils.formattedLocalDateTime(nextMedication.get(it).scheduledTime)
+                time = TimeUtils.formattedLocalDateTime(nextMedication.get(it).scheduledTime),
+                date = TimeUtils.formattedLocalDate(nextMedication.get(it).date)
             )
         }
     }

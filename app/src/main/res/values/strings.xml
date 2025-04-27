@@ -49,7 +49,8 @@
 
     MainMedication
     <string name="next_medication_will_be">Sua próxima medicação será:</string>
-    <string name="next_hour">horas e</string>
+    <string name="next_hour">horas</string>
+    <string name="and">e</string>
     <string name="next_minute">minutos</string>
     <string name="left">Faltam</string>
     

@@ -7,9 +7,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -29,6 +35,7 @@ import com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationT
 import com.app.bamboo.presentation.view.mainScreen.mainMedication.MainMedicationComposable
 import com.app.bamboo.presentation.view.mainScreen.medicationDetailsScreen.MainMedicationDetailsScreen
 import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
+import com.app.bamboo.presentation.viewModel.ThemeModeViewModel
 import com.app.bamboo.presentation.viewModel.alert.NotifyViewModel
 import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import com.app.bamboo.presentation.viewModel.medications.MedicationDetailsViewModel
@@ -47,11 +54,13 @@ class MainNavController : ComponentActivity() {
             alertQuantityThreshold(applicationContext)
             val navController = rememberNavController()
             val notifyViewModel: NotifyViewModel = hiltViewModel()
+            val themeModeViewModel: ThemeModeViewModel = hiltViewModel()
+            val darkMode by themeModeViewModel.themeMode.collectAsState()
             notifyViewModel.showMedicationNotifications(this, this)
 
             val navBackStackEntry = navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry.value?.destination?.route
-            BamBooTheme {
+            BamBooTheme(darkTheme = darkMode) {
                 Scaffold(
                     bottomBar = {
                         if (currentRoute in listOf("main", "appointments", "checkIn")) {
@@ -59,7 +68,8 @@ class MainNavController : ComponentActivity() {
                         }
                     }
                 ) {
-                    NavControllerComposable(navController)
+                    NavControllerComposable(navController, darkMode)
+                    ChangeTheme(darkMode, themeModeViewModel)
                 }
             }
         }
@@ -67,7 +77,7 @@ class MainNavController : ComponentActivity() {
 }
 
 @Composable
-fun NavControllerComposable(navController: NavHostController) {
+fun NavControllerComposable(navController: NavHostController, isDark: Boolean) {
     val context = LocalContext.current
     val activity = context as Activity
     val notifyViewModel: NotifyViewModel = hiltViewModel()
@@ -81,7 +91,7 @@ fun NavControllerComposable(navController: NavHostController) {
             LaunchedEffect(nextMedication) {
                 medicationsViewModel.updateNextMedicationSchedule()
             }
-            MainMedicationComposable(navController, medicationsViewModel)
+            MainMedicationComposable(navController, medicationsViewModel, isDark)
         }
         composable(
             route = "medicationTime?medicationName={medicationName}&quantity={quantity}&description={description}&quantityThreshold={quantityThreshold}",

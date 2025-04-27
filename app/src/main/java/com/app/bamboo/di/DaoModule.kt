@@ -3,6 +3,7 @@ package com.app.bamboo.di
 import android.content.Context
 import com.app.bamboo.data.database.dao.appointments.AppointmentDao
 import com.app.bamboo.data.database.dao.LanguageDao
+import com.app.bamboo.data.database.dao.ThemeDao
 import com.app.bamboo.data.database.dao.medication.MedicationDao
 import com.app.bamboo.data.database.dao.medication.MedicationHistoryDao
 import com.app.bamboo.data.database.dao.medication.MedicationScheduleDao
@@ -33,6 +34,12 @@ object DaoModule {
     @Singleton
     fun providerLanguageDao(@ApplicationContext context: Context): LanguageDao {
         return DatabaseProvider.getLanguageDao(context)
+    }
+
+    @Provides
+    @Singleton
+    fun providerThemeDao(@ApplicationContext context: Context): ThemeDao {
+        return DatabaseProvider.getThemeDao(context)
     }
 
     @Provides

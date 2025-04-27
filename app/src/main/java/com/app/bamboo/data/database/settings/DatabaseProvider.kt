@@ -6,9 +6,12 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 object DatabaseProvider {
-    val MIGRATION_14_15 = object : Migration(14, 15) {
+    val MIGRATION_15_16 = object : Migration(15, 16) {
         override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE medication_schedule ADD COLUMN amount_medication INTEGER NOT NULL DEFAULT 0")
+            database.execSQL("CREATE TABLE IF NOT EXISTS theme_mode (\n" +
+                    "    id INTEGER PRIMARY KEY NOT NULL,\n" +
+                    "    theme INTEGER NOT NULL\n" +
+                    ");\n")
         }
     }
 
@@ -20,7 +23,7 @@ object DatabaseProvider {
             INSTANCE ?: Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "app_database"
-            ).addMigrations(MIGRATION_14_15).fallbackToDestructiveMigration()
+            ).addMigrations(MIGRATION_15_16)
                 .build().also { INSTANCE = it }
         }
     }
@@ -28,6 +31,7 @@ object DatabaseProvider {
     fun getMedicationDao(context: Context) = getDatabase(context).medicationDao()
     fun getAppointmentDao(context: Context) = getDatabase(context).appointmentDao()
     fun getLanguageDao(context: Context) = getDatabase(context).languageDao()
+    fun getThemeDao(context: Context) = getDatabase(context).themeDao()
     fun getMedicationScheduleDao(context: Context) = getDatabase(context).medicationSchedule()
     fun getMedicationHistoryDao(context: Context) = getDatabase(context).medicationHistoryDao()
 

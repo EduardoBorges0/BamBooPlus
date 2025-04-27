@@ -42,7 +42,8 @@
     <string name="appointmentIsNullOrEmpty">No upcoming doctors appointments.</string>
     <!-- MainMedication -->
     <string name="next_medication_will_be">Your next medication will be: </string>
-    <string name="next_hour">hours and</string>
+    <string name="next_hour">hours</string>
+    <string name="and">and</string>
     <string name="next_minute">minutes</string>
     <string name="left">In</string>
 </resources>

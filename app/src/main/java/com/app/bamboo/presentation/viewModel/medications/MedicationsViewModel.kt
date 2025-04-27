@@ -66,7 +66,6 @@ class MedicationsViewModel @Inject constructor(
         }
         return getAllMedications
     }
-
     fun calculateTrueMedicationPercentage(id: Long) {
         viewModelScope.launch {
             val schedules = repositorySchedule.getAllMedicationsScheduleById(id).first()
@@ -77,7 +76,6 @@ class MedicationsViewModel @Inject constructor(
             _percentMap.value = _percentMap.value.toMutableMap().apply {
                 put(id, percent)
             }
-            Log.d("PERCENT", "PERCENT: $percent")
         }
     }
 
@@ -104,12 +102,12 @@ class MedicationsViewModel @Inject constructor(
         }
     }
 
-    fun getTimeUntilNextAlarm(currentTime: LocalTime, scheduledTime: LocalTime): Pair<Long, Long> {
+    fun getTimeUntilNextAlarm(currentTime: LocalTime, scheduledTime: LocalTime, date: LocalDate): Pair<Long, Long> {
         val today = LocalDate.now()
         var nextAlarm = LocalDateTime.of(today, scheduledTime)
         val now = LocalDateTime.of(today, currentTime)
         if (scheduledTime.isBefore(currentTime) || scheduledTime == currentTime) {
-            nextAlarm = nextAlarm.plusDays(1)
+            nextAlarm = LocalDateTime.of(date, scheduledTime)
         }
         val duration = Duration.between(now, nextAlarm)
         val hours = duration.toHours()

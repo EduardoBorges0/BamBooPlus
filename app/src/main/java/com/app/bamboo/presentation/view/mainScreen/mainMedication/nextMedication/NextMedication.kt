@@ -21,10 +21,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.bamboo.R
+import com.app.bamboo.presentation.view.mainScreen.mainMedication.nextMedication.components.hoursMinutesDays
 import com.app.bamboo.presentation.view.ui.theme.SecondaryColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
+import com.app.bamboo.presentation.view.usefulCompounds.TypeWriterText
 import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 import kotlinx.coroutines.delay
+import java.time.LocalDate
 import java.time.LocalTime
 
 @SuppressLint("DefaultLocale")
@@ -35,26 +38,25 @@ fun NextMedication(
     height: Dp,
     width: Dp,
     medicationName: String,
-    time: LocalTime
+    time: LocalTime,
+    date: LocalDate
 ) {
     val currentTime = remember { mutableStateOf(LocalTime.now()) }
-
     LaunchedEffect(Unit) {
         while (true) {
             delay(60_000L)
             currentTime.value = LocalTime.now()
         }
     }
-    val (hours, minutes) = medicationsViewModel.getTimeUntilNextAlarm(currentTime.value, time)
-    val phrase = stringResource(R.string.left)
+    val (time1, time2) = medicationsViewModel.getTimeUntilNextAlarm(currentTime.value, time, date)
+    val suffix = stringResource(R.string.left)
+    val days = stringResource(R.string.Days)
     val nextHour = stringResource(R.string.next_hour)
+    val and = stringResource(R.string.and)
+
     val nextMinute = stringResource(R.string.next_minute)
 
-    val formattedTime = if (hours == 0L) {
-        String.format("$phrase %02d $nextMinute", minutes)
-    } else {
-        String.format("$phrase %02d $nextHour %02d $nextMinute", hours, minutes)
-    }
+    val phrase = hoursMinutesDays(time1, time2, nextHour, nextMinute, and, days, suffix)
     val nextMedicationWillBe = stringResource(R.string.next_medication_will_be)
 
     Box(
@@ -82,10 +84,11 @@ fun NextMedication(
             )
         }
         Text(
-            text = formattedTime,
+            text = TypeWriterText(phrase),
             modifier = Modifier.align(Alignment.Center),
             color = textColor,
             fontSize = 20.sp
         )
+
     }
 }

@@ -1,6 +1,7 @@
 package com.app.bamboo.presentation.view.mainScreen.mainMedication
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -34,7 +36,8 @@ import com.app.bamboo.presentation.viewModel.medications.MedicationsViewModel
 @Composable
 fun MainMedicationComposable(
     navController: NavHostController,
-    medicationsViewModel: MedicationsViewModel
+    medicationsViewModel: MedicationsViewModel,
+    isDark: Boolean
 ) {
     val heightSize = LocalConfiguration.current.screenHeightDp.dp
     val widthSize = LocalConfiguration.current.screenWidthDp.dp
@@ -42,6 +45,7 @@ fun MainMedicationComposable(
     val searchQuery by medicationsViewModel.searchQuery.collectAsState()
     val searchResults by medicationsViewModel.searchResults.collectAsState()
     val nextMedication by medicationsViewModel.getNextMedication.collectAsState(emptyList())
+    val isDarkTheme = isDark
 
     searchResults.forEach { item ->
         val medicationId = item.id
@@ -51,7 +55,7 @@ fun MainMedicationComposable(
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         BackgroundMain(modifier = Modifier.align(Alignment.BottomCenter))
         AsyncImage(
-            model = R.drawable.logo,
+            model = if(isDarkTheme) R.drawable.boo else R.drawable.logo,
             contentDescription = "logo",
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -86,6 +90,7 @@ fun MainMedicationComposable(
                 widthSize
             )
         }
+
         CustomTextField(
             modifier = Modifier
                 .align(Alignment.TopCenter)
