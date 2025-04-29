@@ -40,6 +40,16 @@
     <!-- Appointments -->
     <string name="appointmentHistoryIsNullOrEmpty">No past doctors appointments.</string>
     <string name="appointmentIsNullOrEmpty">No upcoming doctors appointments.</string>
+
+    <!--InsertAppointments-->
+    <string name="onlineOrOnsite">Online or On-site?</string>
+    <string name="appointmentsType">What type of appointment?</string>
+    <string name="which_name_of_doctor">What is the doctor\'s name?</string>
+    <string name="which_name_of_hospital">What is the hospital\'s name?</string>
+
+    <string name="on_site">On-site</string>
+    <string name="online">Online</string>
+
     <!-- MainMedication -->
     <string name="next_medication_will_be">Your next medication will be: </string>
     <string name="next_hour">hours</string>

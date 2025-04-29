@@ -47,6 +47,15 @@
     <string name="appointmentHistoryIsNullOrEmpty">Sem nenhuma ida ao médico passada.</string>
     <string name="appointmentIsNullOrEmpty">Sem nenhuma ida próxima ao médico.</string>
 
+    <!--InsertAppointments-->
+    <string name="onlineOrOnsite">Presencial ou online?</string>
+    <string name="appointmentsType">Qual o tipo de consulta?</string>
+    <string name="which_name_of_doctor">Qual o nome do médico?</string>
+    <string name="which_name_of_hospital">Qual o nome do hospital?</string>
+    <string name="on_site">Presencial</string>
+    <string name="online">Virtual</string>
+
+
     MainMedication
     <string name="next_medication_will_be">Sua próxima medicação será:</string>
     <string name="next_hour">horas</string>

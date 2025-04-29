@@ -7,6 +7,9 @@ import com.app.bamboo.data.models.ThemeMode
 
 @Dao
 interface ThemeDao {
+    @Insert
+    suspend fun insertTheme(theme: ThemeMode)
+
     @Query("SELECT theme FROM theme_mode WHERE id = 1")
     suspend fun getThemeMode(): Boolean
 

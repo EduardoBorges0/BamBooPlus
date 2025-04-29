@@ -4,10 +4,11 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import java.util.Calendar
 
-fun everyScheduleFalse(context: Context) {
-    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+fun everyScheduleFalse(context: Context?) {
+    val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val calendar = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
         set(Calendar.MINUTE, 0)
@@ -27,6 +28,7 @@ fun everyScheduleFalse(context: Context) {
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
+    Log.d("AlarmSchedulesFalse", "scheduleFalse chamada")
 
     alarmManager.setAlarmClock(
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent),

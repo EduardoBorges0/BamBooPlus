@@ -22,9 +22,9 @@ fun ChangeTheme(value: Boolean, themeModeViewModel: ThemeModeViewModel) {
         IconButton(
             onClick = {
                 if (value) {
-                    themeModeViewModel.updateThemeMode(true)
-                } else {
                     themeModeViewModel.updateThemeMode(false)
+                } else {
+                    themeModeViewModel.updateThemeMode(true)
                 }
             },
             modifier = Modifier

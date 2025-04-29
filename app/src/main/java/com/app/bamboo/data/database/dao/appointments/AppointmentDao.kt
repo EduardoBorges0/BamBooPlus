@@ -7,11 +7,13 @@ import androidx.room.Query
 import androidx.room.Update
 import com.app.bamboo.data.models.appointments.AppointmentEntities
 import com.app.bamboo.data.models.appointments.AppointmentSummary
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface AppointmentDao {
     @Query("SELECT * FROM appointment_entity")
-    fun getAllAppointment(): LiveData<List<AppointmentEntities>>
+    fun getAllAppointment(): Flow<List<AppointmentEntities>>
 
     @Insert
     suspend fun insertAppointment(appointment: AppointmentEntities)

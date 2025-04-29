@@ -8,10 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.app.bamboo.R
 import com.app.bamboo.data.models.appointments.AppointmentEntities
 import com.app.bamboo.domain.repositories.appointments.AppointmentRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +22,7 @@ class HistoryViewModel @Inject constructor(private val repository: AppointmentRe
 
     fun appointmentHistory() {
         viewModelScope.launch {
-            val filterIsAccomplish = repository.getAllAppointment().value?.filter {
+            val filterIsAccomplish = repository.getAllAppointment().first()?.filter {
                 it.accomplish == false || it.accomplish == true
             }
             if(filterIsAccomplish != null && filterIsAccomplish.isNotEmpty()){

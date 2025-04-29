@@ -40,6 +40,15 @@
     <!-- Appointments -->
     <string name="appointmentHistoryIsNullOrEmpty">Sin citas médicas pasadas.</string>
     <string name="appointmentIsNullOrEmpty">Sin próximas citas médicas.</string>
+    <string name="appointmentsType">¿Qué tipo de cita?</string>
+    <string name="on_site">Presencial</string>
+    <string name="online">En línea</string>
+    <string name="which_name_of_doctor">¿Cuál es el nombre del médico?</string>
+    <string name="which_name_of_hospital">¿Cuál es el nombre del hospital?</string>
+
+    <!--Insert Appointments-->
+    <string name="onlineOrOnsite">¿Presencial u online?</string>
+
     <!-- MainMedication -->
     <string name="next_medication_will_be">Tu próximo medicamento será: </string>
     <string name="next_hour">horas</string>

@@ -2,8 +2,13 @@ package com.app.bamboo.data.database.settings
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase.Callback
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.app.bamboo.data.models.ThemeMode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object DatabaseProvider {
     val MIGRATION_15_16 = object : Migration(15, 16) {
@@ -23,7 +28,16 @@ object DatabaseProvider {
             INSTANCE ?: Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "app_database"
-            ).addMigrations(MIGRATION_15_16)
+            ).addMigrations(MIGRATION_15_16).addCallback(object : Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        INSTANCE?.themeDao()?.insertTheme(
+                            ThemeMode(theme = false)
+                        )
+                    }
+                }
+            })
                 .build().also { INSTANCE = it }
         }
     }

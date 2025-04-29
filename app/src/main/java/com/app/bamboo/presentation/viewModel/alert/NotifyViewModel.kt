@@ -70,14 +70,9 @@ class NotifyViewModel @Inject constructor(
                 it.map {
                 val formatter = TimeUtils.formattedLocalDateTime(it.scheduledTime)
                 val date = TimeUtils.formattedLocalDate(it.date)
-                Log.d(
-                    "ALARME",
-                    "ESTA É A AGENDA ${formatter.hour}, ${it.medicationId}, ${it.medicationName}"
-                )
                 scheduleNotification(
                     scheduleRepository = medicationScheduleRepository,
                     context = context,
-                    medicationRepository = medicationRepository,
                     hourOrDay = it.hoursOrDays,
                     interval = it.intervalTime.toInt(),
                     hour = formatter.hour.toInt(),
@@ -106,7 +101,6 @@ class NotifyViewModel @Inject constructor(
                         set(Calendar.MINUTE, minute)
                         set(Calendar.SECOND, 0)
                         set(Calendar.MILLISECOND, 0)
-
                         add(Calendar.MINUTE, -30)
                     }
 

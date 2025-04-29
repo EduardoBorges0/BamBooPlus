@@ -135,7 +135,7 @@ class MedicationsViewModel @Inject constructor(
         _searchQuery.value = newQuery
     }
 
-    private suspend fun searchMedication(query: String): Flow<List<MedicationEntities>> {
+    private fun searchMedication(query: String): Flow<List<MedicationEntities>> {
         return getAllMedications.map { list ->
             list.filter {
                 it.medicationName.contains(query, ignoreCase = true)

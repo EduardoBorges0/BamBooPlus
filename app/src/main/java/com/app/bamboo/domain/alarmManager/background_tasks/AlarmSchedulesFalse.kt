@@ -19,13 +19,26 @@ class AlarmSchedulesFalse : BroadcastReceiver() {
     lateinit var repository: MedicationScheduleRepository
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        when (intent?.action) {
+            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED -> {
+                everyScheduleFalse(context)
+            }
+            else -> scheduleFalse()
+        }
+    }
+
+    private fun scheduleFalse() {
         CoroutineScope(Dispatchers.IO).launch {
             val onlyTrue = repository.getAllMedicationSchedules().first().filter {
                 it.accomplish == true
             }
+            Log.d("AlarmSchedulesFalse", "Itens com accomplish == true: $onlyTrue")
+
             onlyTrue.map {
+                Log.d("AlarmSchedulesFalse", "Atualizando o id ${it.id} para accomplish = false")
                 repository.updateAccomplishSchedule(it.id, false)
             }
         }
     }
 }
+

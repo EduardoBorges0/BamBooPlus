@@ -2,6 +2,7 @@ package com.app.bamboo.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.bamboo.data.models.ThemeMode
 import com.app.bamboo.domain.repositories.ThemeModeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,14 @@ class ThemeModeViewModel @Inject constructor(private val repository: ThemeModeRe
     private val _themeMode = MutableStateFlow<Boolean>(false)
     val themeMode : StateFlow<Boolean> = _themeMode
 
+    fun insertTheme(){
+        viewModelScope.launch {
+            val theme = ThemeMode(
+                theme = themeMode.value
+            )
+            repository.insertTheme(theme)
+        }
+    }
     fun getThemeMode(){
         viewModelScope.launch {
             _themeMode.value = repository.getThemeMode()
@@ -22,6 +31,7 @@ class ThemeModeViewModel @Inject constructor(private val repository: ThemeModeRe
     fun updateThemeMode(theme: Boolean){
         viewModelScope.launch {
             repository.updateThemeMode(theme)
+            _themeMode.value = theme
         }
     }
 }

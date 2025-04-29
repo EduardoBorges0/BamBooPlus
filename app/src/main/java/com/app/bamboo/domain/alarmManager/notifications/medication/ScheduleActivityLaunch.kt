@@ -10,8 +10,7 @@ import com.app.bamboo.domain.repositories.medications.MedicationScheduleReposito
 import java.time.LocalDate
 import java.util.Calendar
 
-suspend fun scheduleNotification(
-    medicationRepository: MedicationRepository,
+fun scheduleNotification(
     scheduleRepository: MedicationScheduleRepository,
     context: Context,
     hourOrDay: String,
