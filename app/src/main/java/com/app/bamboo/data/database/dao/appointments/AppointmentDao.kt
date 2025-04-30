@@ -28,7 +28,7 @@ interface AppointmentDao {
     suspend fun updateAccomplish(id: Long, accomplish: Boolean)
 
     @Query("SELECT * FROM appointment_entity WHERE id= :id")
-    suspend fun getAppointmentsById(id: Long): List<AppointmentEntities>
+    fun getAppointmentsById(id: Long): Flow<List<AppointmentEntities>>
 
     @Query(
         """

@@ -55,7 +55,7 @@ fun MainMedicationComposable(
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         BackgroundMain(modifier = Modifier.align(Alignment.BottomCenter))
         AsyncImage(
-            model = if(isDarkTheme) R.drawable.boo else R.drawable.logo,
+            model = if(isDarkTheme) R.drawable.logo_night_mode else R.drawable.logo,
             contentDescription = "logo",
             modifier = Modifier
                 .align(Alignment.TopCenter)

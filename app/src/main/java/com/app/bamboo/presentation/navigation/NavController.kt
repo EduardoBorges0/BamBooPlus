@@ -172,6 +172,7 @@ fun NavControllerComposable(navController: NavHostController, isDark: Boolean) {
         }
         composable("appointments") {
             val appointmentsViewModel: AppointmentsViewModel = hiltViewModel()
+            appointmentsViewModel.getAppointmentsById()
             AppointmentsMain(appointmentsViewModel, navController)
         }
         composable("appointmentsOnlineOrSite") {

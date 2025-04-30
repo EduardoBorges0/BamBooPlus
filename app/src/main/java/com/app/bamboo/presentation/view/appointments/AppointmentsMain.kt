@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -14,7 +15,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.app.bamboo.presentation.navigation.MainNavController
 import com.app.bamboo.presentation.view.usefulCompounds.CustomTextField
 import com.app.bamboo.presentation.view.usefulCompounds.ElevatedButtonAdd
 import com.app.bamboo.presentation.viewModel.appointment.AppointmentsViewModel
@@ -22,6 +22,8 @@ import com.app.bamboo.presentation.viewModel.appointment.AppointmentsViewModel
 @Composable
 fun AppointmentsMain(appointmentsViewModel: AppointmentsViewModel, navController: NavController) {
     val searchQuery = appointmentsViewModel.searchQuery.collectAsState().value
+    val getAllApointments =
+        appointmentsViewModel.getAllApointments.collectAsState(emptyList()).value
     val heightSize = LocalConfiguration.current.screenHeightDp.dp
     val widthSize = LocalConfiguration.current.screenWidthDp.dp
 
@@ -42,9 +44,25 @@ fun AppointmentsMain(appointmentsViewModel: AppointmentsViewModel, navController
         ElevatedButtonAdd(
             modifier = Modifier.align(Alignment.BottomEnd),
             action = {
-               navController.navigate("appointmentsOnlineOrSite")
+                navController.navigate("appointmentsOnlineOrSite")
             },
             heightSize = heightSize
         )
+        if(appointmentsViewModel.appointmentsList.collectAsState().value.isNotEmpty()){
+            LazyColumn(Modifier.align(Alignment.Center)) {
+                items(getAllApointments.size) {
+                    val appointments =
+                        appointmentsViewModel.appointmentsList.collectAsState().value.get(0)
+                    AppointmentsCard(
+                        heightSize = heightSize,
+                        widthSize = widthSize,
+                        typeOfAppointments = appointments.appointmentType,
+                        time = appointments.appointmentTime,
+                        date = appointments.appointmentDate,
+                        hospitalName = appointments.hospitalName
+                    )
+                }
+            }
+        }
     }
 }

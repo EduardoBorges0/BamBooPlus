@@ -65,7 +65,7 @@ class AppointmentRepositoryImpl @Inject constructor(private val appointmentDao: 
         return appointmentDao.getAppointmentSummaries()
     }
 
-    override suspend fun getAppointmentsById(id: Long): List<AppointmentEntities> {
+    override suspend fun getAppointmentsById(id: Long): Flow<List<AppointmentEntities>> {
         return appointmentDao.getAppointmentsById(id)
     }
 }
