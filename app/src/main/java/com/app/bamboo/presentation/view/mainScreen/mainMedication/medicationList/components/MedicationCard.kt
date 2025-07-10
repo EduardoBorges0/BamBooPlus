@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.app.bamboo.R
 import com.app.bamboo.data.models.medications.MedicationSchedule
+import com.app.bamboo.presentation.navigation.navGraph.NavRoutes
 import com.app.bamboo.presentation.view.ui.theme.MainColor
 import com.app.bamboo.presentation.view.ui.theme.textColor
 import com.app.bamboo.presentation.view.usefulCompounds.LoadingProgressMedication
@@ -52,8 +53,12 @@ fun MedicationCards(
             .background(MaterialTheme.colorScheme.primary)
             .height(heightSize / 5.5f)
             .width(widthSize / 1.7f)
-            .clickable{
-                navController.navigate("medicationDetails?id=$id")
+            .clickable {
+                navController.navigate(
+                    NavRoutes.MedicationDetailScreen.createRoute(
+                        id.toLong()
+                    )
+                )
             }
     ) {
         Text(
@@ -68,7 +73,7 @@ fun MedicationCards(
             text = pillsAndStock,
             modifier = Modifier
                 .padding(horizontal = 5.dp)
-                .padding(bottom = if(times.size > 3) 40.dp else 30.dp)
+                .padding(bottom = if (times.size > 3) 40.dp else 30.dp)
                 .align(Alignment.Center),
             fontSize = 17.sp,
             color = textColor

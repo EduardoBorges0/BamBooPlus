@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.app.bamboo.presentation.navigation.MainNavController
+import com.app.bamboo.presentation.navigation.navGraph.MainNavController
 import com.app.bamboo.presentation.view.ui.theme.BamBooTheme
 import com.app.bamboo.presentation.view.notifyView.notifyScreen.MainNotifyView
 import com.app.bamboo.presentation.viewModel.medications.NotifyMedicationsViewModel

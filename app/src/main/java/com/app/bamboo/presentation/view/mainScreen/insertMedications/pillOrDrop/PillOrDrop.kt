@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,23 +30,20 @@ import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewMo
 @Composable
 fun PillOrDrop(
     navController: NavController,
-    description: String,
     insertMedicationsViewModel: InsertMedicationsViewModel,
-    medicationName: String,
-    quantity: String,
-    quantityThreshold: String,
-    firstTime: String,
-    selectedDate: String,
-    hoursOrDay: String,
-    intervalTime: String
 ) {
     var pillOrDrop by remember { mutableStateOf("") }
     var howMany: String by remember { mutableStateOf("") }
+    val medicationBasic by insertMedicationsViewModel.basicState.collectAsState()
+    val medicationSchedule by insertMedicationsViewModel.scheduleState.collectAsState()
+    val medicationPillOrDropState by insertMedicationsViewModel.pillOrDropState.collectAsState()
+
     var isError by remember { mutableStateOf(false) }
     val pillAndDrop =
         if (pillOrDrop == stringResource(R.string.Pills)) "Pill" else "Drop"
     val daysAndHours =
-        if (hoursOrDay == stringResource(R.string.Hours)) "Hours" else "Days"
+        if (medicationSchedule.intervalType == stringResource(R.string.Hours)) "Hours" else "Days"
+
     Box(modifier = Modifier.fillMaxSize()) {
         BackIcon(navController = navController)
         AdvancePercentage(0.75f)
@@ -78,17 +76,18 @@ fun PillOrDrop(
             onClick = {
                 isError = howMany.isBlank()
                 if (!isError) {
+                    insertMedicationsViewModel.updatePillOrDrop(pillOrDrop, howMany.toInt())
                     insertMedicationsViewModel.insertMedication(
-                        medicationName = medicationName,
-                        description = description,
+                        medicationName = medicationBasic.name,
+                        description = medicationBasic.function,
                         pillOrDrop = pillAndDrop,
                         daysOrHour = daysAndHours,
-                        medicationTime = firstTime,
-                        date = selectedDate,
-                        quantity = quantity.toInt(),
-                        time = intervalTime.toLong(),
-                        quantityThreshold = quantityThreshold.toInt(),
-                        amountMedication = howMany.toInt()
+                        medicationTime = medicationSchedule.startTime,
+                        date = medicationSchedule.startDate,
+                        quantity = medicationPillOrDropState.quantity,
+                        time = medicationSchedule.intervalValue,
+                        quantityThreshold = medicationBasic.warningStock,
+                        amountMedication = medicationBasic.stock.toInt()
                     )
                     navController.navigate("main") {
                         popUpTo(navController.graph.startDestinationId) {

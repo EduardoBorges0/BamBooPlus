@@ -24,6 +24,7 @@ import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
 import com.app.bamboo.presentation.view.usefulCompounds.ChoiceTime
 import com.app.bamboo.presentation.view.usefulCompounds.CustomButton
 import com.app.bamboo.presentation.view.usefulCompounds.DatePickerModal
+import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -32,10 +33,7 @@ import java.util.TimeZone
 @Composable
 fun MedicationTime(
     navController: NavController,
-    medicationName: String,
-    quantity: String,
-    description: String,
-    quantityThreshold: String
+    insertMedicationsViewModel: InsertMedicationsViewModel
 ) {
     var selectedDate: Long? by remember { mutableStateOf(0L) }
     var firstTime: String by remember { mutableStateOf("") }
@@ -47,7 +45,7 @@ fun MedicationTime(
 
     val formattedDate = selectedDate?.let {
         val locale = Locale.getDefault()
-        val pattern = if (locale.language == "pt") "dd/MM/yyyy" else "MM/dd/yyyy"
+        val pattern = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(pattern, locale)
         sdf.timeZone = TimeZone.getTimeZone("UTC")
 
@@ -75,11 +73,14 @@ fun MedicationTime(
             onClick = {
                 isError = firstTime.isBlank() || hourOrDays.isEmpty() || intervalTime.isBlank()
                 if (!isError) {
-                    val encodedMedicationName = Uri.encode(medicationName)
-                    val encodedQuantity = Uri.encode(quantity)
-                    val encodedDescription = Uri.encode(description)
+                    insertMedicationsViewModel.updateSchedule(
+                        startTime = firstTime,
+                        startDate = formattedDate,
+                        intervalType = hourOrDays,
+                        intervalValue = intervalTime.toLongOrNull() ?: 0L
+                    )
                     navController.navigate(
-                        "pillOrDrop?medicationName=$encodedMedicationName&quantity=$encodedQuantity&firstTime=$firstTime&selectedDate=$formattedDate&hoursOrDays=$hourOrDays&intervalTime=$intervalTime&description=$encodedDescription&quantityThreshold=$quantityThreshold"
+                        "pillOrDrop"
                     )
                 }
             },

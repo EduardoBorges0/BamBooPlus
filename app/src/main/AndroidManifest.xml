@@ -45,7 +45,7 @@
             android:turnScreenOn="true" />
 
         <activity
-            android:name=".presentation.navigation.MainNavController"
+            android:name=".presentation.navigation.navGraph.MainNavController"
             android:exported="true"
             android:theme="@style/Theme.BamBoo">
             <intent-filter>

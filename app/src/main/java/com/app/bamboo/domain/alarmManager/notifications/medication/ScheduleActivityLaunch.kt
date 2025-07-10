@@ -26,7 +26,7 @@ fun scheduleNotification(
 ) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val requestCode = "${hour}_${minute}_$id".hashCode()
-
+    Log.d("ALARM", "HOUR: $hour, MINUTE: $minute, DAY: $day, MONTH: $month, YEAR: $year, ID: $id")
     val calendar = Calendar.getInstance().apply {
         if (hourOrDay == "Days") {
             set(Calendar.HOUR_OF_DAY, hour)

@@ -1,7 +1,7 @@
 package com.app.bamboo.domain.alarmManager.notifications
 
 import android.content.Context
-import com.app.bamboo.presentation.navigation.MainNavController
+import com.app.bamboo.presentation.navigation.navGraph.MainNavController
 import com.app.bamboo.presentation.view.notifyView.MainAppointmentNotify
 import com.app.bamboo.presentation.view.notifyView.MainNotifyMedication
 import com.app.bamboo.utils.NotificationUtils

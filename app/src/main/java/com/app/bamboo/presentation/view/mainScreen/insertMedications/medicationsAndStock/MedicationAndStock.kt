@@ -1,11 +1,15 @@
 package com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationsAndStock
 
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -15,7 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.bamboo.R
 import com.app.bamboo.presentation.view.mainScreen.insertMedications.medicationsAndStock.components.MedicationInputFields
@@ -24,9 +30,10 @@ import com.app.bamboo.presentation.view.usefulCompounds.AdvancePercentage
 import com.app.bamboo.presentation.view.usefulCompounds.AlertDialogComposable
 import com.app.bamboo.presentation.view.usefulCompounds.BackIcon
 import com.app.bamboo.presentation.view.usefulCompounds.CustomButton
+import com.app.bamboo.presentation.viewModel.medications.InsertMedicationsViewModel
 
 @Composable
-fun MedicationAndStock(navController: NavController) {
+fun MedicationAndStock(navController: NavController, insertMedicationsViewModel: InsertMedicationsViewModel) {
     var medicationName by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -34,12 +41,21 @@ fun MedicationAndStock(navController: NavController) {
 
     var isError by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier.verticalScroll(rememberScrollState())){
+    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+        Box(modifier = Modifier){
+
+
+        }
+        Column(modifier = Modifier.wrapContentHeight()) {
+            Spacer(modifier = Modifier.height(40.dp))
             BackIcon(
-                navController
+                navController,
+                modifier = Modifier.align(Alignment.Start).padding(26.dp).padding(start = 20.dp)
             )
             AdvancePercentage(0.00f)
+
+            Spacer(modifier = Modifier.height(50.dp))
+
             MedicationInputFields(
                 quantityThreshold = quantityThreshold,
                 onQuantityThreshold = { quantityThreshold = it },
@@ -50,10 +66,11 @@ fun MedicationAndStock(navController: NavController) {
                 onMedicationNameChange = { medicationName = it },
                 onQuantityChange = { quantity = it },
                 isError = isError,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier
             )
         }
-        Spacer(modifier = Modifier)
+
+        Spacer(modifier = Modifier.weight(1f))
 
         CustomButton(
             onClick = {
@@ -62,7 +79,13 @@ fun MedicationAndStock(navController: NavController) {
                     val encodedMedicationName = Uri.encode(medicationName)
                     val encodedQuantity = Uri.encode(quantity)
                     val encodedDescription = Uri.encode(description)
-                    navController.navigate("medicationTime?medicationName=$encodedMedicationName&quantity=$encodedQuantity&description=$encodedDescription&quantityThreshold=$quantityThreshold")
+                    insertMedicationsViewModel.updateMedicationsBasic(
+                        name = medicationName,
+                        function = description,
+                        stock = quantity.toLongOrNull() ?: 0L,
+                        warningStock = quantityThreshold.toIntOrNull() ?: 0
+                    )
+                    navController.navigate("medicationTime")
                 }
             },
             text = stringResource(R.string.next),

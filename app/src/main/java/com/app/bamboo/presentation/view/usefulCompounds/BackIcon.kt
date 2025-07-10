@@ -13,14 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun BackIcon(navController: NavController, onClick: () -> Unit = { navController.popBackStack() }) {
+fun BackIcon(navController: NavController, modifier: Modifier = Modifier, onClick: () -> Unit = { navController.popBackStack() }) {
     Icon(
         Icons.AutoMirrored.Filled.KeyboardArrowLeft,
         contentDescription = "back",
         tint = MaterialTheme.colorScheme.tertiary,
-        modifier = Modifier
-            .padding(39.dp)
-            .padding(top = 25.dp)
+        modifier = modifier
             .clickable {
                 onClick()
             },

@@ -8,6 +8,7 @@ import com.app.bamboo.data.models.medications.MedicationSchedule
 import com.app.bamboo.domain.repositories.medications.MedicationHistoryRepository
 import com.app.bamboo.domain.repositories.medications.MedicationRepository
 import com.app.bamboo.domain.repositories.medications.MedicationScheduleRepository
+import com.app.bamboo.domain.use_cases.NextMedicationUseCase
 import com.app.bamboo.utils.TimeUtils.parseToLocalDateTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,7 +34,8 @@ import javax.inject.Inject
 class MedicationsViewModel @Inject constructor(
     private val repository: MedicationRepository,
     private val repositorySchedule: MedicationScheduleRepository,
-    private val medicationHistoryRepository: MedicationHistoryRepository
+    private val medicationHistoryRepository: MedicationHistoryRepository,
+    private val nextMedicationUseCase: NextMedicationUseCase
 ) : ViewModel() {
     private val _getAllMedications = MutableStateFlow<List<MedicationEntities>>(emptyList())
     val getAllMedications: Flow<List<MedicationEntities>> = _getAllMedications
@@ -79,25 +81,10 @@ class MedicationsViewModel @Inject constructor(
         }
     }
 
-    fun updateNextMedicationSchedule(currentDateTime: LocalDateTime = LocalDateTime.now()) {
+    fun updateNextMedicationSchedule() {
         viewModelScope.launch {
             _medicationScheduleTimes.value = repositorySchedule.getAllMedicationSchedules().first()
-            val upcomingMedications = medicationScheduleTimes.first().let { list ->
-                val scheduledDateTimes = list.map {
-                    val fullDateTime = parseToLocalDateTime(it.date, it.scheduledTime)
-                    it to fullDateTime
-                }
-                val futureMedications = scheduledDateTimes.filter { (_, dateTime) ->
-                    dateTime.isAfter(currentDateTime)
-                }
-                if (futureMedications.isNotEmpty()) {
-                    val nextTime = futureMedications.minByOrNull { it.second }?.second
-                    futureMedications.filter { it.second == nextTime }.map { it.first }
-                } else {
-                    val earliestTime = scheduledDateTimes.minByOrNull { it.second }?.second
-                    scheduledDateTimes.filter { it.second == earliestTime }.map { it.first }
-                }
-            }
+            val upcomingMedications = nextMedicationUseCase.invoke(medicationScheduleTimes)
             _getNextMedication.value = upcomingMedications
         }
     }
