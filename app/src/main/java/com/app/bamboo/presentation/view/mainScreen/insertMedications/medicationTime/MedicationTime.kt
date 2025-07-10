@@ -56,7 +56,7 @@ fun MedicationTime(
 
 
     Box(modifier = Modifier.fillMaxSize()) {
-        BackIcon(navController)
+        BackIcon(navController = navController)
         AdvancePercentage(0.5f)
         TimeForm(
             firstTime = firstTime,

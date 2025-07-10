@@ -35,7 +35,7 @@ fun HospitalAndMedicationName(
     var hospitalName by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize()) {
-        BackIcon(navController)
+        BackIcon(navController = navController)
         AdvancePercentage(0.5f)
         Column(
             modifier = Modifier.align(Alignment.Center)

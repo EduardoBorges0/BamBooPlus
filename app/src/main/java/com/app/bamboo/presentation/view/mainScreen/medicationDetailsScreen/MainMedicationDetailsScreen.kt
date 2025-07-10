@@ -57,7 +57,7 @@ fun MainMedicationDetailsScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             BackgroundMain(modifier = Modifier.align(Alignment.BottomCenter))
-            BackIcon(navController, onClick = {
+            BackIcon(navController = navController, onClick = {
                 if (getMedicationsById.quantity != quantity
                     || getMedicationsById.amountMedication != amountMedication
                     || getMedicationsById.quantityThreshold != quantityThreshold
@@ -177,7 +177,5 @@ fun MainMedicationDetailsScreen(
                 dismissText = "Cancelar"
             )
         }
-    } else {
-
     }
 }

@@ -1,8 +1,8 @@
 package com.app.bamboo.presentation.view.usefulCompounds
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,13 +15,13 @@ import com.app.bamboo.R
 fun AdvancePercentage(percent: Float) {
     val height = LocalConfiguration.current.screenHeightDp.dp
     Column(
-        modifier = Modifier.padding(top = height / 13)
+        modifier = Modifier
     ) {
         AsyncImage(
-            model = R.drawable.boo,
+            model = R.drawable.booaa,
             contentDescription = "boo",
             modifier = Modifier
-                .height(height / 4)
+                .width(height / 4)
                 .align(Alignment.CenterHorizontally)
         )
         LoadingProgressMedication(

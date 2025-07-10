@@ -47,7 +47,7 @@ fun PillOrDrop(
     val daysAndHours =
         if (hoursOrDay == stringResource(R.string.Hours)) "Hours" else "Days"
     Box(modifier = Modifier.fillMaxSize()) {
-        BackIcon(navController)
+        BackIcon(navController = navController)
         AdvancePercentage(0.75f)
         Column(
             modifier = Modifier.align(Alignment.Center)

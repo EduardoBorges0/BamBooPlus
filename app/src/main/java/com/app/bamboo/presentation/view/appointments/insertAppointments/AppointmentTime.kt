@@ -61,7 +61,7 @@ fun AppointmentTime(
         it.let { date -> sdf.format(Date(date)) }
     } ?: ""
     Box(modifier = Modifier.fillMaxSize()) {
-        BackIcon(navController)
+        BackIcon(navController = navController)
         AdvancePercentage(0.75f)
         Column(modifier = Modifier.align(Alignment.Center)) {
             CustomTextField(

@@ -32,7 +32,7 @@ fun AppointmentsOnlineOrOnsite(navController: NavController) {
     var onlineOrOnsite by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize()){
-        BackIcon(navController)
+        BackIcon(navController = navController)
         AdvancePercentage(0f)
         Column(
             modifier = Modifier.align(Alignment.Center)

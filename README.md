@@ -1,21 +1,46 @@
-Em desenvolvimento.
+# 🛒 Bamboo+ - Aplicativo Android Nativo
 
-## Licença
+Esse projeto foi feito com intuito de ajudar pessoas próximas com lembretes diários para remédios e consultas.
+## 🚀 Tecnologias utilizadas
 
-Este projeto está licenciado sob a Licença "Todos os Direitos Reservados", o que significa que o uso, modificação ou distribuição do código sem a permissão expressa do proprietário é proibido.
+ - Kotlin com Jetpack Compose (UI moderna e reativa)
+ - Room para armazenamento local
+ - Hilt para injeção de dependência
+ - Navigation Compose para navegação entre telas
+ - MVVM + Clean Architecture + Repository Pattern
+ - JUnit e mockk para testes unitários
+ - Gradle para build automatizado
+ - Git para versionamento de código
 
+---
 
-Você conhece alguém que já perdeu alguma consulta porque esqueceu a data ou a hora do seu remédio que a pessoa precisa tomar? 
-Bom, agora essa pessoa não terá mais esse problema, pois agora existe o BamBoo+, o aplicativo pra você que precisa sempre estar atento a consultas e medicamentos, Nesse
-aplicativo você terá uma variedade de funções para se organizar de forma simples e fácil.
-Dentro do aplicativo, você terá um companheiro chamado Boo, um panda incrivelmente fofo, onde ele irá te ajudar a manter seus remédios e consultas em dia.
+## ✅ Pré-requisitos
 
-Funções:
- - Adicionar, deletar e editar seus remédios
- - Ao chegar a hora do seu remédio, soltará um alarme para te lembrar sobre o seu remédio
- - Quando você tomar sua consulta, apenas terá que apertar no botão de confirmado no despertador, assim, ele ficará marcado como consulta feita com sucesso.
- - Cada consulta feita com sucesso, ela irá para o histórico de consulta sempre que você quiser ver suas consultas.
- - Adicionar, deletar e editar suas consultas, seja as que virão, seja do historico.
- - Ao chegar a data da seu consulta, soltará um alarme para te lembrar sobre a sua consulta.
- - Pesquisar pelo seus remédios tomados e também por suas consultas
- - Configuração de línguas, tendo Português, Inglês e Espanhol.
+Antes de rodar o projeto, você precisará ter instalado na sua máquina:
+
+- [Java JDK 17+](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Android Studio](https://developer.android.com/studio?hl=pt-br)
+- [Git](https://git-scm.com/)
+
+---
+
+## ⚙️ Configuração do banco de dados
+
+1. Instale o Android Studio mais recente
+2. Instale Java +17 (Faça toda configuração nas variaveis de ambiente JAVA_HOME)
+3. Clone o repositório
+   git clone https://github.com/EduardoBorges0/Bamboo_API
+   cd seu-repositorio
+4. Compile e rode a aplicação com Gradle
+   ./gradlew run
+
+Ou, para compilar e gerar o .apk:
+   ./gradlew build
+
+🧪 Testes </br>
+Para rodar os testes: </br>
+  ./gradlew test
+
+👨‍💻 Autor  </br>
+Desenvolvido por Eduardo Borges </br>
+🔗 LinkedIn: https://www.linkedin.com/in/eduardoo-borges/

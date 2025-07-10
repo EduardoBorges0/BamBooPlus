@@ -2,8 +2,12 @@ package com.app.bamboo.presentation.view.mainScreen.insertMedications.medication
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,23 +33,28 @@ fun MedicationAndStock(navController: NavController) {
     var quantityThreshold by remember { mutableStateOf("") }
 
     var isError by remember { mutableStateOf(false) }
-    Box(modifier = Modifier.fillMaxSize()) {
-        BackIcon(
-            navController
-        )
-        AdvancePercentage(0.00f)
-        MedicationInputFields(
-            quantityThreshold = quantityThreshold,
-            onQuantityThreshold = { quantityThreshold = it },
-            medicationName = medicationName,
-            quantity = quantity,
-            description = description,
-            onDescriptionChange = { description = it },
-            onMedicationNameChange = { medicationName = it },
-            onQuantityChange = { quantity = it },
-            isError = isError,
-            modifier = Modifier.align(Alignment.Center)
-        )
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.verticalScroll(rememberScrollState())){
+            BackIcon(
+                navController
+            )
+            AdvancePercentage(0.00f)
+            MedicationInputFields(
+                quantityThreshold = quantityThreshold,
+                onQuantityThreshold = { quantityThreshold = it },
+                medicationName = medicationName,
+                quantity = quantity,
+                description = description,
+                onDescriptionChange = { description = it },
+                onMedicationNameChange = { medicationName = it },
+                onQuantityChange = { quantity = it },
+                isError = isError,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+        Spacer(modifier = Modifier)
+
         CustomButton(
             onClick = {
                 isError = medicationName.isBlank() || quantity.isBlank()
@@ -57,7 +66,7 @@ fun MedicationAndStock(navController: NavController) {
                 }
             },
             text = stringResource(R.string.next),
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+            modifier = Modifier.fillMaxWidth(),
             color = SecondaryColor
         )
 

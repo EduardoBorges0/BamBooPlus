@@ -46,7 +46,7 @@ fun MainNotifyView(
                 .fillMaxSize()
         ) {
             Image(
-                painter = painterResource(id = R.drawable.boo),
+                painter = painterResource(id = R.drawable.booaa),
                 contentDescription = "boo",
                 modifier = Modifier
                     .padding(top = 70.dp)
