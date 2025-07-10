@@ -27,9 +27,9 @@ Antes de rodar o projeto, você precisará ter instalado na sua máquina:
 ## ⚙️ Configuração do banco de dados
 
 1. Instale o Android Studio mais recente
-2. Instale Java +17 (Faça toda configuração nas variaveis de ambiente JAVA_HOME)
+2. Configure as variáveis de ambiente (JAVA_HOME) com o caminho do JDK 17.
 3. Clone o repositório
-   git clone https://github.com/EduardoBorges0/Bamboo_API
+   git clone https://github.com/EduardoBorges0/BamBooPlus.git
    cd seu-repositorio
 4. Compile e rode a aplicação com Gradle
    ./gradlew run
